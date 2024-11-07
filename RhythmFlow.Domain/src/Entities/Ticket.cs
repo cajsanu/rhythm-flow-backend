@@ -26,5 +26,10 @@ namespace RhythmFlow.Domain.src.Entities
             Type = type;
         }
 
+        public override string ToString()
+        {
+            return $"Title: {Title}, Description: {Description}, Priority: {Priority}, Deadline: {Deadline}, Status: {Status}, ProjectId: {ProjectId}, Type: {Type}";
+
+        }
     }
 }

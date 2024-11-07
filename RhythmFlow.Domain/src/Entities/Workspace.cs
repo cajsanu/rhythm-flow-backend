@@ -15,5 +15,10 @@ namespace RhythmFlow.Domain.src.Entities
             OwnerId = ownerId;
         }
 
+        public override string ToString()
+        {
+            return $"Name: {Name}, OwnerId: {OwnerId}";
+
+        }
     }
 }

@@ -15,13 +15,18 @@ namespace RhythmFlow.Domain.src.Entities
         public Project(string name, string description, DateTime startDate, DateTime endDate, StatusEnum status, Guid workspaceId)
         {
             if (DomainHelpers.IsNotValidStringValue(name) || DomainHelpers.IsNotValidStringValue(description)) throw new InvalidDataException("Name and description must not be null or empty");
-            
+
             Name = name;
             Description = description;
             StartDate = startDate;
             EndDate = endDate;
             Status = status;
             WorkspaceId = workspaceId;
+        }
+
+        public override string ToString()
+        {
+            return $"Name: {Name}, Description: {Description}, StartDate: {StartDate}, EndDate: {EndDate}, Status: {Status}, WorkspaceId: {WorkspaceId}";
         }
 
     }
