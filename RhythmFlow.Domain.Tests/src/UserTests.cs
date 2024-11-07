@@ -1,4 +1,5 @@
 using RhythmFlow.Domain.src.Entities;
+using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.Domain.Tests.src
 {
@@ -60,6 +61,36 @@ namespace RhythmFlow.Domain.Tests.src
 
             // Assert
             Assert.Equal($"Id: {user.Id} name: John Doe, email: (john.doe@example.com)", result);
+        }
+
+         [Fact]
+        public void User_ShouldAddProjectToProjectsCollection()
+        {
+            // Arrange
+            var user = new User("John", "Doe", "john.doe@example.com", "passwordHash");
+            var project = new Project("Project Name", "Project Description", DateTime.Now, DateTime.Now.AddDays(30), StatusEnum.InProgress, Guid.NewGuid());
+
+            // Act
+            user.Projects.Add(project);
+
+            // Assert
+            Assert.Single(user.Projects);
+            Assert.Contains(project, user.Projects);
+        }
+
+        [Fact]
+        public void User_ShouldAddTicketToTicketsCollection()
+        {
+            // Arrange
+            var user = new User("John", "Doe", "john.doe@example.com", "passwordHash");
+            var ticket = new Ticket("Ticket Title", "Ticket Description", PriorityEnum.High, DateTime.Now.AddDays(7), StatusEnum.InProgress, Guid.NewGuid(), TicketTypeEnum.Bug);
+
+            // Act
+            user.Tickets.Add(ticket);
+
+            // Assert
+            Assert.Single(user.Tickets);
+            Assert.Contains(ticket, user.Tickets);
         }
     }
 }

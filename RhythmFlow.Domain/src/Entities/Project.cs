@@ -12,6 +12,9 @@ namespace RhythmFlow.Domain.src.Entities
         public StatusEnum Status { get; set; }
         public Guid WorkspaceId { get; set; }
 
+        // Make a collection of users that are assigned to the project
+        public ICollection<User> Users { get; set; } = new List<User>();
+
         public Project(string name, string description, DateTime startDate, DateTime endDate, StatusEnum status, Guid workspaceId)
         {
             if (DomainHelpers.IsNotValidStringValue(name) || DomainHelpers.IsNotValidStringValue(description)) throw new InvalidDataException("Name and description must not be null or empty");

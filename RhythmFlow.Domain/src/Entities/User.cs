@@ -9,6 +9,12 @@ namespace RhythmFlow.Domain.src.Entities
         public string LastName { get; }
         public Email Email { get; set; }
         public string PasswordHash { get; set; } 
+
+        // Make collection of projects that the user is assigned to
+        public ICollection<Project> Projects { get; set; } = new List<Project>();
+
+        // Make collection of tickets that the user is assigned to
+        public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
     
 
         public User(string firstName, string lastName, string email, string password) : base() // Call the base constructor to generate a unique ID
