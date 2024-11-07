@@ -1,4 +1,5 @@
 using RhythmFlow.Domain.src.ValueObjects;
+using RhythmFlow.Domain.src.Helpers;
 
 namespace RhythmFlow.Domain.src.Entities
 {
@@ -14,7 +15,7 @@ namespace RhythmFlow.Domain.src.Entities
         {
             // firstName and lastName validation in the constructor and email validation in the setter. 
             // This is mainly because the users name will probably not change wile the email might. 
-            if (IsNotValidValue(firstName) || IsNotValidValue(lastName)) throw new InvalidDataException("First name and last name must not be null or empty");
+            if (DomainHelpers.IsNotValidStringValue(firstName) || DomainHelpers.IsNotValidStringValue(lastName)) throw new InvalidDataException("First name and last name must not be null or empty");
 
             FirstName = firstName;
             LastName = lastName;
@@ -31,11 +32,6 @@ namespace RhythmFlow.Domain.src.Entities
         public override int GetHashCode()
         {
             return HashCode.Combine(Id, Email);
-        }
-
-        private static bool IsNotValidValue(string value)
-        {
-            return string.IsNullOrWhiteSpace(value);
         }
 
         public override string ToString()
