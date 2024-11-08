@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace RhythmFlow.Domain.src.ValueObjects
 {
-    public class Email
+    public partial class Email
     {
         private string _value = string.Empty; // Initialise email to empty string before a valid value is provided
         public string Value
@@ -11,7 +11,7 @@ namespace RhythmFlow.Domain.src.ValueObjects
             set
             {
                 {
-                    if (Regex.IsMatch(value, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$")) _value = value;
+                    if (MyRegex().IsMatch(value)) _value = value;
                     else throw new InvalidDataException("Invalid email address");
                 }
             }
@@ -21,5 +21,8 @@ namespace RhythmFlow.Domain.src.ValueObjects
         {
             Value = value;
         }
+
+        [GeneratedRegex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$")]
+        private static partial Regex MyRegex();
     }
 }
