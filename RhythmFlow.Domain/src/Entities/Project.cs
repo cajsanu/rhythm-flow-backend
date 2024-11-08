@@ -13,7 +13,7 @@ namespace RhythmFlow.Domain.src.Entities
         public Guid WorkspaceId { get; set; }
 
         // Make a collection of users that are assigned to the project
-        public ICollection<User> Users { get; set; } = new List<User>();
+        public ICollection<User> Users { get; set; } = [];
 
         public Project(string name, string description, DateTime startDate, DateTime endDate, StatusEnum status, Guid workspaceId)
         {

@@ -14,7 +14,7 @@ namespace RhythmFlow.Domain.src.Entities
         public TicketTypeEnum Type { get; set; }
 
         // Make a collection of users that are assigned to the ticket
-        public ICollection<User> Users { get; set; } = new List<User>();
+        public ICollection<User> Users { get; set; } = [];
 
         public Ticket(string title, string description, PriorityEnum priority, DateTime deadline, StatusEnum status, Guid projectId, TicketTypeEnum type)
         {
