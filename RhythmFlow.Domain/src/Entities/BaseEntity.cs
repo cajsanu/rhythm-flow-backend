@@ -1,5 +1,3 @@
-
-
 namespace RhythmFlow.Domain.src.Entities
 {
     public class BaseEntity
