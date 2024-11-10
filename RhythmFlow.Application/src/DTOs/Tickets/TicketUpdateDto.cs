@@ -5,7 +5,7 @@ using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.Application.src.DTOs.Tickets
 {
-    public class TicketReadDto : IBaseReadDto<Ticket>
+    public class TicketUpdateDto : IBaseUpdateDto<Ticket>
     {
         public string Title { get; set; }
         public string Description { get; set; }
@@ -16,9 +16,9 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
         public TicketTypeEnum Type { get; set; }
         public ICollection<UserReadDto> Users { get; set; } = [];
 
-        public IBaseReadDto<Ticket> ToDto(Ticket entity)
+        public IBaseUpdateDto<Ticket> ToDto(Ticket entity)
         {
-            return new TicketReadDto()
+            return new TicketUpdateDto()
             {
                 Title = entity.Title,
                 Description = entity.Description,
@@ -32,10 +32,13 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
                     FirstName = u.FirstName,
                     LastName = u.LastName,
                     Email = u.Email.Value
-                    // Add other properties as needed
                 }).ToList()
                
             };
+        }
+        public Ticket ToEntity()
+        {
+            return new Ticket(Title, Description, Priority, Deadline, Status, ProjectId, Type);
         }
 
     }

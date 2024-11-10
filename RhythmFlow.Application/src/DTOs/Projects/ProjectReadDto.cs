@@ -1,6 +1,3 @@
-
-
-using System.Runtime.CompilerServices;
 using RhythmFlow.Application.src.DTOs.Shared;
 using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Domain.src.Entities;

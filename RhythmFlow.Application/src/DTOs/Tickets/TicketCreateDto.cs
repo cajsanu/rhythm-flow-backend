@@ -1,11 +1,10 @@
 using RhythmFlow.Application.src.DTOs.Shared;
-using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.Application.src.DTOs.Tickets
 {
-    public class TicketReadDto : IBaseReadDto<Ticket>
+    public class TicketCreateDto : IBaseCreateDto<Ticket>
     {
         public string Title { get; set; }
         public string Description { get; set; }
@@ -14,11 +13,11 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
         public StatusEnum Status { get; set; }
         public Guid ProjectId { get; set; }
         public TicketTypeEnum Type { get; set; }
-        public ICollection<UserReadDto> Users { get; set; } = [];
+        // I haven't added the Users collection here because it's not needed for creating a ticket but it's needed when updating the ticket
 
-        public IBaseReadDto<Ticket> ToDto(Ticket entity)
+        public IBaseCreateDto<Ticket> ToDto(Ticket entity)
         {
-            return new TicketReadDto()
+            return new TicketCreateDto()
             {
                 Title = entity.Title,
                 Description = entity.Description,
@@ -26,16 +25,13 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
                 Deadline = entity.Deadline,
                 Status = entity.Status,
                 ProjectId = entity.ProjectId,
-                Type = entity.Type,
-                Users = entity.Users.Select(u => new UserReadDto
-                {
-                    FirstName = u.FirstName,
-                    LastName = u.LastName,
-                    Email = u.Email.Value
-                    // Add other properties as needed
-                }).ToList()
-               
+                Type = entity.Type
+
             };
+        }
+        public Ticket ToEntity()
+        {
+            return new Ticket(Title, Description, Priority, Deadline, Status, ProjectId, Type);
         }
 
     }

@@ -3,30 +3,28 @@ using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
 
-namespace RhythmFlow.Application.src.DTOs.Tickets
+namespace RhythmFlow.Application.src.DTOs.Projects
 {
-    public class TicketReadDto : IBaseReadDto<Ticket>
+    public class ProjectUpdateDto : IBaseUpdateDto<Project>
     {
-        public string Title { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
-        public PriorityEnum Priority { get; set; }
-        public DateTime Deadline { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public StatusEnum Status { get; set; }
-        public Guid ProjectId { get; set; }
-        public TicketTypeEnum Type { get; set; }
+        public Guid WorkspaceId { get; set; }
         public ICollection<UserReadDto> Users { get; set; } = [];
 
-        public IBaseReadDto<Ticket> ToDto(Ticket entity)
+        public IBaseUpdateDto<Project> ToDto(Project entity)
         {
-            return new TicketReadDto()
+            return new ProjectUpdateDto()
             {
-                Title = entity.Title,
+                Name = entity.Name,
                 Description = entity.Description,
-                Priority = entity.Priority,
-                Deadline = entity.Deadline,
+                StartDate = entity.StartDate,
+                EndDate = entity.EndDate,
                 Status = entity.Status,
-                ProjectId = entity.ProjectId,
-                Type = entity.Type,
+                WorkspaceId = entity.WorkspaceId,
                 Users = entity.Users.Select(u => new UserReadDto
                 {
                     FirstName = u.FirstName,
@@ -34,9 +32,12 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
                     Email = u.Email.Value
                     // Add other properties as needed
                 }).ToList()
-               
+
             };
         }
-
+        public Project ToEntity()
+        {
+            return new Project(Name, Description, StartDate, EndDate, Status, WorkspaceId);
+        }
     }
 }
