@@ -32,7 +32,7 @@ namespace RhythmFlow.Application.src.DTOs.Projects
                 {
                     FirstName = u.FirstName,
                     LastName = u.LastName,
-                    Email = u.Email
+                    Email = u.Email.Value
                     // Add other properties as needed
                 }).ToList()
 

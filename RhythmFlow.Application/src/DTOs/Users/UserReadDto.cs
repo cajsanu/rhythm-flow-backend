@@ -10,14 +10,14 @@ namespace RhythmFlow.Application.src.DTOs.Users
     {
         public string FirstName { get; set;}
         public string LastName { get; set;}
-        public Email Email { get; set; }
+        public string Email { get; set; }
 
         public BaseReadDto<User> ToDto(User entity)
         {
             return new UserReadDto() {
                 FirstName = entity.FirstName,
                 LastName = entity.LastName,
-                Email = entity.Email
+                Email = entity.Email.Value
             };
         }
         
