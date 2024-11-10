@@ -6,7 +6,7 @@ using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.Application.src.DTOs.Tickets
 {
-    public class TicketReadDto : BaseReadDto<Ticket>
+    public class TicketReadDto : IBaseReadDto<Ticket>
     {
         public string Title { get; set; }
         public string Description { get; set; }
@@ -16,7 +16,7 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
         public Guid ProjectId { get; set; }
         public TicketTypeEnum Type { get; set; }
 
-        public BaseReadDto<Ticket> ToDto(Ticket entity)
+        public IBaseReadDto<Ticket> ToDto(Ticket entity)
         {
             return new TicketReadDto()
             {

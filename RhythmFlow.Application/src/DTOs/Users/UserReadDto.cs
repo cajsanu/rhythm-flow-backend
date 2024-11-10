@@ -6,13 +6,13 @@ using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.Application.src.DTOs.Users
 {
-    public class UserReadDto : BaseReadDto<User>
+    public class UserReadDto : IBaseReadDto<User>
     {
         public string FirstName { get; set;}
         public string LastName { get; set;}
         public string Email { get; set; }
 
-        public BaseReadDto<User> ToDto(User entity)
+        public IBaseReadDto<User> ToDto(User entity)
         {
             return new UserReadDto() {
                 FirstName = entity.FirstName,

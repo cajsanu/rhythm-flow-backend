@@ -3,12 +3,12 @@ using RhythmFlow.Domain.src.Entities;
 
 namespace RhythmFlow.Application.DTOs.Workspaces
 {
-    public class WorkspaceReadDto : BaseReadDto<Workspace>
+    public class WorkspaceReadDto : IBaseReadDto<Workspace>
     {
         public string Name { get; set; }
         public Guid OwnerId { get; set; }
 
-        public BaseReadDto<Workspace> ToDto(Workspace entity)
+        public IBaseReadDto<Workspace> ToDto(Workspace entity)
         {
             return new WorkspaceReadDto()
             {

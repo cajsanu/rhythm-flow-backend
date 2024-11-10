@@ -8,7 +8,7 @@ using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.Application.src.DTOs.Projects
 {
-    public class ProjectReadDto : BaseReadDto<Project>
+    public class ProjectReadDto : IBaseReadDto<Project>
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -18,7 +18,7 @@ namespace RhythmFlow.Application.src.DTOs.Projects
         public Guid WorkspaceId { get; set; }
         public ICollection<UserReadDto> Users { get; set; } = [];
 
-        public BaseReadDto<Project> ToDto(Project entity)
+        public IBaseReadDto<Project> ToDto(Project entity)
         {
             return new ProjectReadDto()
             {
