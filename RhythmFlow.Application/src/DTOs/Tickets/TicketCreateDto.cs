@@ -1,11 +1,13 @@
+using System.ComponentModel.DataAnnotations;
 using RhythmFlow.Application.src.DTOs.Shared;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.Application.src.DTOs.Tickets
 {
-    public class TicketCreateDto : IBaseCreateDto<Ticket>
+    public class TicketCreateDto : IBaseCreateDto<Ticket>, IValidatableObject
     {
+        [Required]
         public string Title { get; set; }
         public string Description { get; set; }
         public PriorityEnum Priority { get; set; }
@@ -34,5 +36,17 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
             return new Ticket(Title, Description, Priority, Deadline, Status, ProjectId, Type);
         }
 
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+             if (ProjectId == Guid.Empty)
+            {
+                yield return new ValidationResult("ProjectId cannot be empty.", [nameof(ProjectId)]);
+            }
+
+            if (Deadline < DateTime.Now)
+            {
+                yield return new ValidationResult("Deadline must be a future date.", [nameof(Deadline)]);
+            }
+        }
     }
 }
