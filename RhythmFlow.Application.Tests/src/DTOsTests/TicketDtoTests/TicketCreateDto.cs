@@ -1,8 +1,6 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using RhythmFlow.Application.src.DTOs.Tickets;
 using RhythmFlow.Domain.src.ValueObjects;
-using Xunit;
 
 namespace RhythmFlow.Application.Tests.src.DTOsTests.TicketDtoTests
 {

@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using RhythmFlow.Application.src.DTOs.Shared;
-using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
 

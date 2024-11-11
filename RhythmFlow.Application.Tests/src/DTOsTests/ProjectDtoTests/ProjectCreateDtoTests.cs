@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using RhythmFlow.Application.src.DTOs.Projects;
-using RhythmFlow.Application.src.DTOs.Users;
-using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
-using Xunit;
 
 namespace RhythmFlow.Application.Tests.src.DTOsTests.ProjectDtoTests
 {
