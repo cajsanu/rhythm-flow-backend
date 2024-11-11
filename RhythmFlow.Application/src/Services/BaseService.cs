@@ -20,7 +20,7 @@ namespace RhythmFlow.Application.src.Services
                 throw new InvalidOperationException($"No {typeof(T).Name}s found.");
             }
 
-            return (IEnumerable<TReadDto>)entities.Select(entity => new TReadDto().ToDto(entity));
+            return entities.Select(entity => (TReadDto)new TReadDto().ToDto(entity));
         }
 
         public async Task<TReadDto> GetByIdAsync(Guid id)
