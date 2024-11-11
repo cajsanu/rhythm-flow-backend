@@ -1,44 +1,51 @@
 using Microsoft.AspNetCore.Mvc;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Application.src.ServiceInterfaces;
+using RhythmFlow.Application.src.DTOs.Shared;
 
 namespace RhythmFlow.Controller.src.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]s")]
-    public class BaseController<T>(IBaseService<T> service) : ControllerBase
+    public class BaseController<T, TReadDto>(IBaseService<T, TReadDto> service) : ControllerBase
         where T : BaseEntity
+        where TReadDto : IBaseReadDto<T>
     {
-        private readonly IBaseService<T> _service = service;
+        private readonly IBaseService<T, TReadDto> _service = service;
 
         [HttpGet]
-        public async Task<ActionResult> GetAllAsync()
+        public async Task<ActionResult<IEnumerable<TReadDto>>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var entities = await _service.GetAllAsync();
+            return Ok(entities);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetByIdAsync(Guid id)
+        public async Task<ActionResult<TReadDto>> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var entity = await _service.GetByIdAsync(id);
+            return Ok(entity);
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddAsync()
+        public async Task<ActionResult<TReadDto>> AddAsync(T entity)
         {
-            throw new NotImplementedException();
+            var cretedEntity = await _service.AddAsync(entity);
+            return CreatedAtAction(nameof(GetByIdAsync), new { id = cretedEntity.Id }, cretedEntity);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateAsync(Guid id)
+        public async Task<ActionResult> UpdateAsync(Guid id, T updateDto)
         {
-            throw new NotImplementedException();
+            await _service.UpdateAsync(id, updateDto);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _service.DeleteAsync(id);
+            return NoContent();
         }
     }
 }
