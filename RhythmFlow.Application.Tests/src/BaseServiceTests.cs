@@ -1,91 +1,103 @@
 using Moq;
+using RhythmFlow.Application.src.DTOs.Shared;
+using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Application.src.Services;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
 
 namespace RhythmFlow.Application.Tests.src
 {
-    public class BaseServiceTests
+    // Minimal concrete implementation for testing purposes
+    public class TestBaseReadDto : IBaseReadDto<BaseEntity>
     {
-        private readonly Mock<IBaseRepo<BaseEntity>> _mockRepo;
-        private readonly BaseService<BaseEntity> _service;
-
-        public BaseServiceTests()
+        public Guid Id { get; set; }
+        public IBaseReadDto<BaseEntity> ToDto(BaseEntity entity)
         {
-            _mockRepo = new Mock<IBaseRepo<BaseEntity>>();
-            _service = new BaseService<BaseEntity>(_mockRepo.Object);
+            return new TestBaseReadDto { Id = entity.Id };
         }
 
-        [Fact]
-        public async Task GetAllAsync_ShouldReturnEntities()
+        public class BaseServiceTests
         {
-            // Arrange
-            var entities = new List<BaseEntity> { new(), new() };
-            _mockRepo.Setup(repo => repo.GetAllAsync()).ReturnsAsync(entities);
+            private readonly Mock<IBaseRepo<BaseEntity>> _mockRepo;
+            private readonly IBaseService<BaseEntity, TestBaseReadDto> _service;
 
-            // Act
-            var result = await _service.GetAllAsync();
+            public BaseServiceTests()
+            {
+                _mockRepo = new Mock<IBaseRepo<BaseEntity>>();
+                _service = new BaseService<BaseEntity, TestBaseReadDto>(_mockRepo.Object);
+            }
 
-            // Assert
-            Assert.Equal(entities.Count, result.Count());
-        }
+            [Fact]
+            public async Task GetAllAsync_ShouldReturnEntities()
+            {
+                // Arrange
+                var entities = new List<BaseEntity> { new(), new() };
+                _mockRepo.Setup(repo => repo.GetAllAsync()).ReturnsAsync(entities);
 
-        [Fact]
-        public async Task GetByIdAsync_ShouldReturnEntity()
-        {
-            // Arrange
-            var entity = new BaseEntity();
-            _mockRepo.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(entity);
+                // Act
+                var result = await _service.GetAllAsync();
 
-            // Act
-            var result = await _service.GetByIdAsync(entity.Id);
+                // Assert
+                Assert.Equal(entities.Count, result.Count());
+            }
 
-            // Assert
-            Assert.Equal(entity, result);
-        }
+            [Fact]
+            public async Task GetByIdAsync_ShouldReturnEntity()
+            {
+                // Arrange
+                var entity = new BaseEntity();
+                _mockRepo.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(entity);
 
-        [Fact]
-        public async Task AddAsync_ShouldReturnNewEntity()
-        {
-            // Arrange
-            var entity = new BaseEntity();
-            _mockRepo.Setup(repo => repo.AddAsync(It.IsAny<BaseEntity>())).ReturnsAsync(entity);
+                // Act
+                var result = await _service.GetByIdAsync(entity.Id);
 
-            // Act
-            var result = await _service.AddAsync(entity);
+                // Assert
+                Assert.Equal(entity.Id, result.Id);
+            }
 
-            // Assert
-            Assert.Equal(entity, result);
-        }
+            [Fact]
+            public async Task AddAsync_ShouldReturnNewEntity()
+            {
+                // Arrange
+                var entity = new BaseEntity();
+                _mockRepo.Setup(repo => repo.AddAsync(It.IsAny<BaseEntity>())).ReturnsAsync(entity);
 
-        [Fact]
-        public async Task UpdateAsync_ShouldReturnUpdatedEntity()
-        {
-            // Arrange
-            var entity = new BaseEntity();
-            _mockRepo.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(entity);
-            _mockRepo.Setup(repo => repo.UpdateAsync(It.IsAny<BaseEntity>())).ReturnsAsync(entity);
+                // Act
+                var result = await _service.AddAsync(entity);
 
-            // Act
-            var result = await _service.UpdateAsync(entity);
+                // Assert
+                Assert.Equal(entity.Id, result.Id);
+            }
 
-            // Assert
-            Assert.Equal(entity, result);
-        }
+            [Fact]
+            public async Task UpdateAsync_ShouldReturnUpdatedEntity()
+            {
+                // Arrange
+                var entity = new BaseEntity();
+                _mockRepo.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(entity);
+                _mockRepo.Setup(repo => repo.UpdateAsync(It.IsAny<BaseEntity>())).ReturnsAsync(entity);
 
-        [Fact]
-        public async Task DeleteAsync_ShouldCallDeleteOnRepo()
-        {
-            // Arrange
-            var entity = new BaseEntity();
-            _mockRepo.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(entity);
-            _mockRepo.Setup(repo => repo.DeleteAsync(It.IsAny<Guid>())).Returns(Task.CompletedTask);
+                // Act
+                var result = await _service.UpdateAsync(entity.Id, entity);
 
-            // Act
-            await _service.DeleteAsync(entity.Id);
+                // Assert
+                Assert.Equal(entity, result);
+            }
 
-            // Assert
-            _mockRepo.Verify(repo => repo.DeleteAsync(entity.Id), Times.Once);
+            [Fact]
+            public async Task DeleteAsync_ShouldCallDeleteOnRepo()
+            {
+                // Arrange
+                var entity = new BaseEntity();
+                _mockRepo.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(entity);
+                _mockRepo.Setup(repo => repo.DeleteAsync(It.IsAny<Guid>())).Returns(Task.CompletedTask);
+
+                // Act
+                await _service.DeleteAsync(entity.Id);
+
+                // Assert
+                _mockRepo.Verify(repo => repo.DeleteAsync(entity.Id), Times.Once);
+            }
         }
     }
 }
