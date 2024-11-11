@@ -14,7 +14,7 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
         public StatusEnum Status { get; set; }
         public Guid ProjectId { get; set; }
         public TicketTypeEnum Type { get; set; }
-        public ICollection<UserReadDto> Users { get; set; } = [];
+        public ICollection<Guid> UsersId { get; set; } = [];
 
         public IBaseUpdateDto<Ticket> ToDto(Ticket entity)
         {
@@ -27,12 +27,7 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
                 Status = entity.Status,
                 ProjectId = entity.ProjectId,
                 Type = entity.Type,
-                Users = entity.Users.Select(u => new UserReadDto
-                {
-                    FirstName = u.FirstName,
-                    LastName = u.LastName,
-                    Email = u.Email.Value
-                }).ToList()
+                UsersId = entity.Users.Select(u => u.Id).ToList()
                
             };
         }
