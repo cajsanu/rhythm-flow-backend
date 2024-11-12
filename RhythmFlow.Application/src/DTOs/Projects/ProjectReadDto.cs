@@ -10,6 +10,8 @@ namespace RhythmFlow.Application.src.DTOs.Projects
 {
     public class ProjectReadDto : IBaseReadDto<Project>
     {
+        // Addded the Id property to the ProjectReadDto because the BaseController needs it
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime StartDate { get; set; }
@@ -22,6 +24,7 @@ namespace RhythmFlow.Application.src.DTOs.Projects
         {
             return new ProjectReadDto()
             {
+                Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
                 StartDate = entity.StartDate,

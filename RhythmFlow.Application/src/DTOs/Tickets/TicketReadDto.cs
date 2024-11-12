@@ -8,6 +8,8 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
 {
     public class TicketReadDto : IBaseReadDto<Ticket>
     {
+        // Addded the Id property to the TicketReadDto because the BaseController needs it
+        public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public PriorityEnum Priority { get; set; }
@@ -20,6 +22,7 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
         {
             return new TicketReadDto()
             {
+                Id = entity.Id,
                 Title = entity.Title,
                 Description = entity.Description,
                 Priority = entity.Priority,
@@ -27,7 +30,7 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
                 Status = entity.Status,
                 ProjectId = entity.ProjectId,
                 Type = entity.Type
-               
+
             };
         }
 
