@@ -11,7 +11,7 @@ namespace RhythmFlow.Domain.Tests.src
             // Arrange
             var userId = Guid.NewGuid();
             var workspaceId = Guid.NewGuid();
-            var role = RoleEnum.PojectManager;
+            var role = RoleEnum.ProjectManager;
 
             // Act
             var userWorkspace = new UserWorkspace(userId, workspaceId, role);
