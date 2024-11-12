@@ -1,9 +1,6 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 
-// Extract mapper to separate file 
-// How to inject this into program.cs
-
 namespace RhythmFlow.Controller.src.Middleware
 {
     public class ExceptionHandlerMiddleware : IMiddleware
