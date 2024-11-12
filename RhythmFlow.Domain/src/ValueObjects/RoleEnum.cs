@@ -1,6 +1,6 @@
 namespace RhythmFlow.Domain.src.ValueObjects
 {
-    public enum RoleEnum
+    public enum Role
     {
         WorkspaceOwner,
         ProjectManager,
