@@ -61,16 +61,17 @@ namespace RhythmFlow.Framework.src.Data
             var userWorkspace5 = new UserWorkspace(user5.Id, workspace1.Id, RoleEnum.ProjectManager);
             var userWorkspace6 = new UserWorkspace(user6.Id, workspace2.Id, RoleEnum.Developer);
             var userWorkspace7 = new UserWorkspace(user7.Id, workspace2.Id, RoleEnum.Developer);
+            UserWorkspaces.AddRange([userWorkspace1, userWorkspace2, userWorkspace3, userWorkspace4, userWorkspace5, userWorkspace6, userWorkspace7]);
         }
 
         // CRUD Simulation Methods
         public void Add<T>(T entity) where T : BaseEntity => GetDbSet<T>().Add(entity);
         public IEnumerable<T> GetAll<T>() where T : BaseEntity => GetDbSet<T>().AsEnumerable();
-        public T? GetById<T>(Guid id) where T : BaseEntity => GetDbSet<T>().FirstOrDefault(e => e.Id == id);
+        public T? GetById<T>(Guid id) where T : BaseEntity => GetDbSet<T>().Find(e => e.Id == id);
         public void Update<T>(T entity) where T : BaseEntity
         {
             var dbSet = GetDbSet<T>();
-            var existingEntity = dbSet.FirstOrDefault(e => e.Id == entity.Id);
+            var existingEntity = dbSet.Find(e => e.Id == entity.Id);
             if (existingEntity != null)
             {
                 dbSet.Remove(existingEntity);
@@ -81,7 +82,7 @@ namespace RhythmFlow.Framework.src.Data
         public void Delete<T>(Guid id) where T : BaseEntity
         {
             var dbSet = GetDbSet<T>();
-            var entity = dbSet.FirstOrDefault(e => e.Id == id);
+            var entity = dbSet.Find(e => e.Id == id);
             if (entity != null)
             {
                 dbSet.Remove(entity);
