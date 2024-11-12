@@ -1,19 +1,31 @@
 using Moq;
+using RhythmFlow.Application.src.DTOs.Shared;
+using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Application.src.Services;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
 
 namespace RhythmFlow.Application.Tests.src
 {
+    // Minimal concrete implementation for testing purposes
+    public class TestBaseReadDto : IBaseReadDto<BaseEntity>
+    {
+        public Guid Id { get; set; }
+        public IBaseReadDto<BaseEntity> ToDto(BaseEntity entity)
+        {
+            return new TestBaseReadDto { Id = entity.Id };
+        }
+    }
+
     public class BaseServiceTests
     {
         private readonly Mock<IBaseRepo<BaseEntity>> _mockRepo;
-        private readonly BaseService<BaseEntity> _service;
+        private readonly IBaseService<BaseEntity, TestBaseReadDto> _service;
 
         public BaseServiceTests()
         {
             _mockRepo = new Mock<IBaseRepo<BaseEntity>>();
-            _service = new BaseService<BaseEntity>(_mockRepo.Object);
+            _service = new BaseService<BaseEntity, TestBaseReadDto>(_mockRepo.Object);
         }
 
         [Fact]
@@ -41,7 +53,7 @@ namespace RhythmFlow.Application.Tests.src
             var result = await _service.GetByIdAsync(entity.Id);
 
             // Assert
-            Assert.Equal(entity, result);
+            Assert.Equal(entity.Id, result.Id);
         }
 
         [Fact]
@@ -55,7 +67,7 @@ namespace RhythmFlow.Application.Tests.src
             var result = await _service.AddAsync(entity);
 
             // Assert
-            Assert.Equal(entity, result);
+            Assert.Equal(entity.Id, result.Id);
         }
 
         [Fact]
@@ -67,7 +79,7 @@ namespace RhythmFlow.Application.Tests.src
             _mockRepo.Setup(repo => repo.UpdateAsync(It.IsAny<BaseEntity>())).ReturnsAsync(entity);
 
             // Act
-            var result = await _service.UpdateAsync(entity);
+            var result = await _service.UpdateAsync(entity.Id, entity);
 
             // Assert
             Assert.Equal(entity, result);
