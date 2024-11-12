@@ -1,6 +1,6 @@
 namespace RhythmFlow.Domain.src.ValueObjects
 {
-    public enum TicketTypeEnum
+    public enum TicketType
     {
         Bug,
         Feature,
