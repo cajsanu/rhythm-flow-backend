@@ -9,14 +9,14 @@ namespace RhythmFlow.Domain.src.Entities
         public string Description { get; set; }
         public PriorityEnum Priority { get; set; }
         public DateTime Deadline { get; set; }
-        public StatusEnum Status { get; set; }
+        public Status Status { get; set; }
         public Guid ProjectId { get; set; }
         public TicketType Type { get; set; }
 
         // Make a collection of users that are assigned to the ticket
         public ICollection<User> Users { get; set; } = [];
 
-        public Ticket(string title, string description, PriorityEnum priority, DateTime deadline, StatusEnum status, Guid projectId, TicketType type)
+        public Ticket(string title, string description, PriorityEnum priority, DateTime deadline, Status status, Guid projectId, TicketType type)
         {
             if (DomainHelpers.IsNotValidStringValue(title) || DomainHelpers.IsNotValidStringValue(description)) throw new InvalidDataException("Title and description must not be null or empty");
             Title = title;

@@ -1,6 +1,6 @@
 namespace RhythmFlow.Domain.src.ValueObjects
 {
-    public enum StatusEnum
+    public enum Status
     {
         NotStarted,
         InProgress,

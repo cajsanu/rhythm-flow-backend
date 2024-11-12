@@ -12,9 +12,9 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
         public string Description { get; set; }
         public PriorityEnum Priority { get; set; }
         public DateTime Deadline { get; set; }
-        public StatusEnum Status { get; set; }
+        public Status Status { get; set; }
         public Guid ProjectId { get; set; }
-        public TicketTypeEnum Type { get; set; }
+        public TicketType Type { get; set; }
 
         public IBaseReadDto<Ticket> ToDto(Ticket entity)
         {
