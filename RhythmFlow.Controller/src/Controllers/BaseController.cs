@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using RhythmFlow.Domain.src.Entities;
-using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Application.src.DTOs.Shared;
+using RhythmFlow.Application.src.ServiceInterfaces;
+using RhythmFlow.Domain.src.Entities;
 
 namespace RhythmFlow.Controller.src.Controllers
 {
