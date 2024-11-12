@@ -1,7 +1,6 @@
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
 
-
 namespace RhythmFlow.Domain.Tests.src
 {
     public class TicketTests
@@ -12,11 +11,11 @@ namespace RhythmFlow.Domain.Tests.src
             // Arrange
             var title = "Ticket Title";
             var description = "Ticket Description";
-            var priority = PriorityEnum.High;
+            var priority = Priority.High;
             var deadline = DateTime.Now.AddDays(7);
-            var status = StatusEnum.InProgress;
+            var status = Status.InProgress;
             var projectId = Guid.NewGuid();
-            var type = TicketTypeEnum.Bug;
+            var type = TicketType.Bug;
 
             // Act
             var ticket = new Ticket(title, description, priority, deadline, status, projectId, type);
@@ -37,11 +36,11 @@ namespace RhythmFlow.Domain.Tests.src
             // Arrange
             var title = "";
             var description = "Ticket Description";
-            var priority = PriorityEnum.High;
+            var priority = Priority.High;
             var deadline = DateTime.Now.AddDays(7);
-            var status = StatusEnum.InProgress;
+            var status = Status.InProgress;
             var projectId = Guid.NewGuid();
-            var type = TicketTypeEnum.Bug;
+            var type = TicketType.Bug;
 
             // Act & Assert
             Assert.Throws<InvalidDataException>(() => new Ticket(title, description, priority, deadline, status, projectId, type));
@@ -53,11 +52,11 @@ namespace RhythmFlow.Domain.Tests.src
             // Arrange
             var title = "Ticket Title";
             var description = "";
-            var priority = PriorityEnum.High;
+            var priority = Priority.High;
             var deadline = DateTime.Now.AddDays(7);
-            var status = StatusEnum.InProgress;
+            var status = Status.InProgress;
             var projectId = Guid.NewGuid();
-            var type = TicketTypeEnum.Bug;
+            var type = TicketType.Bug;
 
             // Act & Assert
             Assert.Throws<InvalidDataException>(() => new Ticket(title, description, priority, deadline, status, projectId, type));

@@ -1,5 +1,5 @@
-using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Application.src.DTOs.Shared;
+using RhythmFlow.Domain.src.Entities;
 
 namespace RhythmFlow.Application.src.ServiceInterfaces
 {

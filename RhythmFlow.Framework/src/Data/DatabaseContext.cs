@@ -40,38 +40,37 @@ namespace RhythmFlow.Framework.src.Data
             Workspaces.AddRange([workspace1, workspace2, workspace3, workspace4, workspace5]);
 
             // Generate tickets
-            var ticket1 = new Ticket("Create Database", "using Postgres", PriorityEnum.High, DateTime.Now.AddDays(7), StatusEnum.InProgress, workspace1.Id, TicketTypeEnum.Bug);
-            var ticket2 = new Ticket("Fix Login Issue", "Resolve authentication error", PriorityEnum.High, DateTime.Now.AddDays(3), StatusEnum.InProgress, workspace1.Id, TicketTypeEnum.Bug);
-            var ticket3 = new Ticket("Design Landing Page", "Create wireframe for new landing page", PriorityEnum.Medium, DateTime.Now.AddDays(14), StatusEnum.Cancelled, workspace1.Id, TicketTypeEnum.Feature);
-            var ticket4 = new Ticket("Update Privacy Policy", "Review and update policy document", PriorityEnum.Low, DateTime.Now.AddDays(30), StatusEnum.NotStarted, workspace2.Id, TicketTypeEnum.TechnicalDebt);
-            var ticket5 = new Ticket("Optimize API", "Enhance performance of existing API calls", PriorityEnum.High, DateTime.Now.AddDays(10), StatusEnum.InProgress, workspace2.Id, TicketTypeEnum.Feature);
-            var ticket6 = new Ticket("Schedule Training", "Plan onboarding session for new hires", PriorityEnum.Medium, DateTime.Now.AddDays(7), StatusEnum.NotStarted, workspace2.Id, TicketTypeEnum.TechnicalDebt);
-            var ticket7 = new Ticket("Add Dark Mode", "Implement dark mode toggle for users", PriorityEnum.High, DateTime.Now.AddDays(21), StatusEnum.Cancelled, workspace3.Id, TicketTypeEnum.Bug);
-            var ticket8 = new Ticket("Bug in Report Generation", "Fix issue with incorrect data rendering", PriorityEnum.High, DateTime.Now.AddDays(5), StatusEnum.InProgress, workspace4.Id, TicketTypeEnum.Feature);
+            var ticket1 = new Ticket("Create Database", "using Postgres", Priority.High, DateTime.Now.AddDays(7), Status.InProgress, workspace1.Id, TicketType.Bug);
+            var ticket2 = new Ticket("Fix Login Issue", "Resolve authentication error", Priority.High, DateTime.Now.AddDays(3), Status.InProgress, workspace1.Id, TicketType.Bug);
+            var ticket3 = new Ticket("Design Landing Page", "Create wireframe for new landing page", Priority.Medium, DateTime.Now.AddDays(14), Status.Cancelled, workspace1.Id, TicketType.Feature);
+            var ticket4 = new Ticket("Update Privacy Policy", "Review and update policy document", Priority.Low, DateTime.Now.AddDays(30), Status.NotStarted, workspace2.Id, TicketType.TechnicalDebt);
+            var ticket5 = new Ticket("Optimize API", "Enhance performance of existing API calls", Priority.High, DateTime.Now.AddDays(10), Status.InProgress, workspace2.Id, TicketType.Feature);
+            var ticket6 = new Ticket("Schedule Training", "Plan onboarding session for new hires", Priority.Medium, DateTime.Now.AddDays(7), Status.NotStarted, workspace2.Id, TicketType.TechnicalDebt);
+            var ticket7 = new Ticket("Add Dark Mode", "Implement dark mode toggle for users", Priority.High, DateTime.Now.AddDays(21), Status.Cancelled, workspace3.Id, TicketType.Bug);
+            var ticket8 = new Ticket("Bug in Report Generation", "Fix issue with incorrect data rendering", Priority.High, DateTime.Now.AddDays(5), Status.InProgress, workspace4.Id, TicketType.Feature);
             Tickets.AddRange([ticket1, ticket2, ticket3, ticket4, ticket5, ticket6, ticket7, ticket8]);
 
             // Generate user workspace
             // Project manager
-            var userWorkspace1 = new UserWorkspace(user1.Id, workspace1.Id, RoleEnum.ProjectManager);
-            var userWorkspace2 = new UserWorkspace(user2.Id, workspace2.Id, RoleEnum.ProjectManager);
-            var userWorkspace3 = new UserWorkspace(user3.Id, workspace3.Id, RoleEnum.ProjectManager);
+            var userWorkspace1 = new UserWorkspace(user1.Id, workspace1.Id, Role.ProjectManager);
+            var userWorkspace2 = new UserWorkspace(user2.Id, workspace2.Id, Role.ProjectManager);
+            var userWorkspace3 = new UserWorkspace(user3.Id, workspace3.Id, Role.ProjectManager);
 
             // developer
-            var userWorkspace4 = new UserWorkspace(user4.Id, workspace1.Id, RoleEnum.ProjectManager);
-            var userWorkspace5 = new UserWorkspace(user5.Id, workspace1.Id, RoleEnum.ProjectManager);
-            var userWorkspace6 = new UserWorkspace(user6.Id, workspace2.Id, RoleEnum.Developer);
-            var userWorkspace7 = new UserWorkspace(user7.Id, workspace2.Id, RoleEnum.Developer);
-            UserWorkspaces.AddRange([userWorkspace1, userWorkspace2, userWorkspace3, userWorkspace4, userWorkspace5, userWorkspace6, userWorkspace7]);
+            var userWorkspace4 = new UserWorkspace(user4.Id, workspace1.Id, Role.ProjectManager);
+            var userWorkspace5 = new UserWorkspace(user5.Id, workspace1.Id, Role.ProjectManager);
+            var userWorkspace6 = new UserWorkspace(user6.Id, workspace2.Id, Role.Developer);
+            var userWorkspace7 = new UserWorkspace(user7.Id, workspace2.Id, Role.Developer);
         }
 
         // CRUD Simulation Methods
         public void Add<T>(T entity) where T : BaseEntity => GetDbSet<T>().Add(entity);
         public IEnumerable<T> GetAll<T>() where T : BaseEntity => GetDbSet<T>().AsEnumerable();
-        public T? GetById<T>(Guid id) where T : BaseEntity => GetDbSet<T>().Find(e => e.Id == id);
+        public T? GetById<T>(Guid id) where T : BaseEntity => GetDbSet<T>().FirstOrDefault(e => e.Id == id);
         public void Update<T>(T entity) where T : BaseEntity
         {
             var dbSet = GetDbSet<T>();
-            var existingEntity = dbSet.Find(e => e.Id == entity.Id);
+            var existingEntity = dbSet.FirstOrDefault(e => e.Id == entity.Id);
             if (existingEntity != null)
             {
                 dbSet.Remove(existingEntity);
@@ -82,7 +81,7 @@ namespace RhythmFlow.Framework.src.Data
         public void Delete<T>(Guid id) where T : BaseEntity
         {
             var dbSet = GetDbSet<T>();
-            var entity = dbSet.Find(e => e.Id == id);
+            var entity = dbSet.FirstOrDefault(e => e.Id == id);
             if (entity != null)
             {
                 dbSet.Remove(entity);

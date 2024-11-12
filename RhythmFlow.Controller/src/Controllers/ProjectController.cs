@@ -7,9 +7,8 @@ namespace RhythmFlow.Controller.src.Controllers
 {
     public class ProjcetController(IProjectService service) : BaseController<Project, ProjectReadDto>(service)
     {
-        // Get workspace by id should include all projects in the workspace 
+        // Get workspace by id should include all projects in the workspace
         // so no need to have a separate method for this.
-
         [HttpPost("assignUser/{userId}")]
         public async Task<ActionResult> AssignUserToProject(Guid userId)
         {

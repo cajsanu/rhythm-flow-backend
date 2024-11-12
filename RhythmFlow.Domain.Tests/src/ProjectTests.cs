@@ -13,7 +13,7 @@ namespace RhythmFlow.Domain.Tests.src
             var description = "Project Description";
             var startDate = DateTime.Now;
             var endDate = DateTime.Now.AddMonths(1);
-            var status = StatusEnum.InProgress;
+            var status = Status.InProgress;
             var workspaceId = Guid.NewGuid();
 
             // Act
@@ -36,7 +36,7 @@ namespace RhythmFlow.Domain.Tests.src
             var description = "Project Description";
             var startDate = DateTime.Now;
             var endDate = DateTime.Now.AddMonths(1);
-            var status = StatusEnum.InProgress;
+            var status = Status.InProgress;
             var workspaceId = Guid.NewGuid();
 
             // Act & Assert
@@ -51,7 +51,7 @@ namespace RhythmFlow.Domain.Tests.src
             var description = "";
             var startDate = DateTime.Now;
             var endDate = DateTime.Now.AddMonths(1);
-            var status = StatusEnum.InProgress;
+            var status = Status.InProgress;
             var workspaceId = Guid.NewGuid();
 
             // Act & Assert

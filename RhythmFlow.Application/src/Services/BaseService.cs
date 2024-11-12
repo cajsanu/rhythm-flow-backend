@@ -5,7 +5,7 @@ using RhythmFlow.Domain.src.RepoInterfaces;
 
 namespace RhythmFlow.Application.src.Services
 {
-    public class BaseService<T, TReadDto>(IBaseRepo<T> repository) : IBaseService<T, TReadDto> 
+    public class BaseService<T, TReadDto>(IBaseRepo<T> repository) : IBaseService<T, TReadDto>
         where T : BaseEntity
         where TReadDto : IBaseReadDto<T>, new()
     {
