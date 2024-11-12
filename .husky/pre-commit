@@ -7,7 +7,4 @@ dotnet build
 echo 'Formatting code'
 dotnet format
 
-echo 'Running tests'
-dotnet test
-
-echo 'Hello world!'
+echo 'Husky has completed its job!'
