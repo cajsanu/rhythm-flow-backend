@@ -63,7 +63,7 @@ namespace RhythmFlow.Domain.Tests.src
             Assert.Equal($"Id: {user.Id} name: John Doe, email: (john.doe@example.com)", result);
         }
 
-         [Fact]
+        [Fact]
         public void User_ShouldAddProjectToProjectsCollection()
         {
             // Arrange

@@ -4,7 +4,8 @@ using RhythmFlow.Domain.src.RepoInterfaces;
 
 namespace RhythmFlow.Application.src.Services
 {
-    public class BaseService<T>(IBaseRepo<T> repository) : IBaseService<T> where T : BaseEntity
+    public class BaseService<T>(IBaseRepo<T> repository) : IBaseService<T>
+        where T : BaseEntity
     {
         private readonly IBaseRepo<T> _repository = repository;
 

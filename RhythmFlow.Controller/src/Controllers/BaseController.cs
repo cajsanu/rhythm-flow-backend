@@ -18,7 +18,6 @@ namespace RhythmFlow.Controller.src.Controllers
     public class BaseController<T>(IBaseService<T> service) : ControllerBase
         where T : BaseEntity
     {
-        private readonly IBaseService<T> _service = service;
 
         [HttpGet]
         public async Task<ActionResult> GetAll()

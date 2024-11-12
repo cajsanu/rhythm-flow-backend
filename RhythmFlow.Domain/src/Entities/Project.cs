@@ -31,6 +31,5 @@ namespace RhythmFlow.Domain.src.Entities
         {
             return $"Name: {Name}, Description: {Description}, StartDate: {StartDate}, EndDate: {EndDate}, Status: {Status}, WorkspaceId: {WorkspaceId}";
         }
-
     }
 }

@@ -1,5 +1,3 @@
-
-
 using System.Runtime.CompilerServices;
 using RhythmFlow.Application.src.DTOs.Shared;
 using RhythmFlow.Application.src.DTOs.Users;
@@ -10,8 +8,8 @@ namespace RhythmFlow.Application.src.DTOs.Projects
 {
     public class ProjectReadDto : IBaseReadDto<Project>
     {
-        public required string Name { get; set; }
-        public required string Description { get; set; }
+        required public string Name { get; set; }
+        required public string Description { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public Status Status { get; set; }
@@ -33,12 +31,10 @@ namespace RhythmFlow.Application.src.DTOs.Projects
                     FirstName = u.FirstName,
                     LastName = u.LastName,
                     Email = u.Email.Value
+
                     // Add other properties as needed
                 }).ToList()
-
             };
-
-
         }
     }
 }
