@@ -1,9 +1,10 @@
 using System.Net;
+using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 
 namespace RhythmFlow.Controller.src.Middleware
 {
-    public class GlobalExceptionHandlerMiddleware : IMiddleware
+    public class ExceptionHandlerMiddleware : IMiddleware
     {
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
@@ -13,13 +14,34 @@ namespace RhythmFlow.Controller.src.Middleware
             }
             catch (Exception ex)
             {
-                HandleExceptionAsync(ex);
+                await HandleExceptionAsync(ex, context);
             }
         }
 
-        private static void HandleExceptionAsync(Exception exception)
+        private static async Task HandleExceptionAsync(Exception exception, HttpContext context)
         {
-            ExceptionMapper.MapException(exception);
+            var (status, message) = ExceptionMapper.MapException(exception);
+
+            // Customise response
+            var exceptionResponse = new
+            {
+                StatusCode = status,
+                Message = message,
+                // Details = exception.Message, // Only for development
+                Timestamp = DateTime.UtcNow
+            };
+
+            // Serialize the error response to JSON
+            var responsePayload = JsonSerializer.Serialize(exceptionResponse, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+
+            // Set HTTP response details
+            context.Response.StatusCode = status;
+            context.Response.ContentType = "application/json";
+
+            await context.Response.WriteAsync(responsePayload);
         }
     }
 
