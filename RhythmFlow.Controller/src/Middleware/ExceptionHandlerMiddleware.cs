@@ -6,6 +6,12 @@ namespace RhythmFlow.Controller.src.Middleware
 {
     public class ExceptionHandlerMiddleware : IMiddleware
     {
+        // Define a single, shared JsonSerialiserOptions instance
+        private static readonly JsonSerializerOptions JsonOptions = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             try
@@ -32,10 +38,7 @@ namespace RhythmFlow.Controller.src.Middleware
             };
 
             // Serialize the error response to JSON
-            var responsePayload = JsonSerializer.Serialize(exceptionResponse, new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
+            var responsePayload = JsonSerializer.Serialize(exceptionResponse, JsonOptions);
 
             // Set HTTP response details
             context.Response.StatusCode = status;
