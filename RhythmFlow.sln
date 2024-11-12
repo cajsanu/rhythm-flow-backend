@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RhythmFlow.Application", "R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RhythmFlow.Application.Tests", "RhythmFlow.Application.Tests\RhythmFlow.Application.Tests.csproj", "{931D912B-3F57-4982-B385-B35C606DEF93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RhythmFlow.Framework", "RhythmFlow.Framework\RhythmFlow.Framework.csproj", "{4121E8ED-EB12-4A09-B267-249649745E3E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{931D912B-3F57-4982-B385-B35C606DEF93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{931D912B-3F57-4982-B385-B35C606DEF93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{931D912B-3F57-4982-B385-B35C606DEF93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4121E8ED-EB12-4A09-B267-249649745E3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4121E8ED-EB12-4A09-B267-249649745E3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4121E8ED-EB12-4A09-B267-249649745E3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4121E8ED-EB12-4A09-B267-249649745E3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
