@@ -18,7 +18,6 @@ namespace RhythmFlow.Controller.src.Controllers
     public class BaseController<T>(IBaseService<T> service) : ControllerBase
         where T : BaseEntity
     {
-
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
