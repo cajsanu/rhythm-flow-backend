@@ -1,6 +1,8 @@
-using System.Net;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
+
+// Extract mapper to separate file 
+// How to inject this into program.cs
 
 namespace RhythmFlow.Controller.src.Middleware
 {
@@ -47,23 +49,4 @@ namespace RhythmFlow.Controller.src.Middleware
             await context.Response.WriteAsync(responsePayload);
         }
     }
-
-    // Static helper class for mapping exceptions to status codes and messages
-    // Should this be extracted to a separate file?
-    public static class ExceptionMapper
-    {
-        private static readonly Dictionary<Type, (int StatusCode, string Message)> ExceptionMappings = new()
-    {
-        { typeof(InvalidOperationException), ((int)HttpStatusCode.BadRequest, "The operation is not valid.") },
-        { typeof(KeyNotFoundException), ((int)HttpStatusCode.NotFound, "The requested resource was not found.") }
-    };
-
-        public static (int StatusCode, string Message) MapException(Exception exception)
-        {
-            return ExceptionMappings.TryGetValue(exception.GetType(), out var result)
-                ? result
-                : ((int)HttpStatusCode.InternalServerError, "An unexpected error occurred. Please try again later.");
-        }
-    }
-
 }
