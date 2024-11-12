@@ -6,14 +6,16 @@ namespace RhythmFlow.Application.src.DTOs.Users
 {
     public class UserReadDto : IBaseReadDto<User>
     {
-        required public string FirstName { get; set; }
-        required public string LastName { get; set; }
+        // Addded the Id property to the UserReadDto because the BaseController needs it
+        public Guid Id { get; set; }
+        required public string FirstName { get; set;}
+        required public string LastName { get; set;}
         required public string Email { get; set; }
 
         public IBaseReadDto<User> ToDto(User entity)
         {
-            return new UserReadDto()
-            {
+            return new UserReadDto() {
+                Id = entity.Id,
                 FirstName = entity.FirstName,
                 LastName = entity.LastName,
                 Email = entity.Email.Value

@@ -18,6 +18,7 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
         {
             return new TicketReadDto()
             {
+                Id = entity.Id,
                 Title = entity.Title,
                 Description = entity.Description,
                 Priority = entity.Priority,

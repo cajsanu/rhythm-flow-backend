@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RhythmFlow.Domain\RhythmFlow.Domain.csproj" />
+    <ProjectReference Include="..\RhythmFlow.Application\RhythmFlow.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>

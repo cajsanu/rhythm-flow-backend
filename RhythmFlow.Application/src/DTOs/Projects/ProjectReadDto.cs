@@ -20,6 +20,7 @@ namespace RhythmFlow.Application.src.DTOs.Projects
         {
             return new ProjectReadDto()
             {
+                Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
                 StartDate = entity.StartDate,
