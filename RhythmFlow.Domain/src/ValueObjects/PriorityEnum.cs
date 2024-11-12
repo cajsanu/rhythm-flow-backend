@@ -1,6 +1,6 @@
 namespace RhythmFlow.Domain.src.ValueObjects
 {
-    public enum PriorityEnum
+    public enum Priority
     {
         Low,
         Medium,

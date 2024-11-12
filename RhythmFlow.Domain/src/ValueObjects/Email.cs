@@ -10,10 +10,8 @@ namespace RhythmFlow.Domain.src.ValueObjects
             get => _value;
             set
             {
-                
                 if (MyRegex().IsMatch(value)) _value = value;
                 else throw new InvalidDataException("Invalid email address");
-                
             }
         }
 

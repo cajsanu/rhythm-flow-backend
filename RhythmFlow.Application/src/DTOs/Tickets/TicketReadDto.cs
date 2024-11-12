@@ -8,9 +8,9 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
 {
     public class TicketReadDto : IBaseReadDto<Ticket>
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public PriorityEnum Priority { get; set; }
+        public required string Title { get; set; }
+        public required string Description { get; set; }
+        public Priority Priority { get; set; }
         public DateTime Deadline { get; set; }
         public Status Status { get; set; }
         public Guid ProjectId { get; set; }

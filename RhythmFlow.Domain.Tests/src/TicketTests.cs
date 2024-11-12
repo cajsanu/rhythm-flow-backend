@@ -12,7 +12,7 @@ namespace RhythmFlow.Domain.Tests.src
             // Arrange
             var title = "Ticket Title";
             var description = "Ticket Description";
-            var priority = PriorityEnum.High;
+            var priority = Priority.High;
             var deadline = DateTime.Now.AddDays(7);
             var status = Status.InProgress;
             var projectId = Guid.NewGuid();
@@ -37,7 +37,7 @@ namespace RhythmFlow.Domain.Tests.src
             // Arrange
             var title = "";
             var description = "Ticket Description";
-            var priority = PriorityEnum.High;
+            var priority = Priority.High;
             var deadline = DateTime.Now.AddDays(7);
             var status = Status.InProgress;
             var projectId = Guid.NewGuid();
@@ -53,7 +53,7 @@ namespace RhythmFlow.Domain.Tests.src
             // Arrange
             var title = "Ticket Title";
             var description = "";
-            var priority = PriorityEnum.High;
+            var priority = Priority.High;
             var deadline = DateTime.Now.AddDays(7);
             var status = Status.InProgress;
             var projectId = Guid.NewGuid();

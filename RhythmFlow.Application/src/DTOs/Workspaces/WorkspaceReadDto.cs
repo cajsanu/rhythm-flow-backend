@@ -5,7 +5,7 @@ namespace RhythmFlow.Application.DTOs.Workspaces
 {
     public class WorkspaceReadDto : IBaseReadDto<Workspace>
     {
-        public string Name { get; set; }
+        public required string Name { get; set; }
         public Guid OwnerId { get; set; }
 
         public IBaseReadDto<Workspace> ToDto(Workspace entity)

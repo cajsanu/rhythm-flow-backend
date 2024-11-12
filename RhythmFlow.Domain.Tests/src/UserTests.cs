@@ -83,7 +83,7 @@ namespace RhythmFlow.Domain.Tests.src
         {
             // Arrange
             var user = new User("John", "Doe", "john.doe@example.com", "passwordHash");
-            var ticket = new Ticket("Ticket Title", "Ticket Description", PriorityEnum.High, DateTime.Now.AddDays(7), Status.InProgress, Guid.NewGuid(), TicketType.Bug);
+            var ticket = new Ticket("Ticket Title", "Ticket Description", Priority.High, DateTime.Now.AddDays(7), Status.InProgress, Guid.NewGuid(), TicketType.Bug);
 
             // Act
             user.Tickets.Add(ticket);

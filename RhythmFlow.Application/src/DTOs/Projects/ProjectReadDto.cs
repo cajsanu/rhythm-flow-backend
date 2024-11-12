@@ -10,8 +10,8 @@ namespace RhythmFlow.Application.src.DTOs.Projects
 {
     public class ProjectReadDto : IBaseReadDto<Project>
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public required string Name { get; set; }
+        public required string Description { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public Status Status { get; set; }

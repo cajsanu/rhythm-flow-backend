@@ -40,14 +40,14 @@ namespace RhythmFlow.Framework.src.Data
             Workspaces.AddRange([workspace1, workspace2, workspace3, workspace4, workspace5]);
 
             // Generate tickets
-            var ticket1 = new Ticket("Create Database", "using Postgres", PriorityEnum.High, DateTime.Now.AddDays(7), Status.InProgress, workspace1.Id, TicketType.Bug);
-            var ticket2 = new Ticket("Fix Login Issue", "Resolve authentication error", PriorityEnum.High, DateTime.Now.AddDays(3), Status.InProgress, workspace1.Id, TicketType.Bug);
-            var ticket3 = new Ticket("Design Landing Page", "Create wireframe for new landing page", PriorityEnum.Medium, DateTime.Now.AddDays(14), Status.Cancelled, workspace1.Id, TicketType.Feature);
-            var ticket4 = new Ticket("Update Privacy Policy", "Review and update policy document", PriorityEnum.Low, DateTime.Now.AddDays(30), Status.NotStarted, workspace2.Id, TicketType.TechnicalDebt);
-            var ticket5 = new Ticket("Optimize API", "Enhance performance of existing API calls", PriorityEnum.High, DateTime.Now.AddDays(10), Status.InProgress, workspace2.Id, TicketType.Feature);
-            var ticket6 = new Ticket("Schedule Training", "Plan onboarding session for new hires", PriorityEnum.Medium, DateTime.Now.AddDays(7), Status.NotStarted, workspace2.Id, TicketType.TechnicalDebt);
-            var ticket7 = new Ticket("Add Dark Mode", "Implement dark mode toggle for users", PriorityEnum.High, DateTime.Now.AddDays(21), Status.Cancelled, workspace3.Id, TicketType.Bug);
-            var ticket8 = new Ticket("Bug in Report Generation", "Fix issue with incorrect data rendering", PriorityEnum.High, DateTime.Now.AddDays(5), Status.InProgress, workspace4.Id, TicketType.Feature);
+            var ticket1 = new Ticket("Create Database", "using Postgres", Priority.High, DateTime.Now.AddDays(7), Status.InProgress, workspace1.Id, TicketType.Bug);
+            var ticket2 = new Ticket("Fix Login Issue", "Resolve authentication error", Priority.High, DateTime.Now.AddDays(3), Status.InProgress, workspace1.Id, TicketType.Bug);
+            var ticket3 = new Ticket("Design Landing Page", "Create wireframe for new landing page", Priority.Medium, DateTime.Now.AddDays(14), Status.Cancelled, workspace1.Id, TicketType.Feature);
+            var ticket4 = new Ticket("Update Privacy Policy", "Review and update policy document", Priority.Low, DateTime.Now.AddDays(30), Status.NotStarted, workspace2.Id, TicketType.TechnicalDebt);
+            var ticket5 = new Ticket("Optimize API", "Enhance performance of existing API calls", Priority.High, DateTime.Now.AddDays(10), Status.InProgress, workspace2.Id, TicketType.Feature);
+            var ticket6 = new Ticket("Schedule Training", "Plan onboarding session for new hires", Priority.Medium, DateTime.Now.AddDays(7), Status.NotStarted, workspace2.Id, TicketType.TechnicalDebt);
+            var ticket7 = new Ticket("Add Dark Mode", "Implement dark mode toggle for users", Priority.High, DateTime.Now.AddDays(21), Status.Cancelled, workspace3.Id, TicketType.Bug);
+            var ticket8 = new Ticket("Bug in Report Generation", "Fix issue with incorrect data rendering", Priority.High, DateTime.Now.AddDays(5), Status.InProgress, workspace4.Id, TicketType.Feature);
             Tickets.AddRange([ticket1, ticket2, ticket3, ticket4, ticket5, ticket6, ticket7, ticket8]);
 
             // Generate user workspace
