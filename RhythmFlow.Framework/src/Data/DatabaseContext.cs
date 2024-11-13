@@ -6,11 +6,11 @@ namespace RhythmFlow.Framework.src.Data
     public class AppDbContext
     {
         // In-memory storage for each entity type
-        public List<User> Users { get; set; } = new List<User>();
-        public List<Project> Projects { get; set; } = new List<Project>();
-        public List<Ticket> Tickets { get; set; } = new List<Ticket>();
-        public List<Workspace> Workspaces { get; set; } = new List<Workspace>();
-        public List<UserWorkspace> UserWorkspaces { get; set; } = new List<UserWorkspace>();
+        public List<User> Users { get; set; } = [];
+        public List<Project> Projects { get; set; } = [];
+        public List<Ticket> Tickets { get; set; } = [];
+        public List<Workspace> Workspaces { get; set; } = [];
+        public List<UserWorkspace> UserWorkspaces { get; set; } = [];
 
         public AppDbContext()
         {
@@ -61,16 +61,24 @@ namespace RhythmFlow.Framework.src.Data
             var userWorkspace5 = new UserWorkspace(user5.Id, workspace1.Id, Role.ProjectManager);
             var userWorkspace6 = new UserWorkspace(user6.Id, workspace2.Id, Role.Developer);
             var userWorkspace7 = new UserWorkspace(user7.Id, workspace2.Id, Role.Developer);
+            UserWorkspaces.AddRange([userWorkspace1, userWorkspace2, userWorkspace3, userWorkspace4, userWorkspace5, userWorkspace6, userWorkspace7]);
         }
 
         // CRUD Simulation Methods
-        public void Add<T>(T entity) where T : BaseEntity => GetDbSet<T>().Add(entity);
-        public IEnumerable<T> GetAll<T>() where T : BaseEntity => GetDbSet<T>().AsEnumerable();
-        public T? GetById<T>(Guid id) where T : BaseEntity => GetDbSet<T>().FirstOrDefault(e => e.Id == id);
-        public void Update<T>(T entity) where T : BaseEntity
+        public void Add<T>(T entity)
+            where T : BaseEntity
+            => GetDbSet<T>().Add(entity);
+        public IEnumerable<T> GetAll<T>()
+            where T : BaseEntity
+            => GetDbSet<T>().AsEnumerable();
+        public T? GetById<T>(Guid id)
+            where T : BaseEntity
+            => GetDbSet<T>().Find(e => e.Id == id);
+        public void Update<T>(T entity)
+            where T : BaseEntity
         {
             var dbSet = GetDbSet<T>();
-            var existingEntity = dbSet.FirstOrDefault(e => e.Id == entity.Id);
+            var existingEntity = dbSet.Find(e => e.Id == entity.Id);
             if (existingEntity != null)
             {
                 dbSet.Remove(existingEntity);
@@ -78,17 +86,19 @@ namespace RhythmFlow.Framework.src.Data
             }
         }
 
-        public void Delete<T>(Guid id) where T : BaseEntity
+        public void Delete<T>(Guid id)
+            where T : BaseEntity
         {
             var dbSet = GetDbSet<T>();
-            var entity = dbSet.FirstOrDefault(e => e.Id == id);
+            var entity = dbSet.Find(e => e.Id == id);
             if (entity != null)
             {
                 dbSet.Remove(entity);
             }
         }
 
-        private List<T> GetDbSet<T>() where T : BaseEntity
+        private List<T> GetDbSet<T>()
+            where T : BaseEntity
         {
             if (typeof(T) == typeof(User))
                 return Users as List<T>;
