@@ -6,8 +6,8 @@ namespace RhythmFlow.Application.src.DTOs.Projects
 {
     public class ProjectUpdateDto : IBaseUpdateDto<Project>
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public StatusEnum Status { get; set; }
@@ -27,9 +27,10 @@ namespace RhythmFlow.Application.src.DTOs.Projects
 
             };
         }
+        // Exlamation mark is used to tell the compiler that the value is not null
         public Project ToEntity()
         {
-            return new Project(Name, Description, StartDate, EndDate, Status, WorkspaceId);
+            return new Project(Name!, Description!, StartDate, EndDate, Status, WorkspaceId);
         }
     }
 }

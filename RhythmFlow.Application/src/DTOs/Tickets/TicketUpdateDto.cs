@@ -7,8 +7,8 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
 {
     public class TicketUpdateDto : IBaseUpdateDto<Ticket>
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public string? Title { get; set; }
+        public string? Description { get; set; }
         public PriorityEnum Priority { get; set; }
         public DateTime Deadline { get; set; }
         public StatusEnum Status { get; set; }
@@ -33,7 +33,7 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
         }
         public Ticket ToEntity()
         {
-            return new Ticket(Title, Description, Priority, Deadline, Status, ProjectId, Type);
+            return new Ticket(Title!, Description!, Priority, Deadline, Status, ProjectId, Type);
         }
 
     }

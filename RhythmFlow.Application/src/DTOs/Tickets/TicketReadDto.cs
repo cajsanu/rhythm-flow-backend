@@ -9,8 +9,8 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
     {
         // Addded the Id property to the TicketReadDto because the BaseController needs it
         public Guid Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public string? Title { get; set; }
+        public string? Description { get; set; }
         public PriorityEnum Priority { get; set; }
         public DateTime Deadline { get; set; }
         public StatusEnum Status { get; set; }

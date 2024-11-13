@@ -1,16 +1,20 @@
 using System.ComponentModel.DataAnnotations;
+using RhythmFlow.Application.src.DTOs.ValidationAttributes;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.Application.src.DTOs.UserWorkspaces
 {
-    public class UserWorkspaceCreateDto : IValidatableObject
+    public class UserWorkspaceCreateDto 
     {
         [Required]
+        [NoEmptyGuid]
         public Guid UserId { get; set; }
         [Required]
+         [NoEmptyGuid]
         public Guid WorkspaceId { get; set; }
         [Required]
+        [EnumDataType(typeof(RoleEnum))]
         public RoleEnum Role { get; set; }
 
         public UserWorkspaceCreateDto ToDto(UserWorkspace entity)
@@ -23,27 +27,12 @@ namespace RhythmFlow.Application.src.DTOs.UserWorkspaces
             };
         }
 
-        public UserWorkspace ToEntity(UserWorkspaceCreateDto dto)
+        public UserWorkspace ToEntity()
         {
-            return new UserWorkspace(dto.UserId, dto.WorkspaceId, dto.Role);
+            return new UserWorkspace(UserId, WorkspaceId, Role);
         }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            if (UserId == Guid.Empty)
-            {
-                yield return new ValidationResult("UserId cannot be an empty GUID.", [nameof(UserId)]);
-            }
 
-            if (WorkspaceId == Guid.Empty)
-            {
-                yield return new ValidationResult("WorkspaceId cannot be an empty GUID.", [nameof(WorkspaceId)]);
-            }
-
-            if (!Enum.IsDefined(typeof(RoleEnum), Role))
-            {
-                yield return new ValidationResult("Role is not a valid value.", [nameof(Role)]);
-            }
-        }
+       
     }
 }

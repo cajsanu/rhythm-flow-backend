@@ -7,7 +7,7 @@ namespace RhythmFlow.Application.Tests.src.DTOsTests.ProjectDtoTests
     public class ProjectCreateDtoTests
     {
         private List<ValidationResult> ValidateModel(object model)
-       {
+        {
             var validationResults = new List<ValidationResult>();
             var validationContext = new ValidationContext(model, serviceProvider: null, items: null);
             Validator.TryValidateObject(model, validationContext, validationResults, validateAllProperties: true);
@@ -15,11 +15,11 @@ namespace RhythmFlow.Application.Tests.src.DTOsTests.ProjectDtoTests
         }
 
         [Theory]
-        [InlineData("Project Alpha", "A sample project", "2024-01-01", "2024-12-31", StatusEnum.InProgress, "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[] { "6fa85f64-5717-4562-b3fc-2c963f66afa6", "7fa85f64-5717-4562-b3fc-2c963f66afa7" }, true)]
-        [InlineData("", "A sample project", "2024-01-01", "2024-12-31", StatusEnum.InProgress, "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[] { "6fa85f64-5717-4562-b3fc-2c963f66afa6" }, false)] // Missing Name
-        [InlineData("Project Beta", "", "2024-01-01", "2024-01-01", StatusEnum.NotStarted, "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[0], true)] // Valid with empty Description and UsersId
-        [InlineData("Project Gamma", "Another project", "2025-01-01", "2024-12-31", StatusEnum.Completed, "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[] { "invalid-guid" }, false)] // Invalid UsersId GUID
-        [InlineData("Project Delta", "Description", "2024-01-01", "2024-12-31", StatusEnum.Cancelled, "00000000-0000-0000-0000-000000000000", new string[] { "6fa85f64-5717-4562-b3fc-2c963f66afa6" }, false)] // Invalid WorkspaceId
+        [InlineData("Project Alpha", "A sample project", "2024-01-01", "2028-12-31", StatusEnum.InProgress, "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[] { "6fa85f64-5717-4562-b3fc-2c963f66afa6", "7fa85f64-5717-4562-b3fc-2c963f66afa7" }, true)]
+        [InlineData("", "A sample project", "2024-01-01", "2027-12-31", StatusEnum.InProgress, "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[] { "6fa85f64-5717-4562-b3fc-2c963f66afa6" }, false)] // Missing Name
+        [InlineData("Project Beta", "", "2024-01-01", "2027-01-01", StatusEnum.NotStarted, "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[0], true)] // Valid with empty Description and UsersId
+        [InlineData("Project Gamma", "Another project", "2025-01-01", "2026-12-31", StatusEnum.Completed, "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[] { "00000000-0000-0000-0000-000000000000" }, false)] // Invalid UsersId GUID
+        [InlineData("Project Delta", "Description", "2024-01-01", "2026-12-31", StatusEnum.Cancelled, "00000000-0000-0000-0000-000000000000", new string[] { "6fa85f64-5717-4562-b3fc-2c963f66afa6" }, false)] // Invalid WorkspaceId
         public void ProjectCreateDto_ValidationTests(
             string name, 
             string description, 
@@ -67,7 +67,7 @@ namespace RhythmFlow.Application.Tests.src.DTOsTests.ProjectDtoTests
                 }
                 else
                 {
-                    // Return an invalid GUID to trigger validation failure
+                    // Add Guid.Empty to simulate an invalid GUID
                     result.Add(Guid.Empty);
                 }
             }

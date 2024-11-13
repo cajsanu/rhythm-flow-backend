@@ -5,7 +5,6 @@ namespace RhythmFlow.Application.src.DTOs.Shared
     {
         public IBaseUpdateDto<T> ToDto(T entity);
         // This is method is used if the entity should be fully updated
-       // public T ToEntity();
     }
 }
 

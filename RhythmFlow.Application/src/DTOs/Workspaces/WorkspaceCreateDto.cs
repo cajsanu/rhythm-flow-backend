@@ -1,15 +1,16 @@
 using System.ComponentModel.DataAnnotations;
 using RhythmFlow.Application.src.DTOs.Shared;
+using RhythmFlow.Application.src.DTOs.ValidationAttributes;
 using RhythmFlow.Domain.src.Entities;
 
 namespace RhythmFlow.Application.DTOs.Workspaces
 {
-    public class WorkspaceCreateDto : IBaseCreateDto<Workspace>, IValidatableObject
+    public class WorkspaceCreateDto : IBaseCreateDto<Workspace>
     {
         [Required]
-
-        public string Name { get; set; }
+        public string? Name { get; set; }
         [Required]
+        [NoEmptyGuid]
         public Guid OwnerId { get; set; }
 
         public IBaseCreateDto<Workspace> ToDto(Workspace entity)
@@ -20,18 +21,11 @@ namespace RhythmFlow.Application.DTOs.Workspaces
             };
         }
 
+        // Exlamation mark to tell the compiler that the value is not null
         public Workspace ToEntity()
         {
-            return new Workspace(Name, OwnerId);
+            return new Workspace(Name!, OwnerId);
         }
 
-        // For testing
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-             if (OwnerId == Guid.Empty)
-            {
-                yield return new ValidationResult("OwnerId cannot be an empty GUID.", [nameof(OwnerId)]);
-            }
-        }
     }
 }

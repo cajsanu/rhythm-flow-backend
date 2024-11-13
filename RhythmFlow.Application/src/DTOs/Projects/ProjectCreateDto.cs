@@ -1,19 +1,23 @@
 using System.ComponentModel.DataAnnotations;
 using RhythmFlow.Application.src.DTOs.Shared;
+using RhythmFlow.Application.src.DTOs.ValidationAttributes;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.Application.src.DTOs.Projects
 {
-    public class ProjectCreateDto : IBaseCreateDto<Project>, IValidatableObject
+    public class ProjectCreateDto : IBaseCreateDto<Project>
     {
         [Required]
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
         public DateTime StartDate { get; set; }
+       // [FutureDate]
         public DateTime EndDate { get; set; }
         public StatusEnum Status { get; set; }
+        [NoEmptyGuid]
         public Guid WorkspaceId { get; set; }
+        [NoEmptyGuid(ValidateCollection = true)]
         public ICollection<Guid> UsersId { get; set; } = [];
 
         public IBaseCreateDto<Project> ToDto(Project entity)
@@ -30,38 +34,14 @@ namespace RhythmFlow.Application.src.DTOs.Projects
 
             };
         }
+        // Exlamation mark is used to tell the compiler that the value is not null
         public Project ToEntity()
         {
-            return new Project(Name, Description, StartDate, EndDate, Status, WorkspaceId);
+            return new Project(Name!, Description!, StartDate, EndDate, Status, WorkspaceId);
         }
 
 
         // For testing purposes. the test should fail if the validation fails
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            if (StartDate > EndDate)
-            {
-                yield return new ValidationResult(
-                    "StartDate should be earlier than EndDate.",
-                    [nameof(StartDate), nameof(EndDate)]);
-            }
-
-            if (WorkspaceId == Guid.Empty)
-            {
-                yield return new ValidationResult(
-                    "WorkspaceId cannot be empty.",
-                    [nameof(WorkspaceId)]);
-            }
-
-            foreach (var userId in UsersId)
-            {
-                if (userId == Guid.Empty)
-                {
-                    yield return new ValidationResult(
-                        "User ID cannot be empty.",
-                        [nameof(UsersId)]);
-                }
-            }
-        }
+       
     }
 }
