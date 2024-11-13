@@ -7,13 +7,13 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
 {
     public class TicketUpdateDto : IBaseUpdateDto<Ticket>
     {
-        public string? Title { get; set; }
-        public string? Description { get; set; }
-        public PriorityEnum Priority { get; set; }
+        required public string Title { get; set; }
+        required public string Description { get; set; }
+        public Priority Priority { get; set; }
         public DateTime Deadline { get; set; }
-        public StatusEnum Status { get; set; }
+        public Status Status { get; set; }
         public Guid ProjectId { get; set; }
-        public TicketTypeEnum Type { get; set; }
+        public TicketType Type { get; set; }
         public ICollection<Guid> UsersId { get; set; } = [];
 
         public IBaseUpdateDto<Ticket> ToDto(Ticket entity)

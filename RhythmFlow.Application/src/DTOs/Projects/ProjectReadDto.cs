@@ -13,7 +13,7 @@ namespace RhythmFlow.Application.src.DTOs.Projects
         public string? Description { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public StatusEnum Status { get; set; }
+        public Status Status { get; set; }
         public Guid WorkspaceId { get; set; }
         public ICollection<UserReadDto> Users { get; set; } = [];
 
@@ -33,12 +33,10 @@ namespace RhythmFlow.Application.src.DTOs.Projects
                     FirstName = u.FirstName,
                     LastName = u.LastName,
                     Email = u.Email.Value
+
                     // Add other properties as needed
                 }).ToList()
-
             };
-
-
         }
     }
 }

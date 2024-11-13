@@ -2,7 +2,8 @@ using RhythmFlow.Domain.src.Entities;
 
 namespace RhythmFlow.Domain.src.RepoInterfaces
 {
-    public interface IBaseRepo<T> where T : BaseEntity
+    public interface IBaseRepo<T>
+        where T : BaseEntity
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetByIdAsync(Guid id);

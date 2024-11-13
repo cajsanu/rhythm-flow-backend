@@ -15,14 +15,14 @@ namespace RhythmFlow.Application.Tests.src.DTOsTests.UserWorkspaceCreateDtoTests
         }
 
         [Theory]
-        [InlineData("6fa85f64-5717-4562-b3fc-2c963f66afa6", "6fa85f64-5717-4562-b3fc-2c963f66afa6", RoleEnum.Developer, true)] // Valid case
-        [InlineData("00000000-0000-0000-0000-000000000000", "6fa85f64-5717-4562-b3fc-2c963f66afa6", RoleEnum.ProjectManager, false)] // Invalid UserId (empty GUID)
-        [InlineData("6fa85f64-5717-4562-b3fc-2c963f66afa6", "00000000-0000-0000-0000-000000000000", RoleEnum.ProjectManager, false)] // Invalid WorkspaceId (empty GUID)
-        [InlineData("6fa85f64-5717-4562-b3fc-2c963f66afa6", "6fa85f64-5717-4562-b3fc-2c963f66afa6", (RoleEnum)999, false)] // Invalid Role (out of range)
+        [InlineData("6fa85f64-5717-4562-b3fc-2c963f66afa6", "6fa85f64-5717-4562-b3fc-2c963f66afa6", Role.Developer, true)] // Valid case
+        [InlineData("00000000-0000-0000-0000-000000000000", "6fa85f64-5717-4562-b3fc-2c963f66afa6", Role.ProjectManager, false)] // Invalid UserId (empty GUID)
+        [InlineData("6fa85f64-5717-4562-b3fc-2c963f66afa6", "00000000-0000-0000-0000-000000000000", Role.ProjectManager, false)] // Invalid WorkspaceId (empty GUID)
+        [InlineData("6fa85f64-5717-4562-b3fc-2c963f66afa6", "6fa85f64-5717-4562-b3fc-2c963f66afa6", (Role)999, false)] // Invalid Role (out of range)
         public void UserWorkspaceCreateDto_ValidationTests(
             string userId, 
             string workspaceId, 
-            RoleEnum role, 
+            Role role, 
             bool isValid)
         {
             // Arrange

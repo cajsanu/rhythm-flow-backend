@@ -7,12 +7,12 @@ namespace RhythmFlow.Application.src.DTOs.Users
     public class UserCreateDto : IBaseCreateDto<User>
     {
         [Required]
-        public string? FirstName { get; set; }
+        required public string FirstName { get; set; }
         [Required]
-        public string? LastName { get; set; }
+        required public string LastName { get; set; }
         [Required]
         [EmailAddress]
-        public string? Email { get; set; }
+        required public string Email { get; set; }
         [Required]
         public string? PasswordHash { get; set; }
         // Projects and Workspaces are not needed in the create dto but can be added in update dto
@@ -27,10 +27,9 @@ namespace RhythmFlow.Application.src.DTOs.Users
                 PasswordHash = entity.PasswordHash
             };
         }
-        // Exlamation mark is used to tell the compiler that the value is not null
         public User ToEntity()
         {
-            return new User(FirstName!, LastName!, Email!, PasswordHash!);
+            return new User(FirstName, LastName, Email!, PasswordHash!);
         }
 
     }

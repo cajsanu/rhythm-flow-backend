@@ -9,15 +9,15 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
     public class TicketCreateDto : IBaseCreateDto<Ticket>
     {
         [Required]
-        public string? Title { get; set; }
-        public string? Description { get; set; }
-        public PriorityEnum Priority { get; set; }
+        required public string Title { get; set; }
+        required public string Description { get; set; }
+        public Priority Priority { get; set; }
         [FutureDate]
         public DateTime Deadline { get; set; }
-        public StatusEnum Status { get; set; }
+        public Status Status { get; set; }
         [NoEmptyGuid]
         public Guid ProjectId { get; set; }
-        public TicketTypeEnum Type { get; set; }
+        public TicketType Type { get; set; }
         // I haven't added the Users collection here because it's not needed for creating a ticket but it's needed when updating the ticket
 
         public IBaseCreateDto<Ticket> ToDto(Ticket entity)
@@ -36,9 +36,7 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
         }
         public Ticket ToEntity()
         {
-            return new Ticket(Title!, Description!, Priority, Deadline, Status, ProjectId, Type);
+            return new Ticket(Title, Description, Priority, Deadline, Status, ProjectId, Type);
         }
-
-        
     }
 }

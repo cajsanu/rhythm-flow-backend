@@ -5,7 +5,7 @@ namespace RhythmFlow.Application.DTOs.Workspaces
 {
     public class WorkspaceUpdateDto : IBaseUpdateDto<Workspace>
     {
-        public string? Name { get; set; }
+        required public string Name { get; set; }
         public Guid OwnerId { get; set; }
 
         public IBaseUpdateDto<Workspace> ToDto(Workspace entity)
@@ -18,7 +18,7 @@ namespace RhythmFlow.Application.DTOs.Workspaces
         }
         public Workspace ToEntity()
         {
-            return new Workspace(Name!, OwnerId);
+            return new Workspace(Name, OwnerId);
         }
 
     }

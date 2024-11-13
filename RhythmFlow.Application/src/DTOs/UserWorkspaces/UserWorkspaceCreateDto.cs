@@ -14,8 +14,8 @@ namespace RhythmFlow.Application.src.DTOs.UserWorkspaces
          [NoEmptyGuid]
         public Guid WorkspaceId { get; set; }
         [Required]
-        [EnumDataType(typeof(RoleEnum))]
-        public RoleEnum Role { get; set; }
+        [EnumDataType(typeof(Role))]
+        public Role Role { get; set; }
 
         public UserWorkspaceCreateDto ToDto(UserWorkspace entity)
         {

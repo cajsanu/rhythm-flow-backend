@@ -15,19 +15,19 @@ namespace RhythmFlow.Application.Tests.src.DTOsTests.TicketDtoTests
         }
 
         [Theory]
-        [InlineData("Ticket 1", "A sample ticket", PriorityEnum.High, "2025-12-31", StatusEnum.Completed, "6fa85f64-5717-4562-b3fc-2c963f66afa6", TicketTypeEnum.Bug, true)]
-        [InlineData("", "A sample ticket with missing title", PriorityEnum.Low, "2025-12-31", StatusEnum.InProgress, "6fa85f64-5717-4562-b3fc-2c963f66afa6", TicketTypeEnum.Bug, false)] // Missing Title
-        [InlineData("Ticket 3", "", PriorityEnum.Medium, "2025-01-01", StatusEnum.Completed, "00000000-0000-0000-0000-000000000000", TicketTypeEnum.Feature, false)] // Invalid ProjectId
-        [InlineData("Ticket 4", "Deadline in the past", PriorityEnum.High, "2020-01-01", StatusEnum.InProgress, "6fa85f64-5717-4562-b3fc-2c963f66afa6", TicketTypeEnum.Feature, false)] // Past Deadline
-        [InlineData("Ticket 5", "A valid ticket", PriorityEnum.Low, "2026-07-15", StatusEnum.Completed, "6fa85f64-5717-4562-b3fc-2c963f66afa6", TicketTypeEnum.Bug, true)] // Valid Case
+        [InlineData("Ticket 1", "A sample ticket", Priority.High, "2025-12-31", Status.Completed, "6fa85f64-5717-4562-b3fc-2c963f66afa6", TicketType.Bug, true)]
+        [InlineData("", "A sample ticket with missing title", Priority.Low, "2025-12-31", Status.InProgress, "6fa85f64-5717-4562-b3fc-2c963f66afa6", TicketType.Bug, false)] // Missing Title
+        [InlineData("Ticket 3", "", Priority.Medium, "2025-01-01", Status.Completed, "00000000-0000-0000-0000-000000000000", TicketType.Feature, false)] // Invalid ProjectId
+        [InlineData("Ticket 4", "Deadline in the past", Priority.High, "2020-01-01", Status.InProgress, "6fa85f64-5717-4562-b3fc-2c963f66afa6", TicketType.Feature, false)] // Past Deadline
+        [InlineData("Ticket 5", "A valid ticket", Priority.Low, "2026-07-15", Status.Completed, "6fa85f64-5717-4562-b3fc-2c963f66afa6", TicketType.Bug, true)] // Valid Case
         public void TicketCreateDto_ValidationTests(
             string title, 
             string description, 
-            PriorityEnum priority, 
+            Priority priority, 
             string deadline, 
-            StatusEnum status, 
+            Status status, 
             string projectId, 
-            TicketTypeEnum type, 
+            TicketType type, 
             bool isValid)
         {
             // Arrange

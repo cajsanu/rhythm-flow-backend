@@ -9,14 +9,13 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
     {
         // Addded the Id property to the TicketReadDto because the BaseController needs it
         public Guid Id { get; set; }
-        public string? Title { get; set; }
-        public string? Description { get; set; }
-        public PriorityEnum Priority { get; set; }
+        required public string Title { get; set; }
+        required public string Description { get; set; }
+        public Priority Priority { get; set; }
         public DateTime Deadline { get; set; }
-        public StatusEnum Status { get; set; }
+        public Status Status { get; set; }
         public Guid ProjectId { get; set; }
-        public TicketTypeEnum Type { get; set; }
-        public ICollection<UserReadDto> Users { get; set; } = [];
+        public TicketType Type { get; set; }
 
         public IBaseReadDto<Ticket> ToDto(Ticket entity)
         {
@@ -29,17 +28,8 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
                 Deadline = entity.Deadline,
                 Status = entity.Status,
                 ProjectId = entity.ProjectId,
-                Type = entity.Type,
-                Users = entity.Users.Select(u => new UserReadDto
-                {
-                    FirstName = u.FirstName,
-                    LastName = u.LastName,
-                    Email = u.Email.Value
-                    // Add other properties as needed
-                }).ToList()
-               
+                Type = entity.Type
             };
         }
-
     }
 }

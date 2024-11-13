@@ -9,6 +9,5 @@ namespace RhythmFlow.Domain.src.Entities
         {
             Id = Guid.NewGuid();
         }
-
     }
 }

@@ -9,12 +9,12 @@ namespace RhythmFlow.Application.src.DTOs.Projects
     public class ProjectCreateDto : IBaseCreateDto<Project>
     {
         [Required]
-        public string? Name { get; set; }
-        public string? Description { get; set; }
+        required public string Name { get; set; }
+        required public string Description { get; set; }
         public DateTime StartDate { get; set; }
-       // [FutureDate]
+        [FutureDate]
         public DateTime EndDate { get; set; }
-        public StatusEnum Status { get; set; }
+        public Status Status { get; set; }
         [NoEmptyGuid]
         public Guid WorkspaceId { get; set; }
         [NoEmptyGuid(ValidateCollection = true)]
@@ -34,14 +34,11 @@ namespace RhythmFlow.Application.src.DTOs.Projects
 
             };
         }
-        // Exlamation mark is used to tell the compiler that the value is not null
         public Project ToEntity()
         {
-            return new Project(Name!, Description!, StartDate, EndDate, Status, WorkspaceId);
+            return new Project(Name, Description, StartDate, EndDate, Status, WorkspaceId);
         }
 
 
-        // For testing purposes. the test should fail if the validation fails
-       
     }
 }

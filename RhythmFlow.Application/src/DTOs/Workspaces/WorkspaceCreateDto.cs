@@ -8,7 +8,7 @@ namespace RhythmFlow.Application.DTOs.Workspaces
     public class WorkspaceCreateDto : IBaseCreateDto<Workspace>
     {
         [Required]
-        public string? Name { get; set; }
+        required public string Name { get; set; }
         [Required]
         [NoEmptyGuid]
         public Guid OwnerId { get; set; }
@@ -20,11 +20,9 @@ namespace RhythmFlow.Application.DTOs.Workspaces
                 Name = entity.Name,
             };
         }
-
-        // Exlamation mark to tell the compiler that the value is not null
         public Workspace ToEntity()
         {
-            return new Workspace(Name!, OwnerId);
+            return new Workspace(Name, OwnerId);
         }
 
     }
