@@ -35,7 +35,23 @@ namespace RhythmFlow.Application.src.Services
 
         public async Task<TReadDto> RemoveUserFromEntityAsync(Guid userId, Guid entityId)
         {
-            throw new NotImplementedException();
+            var user = await _userRepo.GetByIdAsync(userId);
+            var entity = await _entityRepo.GetByIdAsync(entityId);
+
+            if (user == null || entity == null)
+            {
+                throw new KeyNotFoundException("User or entity not found.");
+            }
+
+            // Use reflection to remove the user from the entity's collection
+            var entityUsers = (entity as dynamic).Users;
+            if (entityUsers.Contains(user))
+            {
+                entityUsers.Remove(user);
+                await _entityRepo.UpdateAsync(entity);
+            }
+
+            return (TReadDto)new TReadDto().ToDto(entity);
         }
     }
 }
