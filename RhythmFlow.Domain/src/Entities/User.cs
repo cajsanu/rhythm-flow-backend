@@ -10,11 +10,15 @@ namespace RhythmFlow.Domain.src.Entities
         public Email Email { get; set; }
         public string PasswordHash { get; set; }
 
-        // Make collection of projects that the user is assigned to
+        // Make collection of projects, tickets and workspaces that the user is assigned to
+        // EF core can manage the join entity transparently, without a class defined for it,
+        // and without navigations for the two one-to-many relationships.
+        // See: https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many
         public ICollection<Project> Projects { get; set; } = [];
 
-        // Make collection of tickets that the user is assigned to
         public ICollection<Ticket> Tickets { get; set; } = [];
+
+        public ICollection<Workspace> Workspaces { get; set; } = [];
 
         public User(string firstName, string lastName, string email, string password) : base() // Call the base constructor to generate a unique ID
         {
