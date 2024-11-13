@@ -5,6 +5,11 @@ using RhythmFlow.Domain.src.RepoInterfaces;
 
 namespace RhythmFlow.Application.src.Services
 {
+    // The assignment service is used to assign a user to an entity and remove a user from an entity.
+    // This happens through a many-to-many relationship between the user and the entity.
+    // This relationship is represented by a collection of users on the entity and collections of entities on the user.
+    // The many-to-many table is implemented in the database as a implicit join table, which means that the table is not explicitly defined in the database schema.
+    // Read more about it here: https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many
     public class AssignmentService<T, TReadDto>(IUserRepo userRepo, IBaseRepo<T> entityRepo) : IAssignmentService<T, TReadDto>
     where T : BaseEntity
     where TReadDto : IBaseReadDto<T>, new()
@@ -27,7 +32,7 @@ namespace RhythmFlow.Application.src.Services
             if (!entityUsers.Contains(user))
             {
                 entityUsers.Add(user);
-                await _entityRepo.UpdateAsync(entity);
+                await _entityRepo.UpdateAsync(entity); // Need to make sure SaveChangesAsync is called
             }
 
             return (TReadDto)new TReadDto().ToDto(entity);
