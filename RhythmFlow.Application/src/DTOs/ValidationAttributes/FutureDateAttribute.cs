@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 
-
 namespace RhythmFlow.Application.src.DTOs.ValidationAttributes
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
@@ -12,6 +11,7 @@ namespace RhythmFlow.Application.src.DTOs.ValidationAttributes
             {
                 return new ValidationResult("The date must be in the future.");
             }
+
             return ValidationResult.Success!;
         }
     }

@@ -25,9 +25,9 @@ namespace RhythmFlow.Application.src.DTOs.Projects
                 Status = entity.Status,
                 WorkspaceId = entity.WorkspaceId,
                 UsersId = entity.Users.Select(u => u.Id).ToList()
-
             };
         }
+
         // Exlamation mark is used to tell the compiler that the value is not null
         public Project ToEntity()
         {

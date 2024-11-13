@@ -5,13 +5,13 @@ using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.Application.src.DTOs.UserWorkspaces
 {
-    public class UserWorkspaceCreateDto 
+    public class UserWorkspaceCreateDto
     {
         [Required]
         [NoEmptyGuid]
         public Guid UserId { get; set; }
         [Required]
-         [NoEmptyGuid]
+        [NoEmptyGuid]
         public Guid WorkspaceId { get; set; }
         [Required]
         [EnumDataType(typeof(Role))]
@@ -31,8 +31,5 @@ namespace RhythmFlow.Application.src.DTOs.UserWorkspaces
         {
             return new UserWorkspace(UserId, WorkspaceId, Role);
         }
-
-
-       
     }
 }

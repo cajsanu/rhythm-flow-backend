@@ -3,7 +3,7 @@ using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.Application.src.DTOs.UserWorkspaces
 {
-    public class UserWorkspaceUpdateDto 
+    public class UserWorkspaceUpdateDto
     {
         public Guid UserId { get; set; }
         public Guid WorkspaceId { get; set; }
@@ -18,6 +18,7 @@ namespace RhythmFlow.Application.src.DTOs.UserWorkspaces
                 Role = entity.Role
             };
         }
+
         public UserWorkspace ToEntity(UserWorkspaceUpdateDto dto)
         {
             return new UserWorkspace(dto.UserId, dto.WorkspaceId, dto.Role);

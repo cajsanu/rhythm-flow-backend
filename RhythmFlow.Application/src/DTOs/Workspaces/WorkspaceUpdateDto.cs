@@ -16,10 +16,10 @@ namespace RhythmFlow.Application.DTOs.Workspaces
                 OwnerId = entity.OwnerId
             };
         }
+
         public Workspace ToEntity()
         {
             return new Workspace(Name, OwnerId);
         }
-
     }
 }

@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using RhythmFlow.Application.src.DTOs.Users;
 
-
 namespace RhythmFlow.Application.Tests.src.DTOsTests.UserDtoTests
 {
     public class UserCreateDtoTests
@@ -14,14 +13,13 @@ namespace RhythmFlow.Application.Tests.src.DTOsTests.UserDtoTests
             return validationResults;
         }
 
-
-        [Theory]
-        [InlineData("John", "Doe", "john.doe@example.com", "hashedPassword", true)]
-        [InlineData("", "Doe", "john.doe@example.com", "hashedPassword", false)] // Missing FirstName
-        [InlineData("John", "", "john.doe@example.com", "hashedPassword", false)] // Missing LastName
-        [InlineData("John", "Doe", "invalid-email", "hashedPassword", false)] // Invalid Email
-        [InlineData("John", "Doe", "john.doe@example.com", "", false)] // Missing PasswordHash
-        public void UserCreateDto_ValidationTests(string firstName, string lastName, string email, string passwordHash, bool isValid)
+         [Theory]
+         [InlineData("John", "Doe", "john.doe@example.com", "hashedPassword", true)]
+         [InlineData("", "Doe", "john.doe@example.com", "hashedPassword", false)] // Missing FirstName
+         [InlineData("John", "", "john.doe@example.com", "hashedPassword", false)] // Missing LastName
+         [InlineData("John", "Doe", "invalid-email", "hashedPassword", false)] // Invalid Email
+         [InlineData("John", "Doe", "john.doe@example.com", "", false)] // Missing PasswordHash
+         public void UserCreateDto_ValidationTests(string firstName, string lastName, string email, string passwordHash, bool isValid)
         {
             // Arrange
             var dto = new UserCreateDto
@@ -45,6 +43,5 @@ namespace RhythmFlow.Application.Tests.src.DTOsTests.UserDtoTests
                 Assert.NotEmpty(validationResults);
             }
         }
-
     }
 }

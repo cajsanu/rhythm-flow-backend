@@ -18,8 +18,6 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
         [NoEmptyGuid]
         public Guid ProjectId { get; set; }
         public TicketType Type { get; set; }
-        // I haven't added the Users collection here because it's not needed for creating a ticket but it's needed when updating the ticket
-
         public IBaseCreateDto<Ticket> ToDto(Ticket entity)
         {
             return new TicketCreateDto()
@@ -31,9 +29,9 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
                 Status = entity.Status,
                 ProjectId = entity.ProjectId,
                 Type = entity.Type
-
             };
         }
+
         public Ticket ToEntity()
         {
             return new Ticket(Title, Description, Priority, Deadline, Status, ProjectId, Type);

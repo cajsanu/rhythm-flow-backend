@@ -21,13 +21,13 @@ namespace RhythmFlow.Application.Tests.src.DTOsTests.ProjectDtoTests
         [InlineData("Project Gamma", "Another project", "2025-01-01", "2026-12-31", Status.Completed, "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[] { "00000000-0000-0000-0000-000000000000" }, false)] // Invalid UsersId GUID
         [InlineData("Project Delta", "Description", "2024-01-01", "2026-12-31", Status.Cancelled, "00000000-0000-0000-0000-000000000000", new string[] { "6fa85f64-5717-4562-b3fc-2c963f66afa6" }, false)] // Invalid WorkspaceId
         public void ProjectCreateDto_ValidationTests(
-            string name, 
-            string description, 
-            string startDate, 
-            string endDate, 
-            Status status, 
-            string workspaceId, 
-            string[] usersId, 
+            string name,
+            string description,
+            string startDate,
+            string endDate,
+            Status status,
+            string workspaceId,
+            string[] usersId,
             bool isValid)
         {
             // Arrange
@@ -71,6 +71,7 @@ namespace RhythmFlow.Application.Tests.src.DTOsTests.ProjectDtoTests
                     result.Add(Guid.Empty);
                 }
             }
+
             return result;
         }
     }

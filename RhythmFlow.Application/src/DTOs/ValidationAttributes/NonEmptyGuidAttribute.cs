@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RhythmFlow.Application.src.DTOs.ValidationAttributes
 {
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
+   [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
    public class NoEmptyGuidAttribute : ValidationAttribute
     {
         public bool ValidateCollection { get; set; } = false;
@@ -22,6 +22,7 @@ namespace RhythmFlow.Application.src.DTOs.ValidationAttributes
             {
                 return new ValidationResult("Collection contains an empty Guid.");
             }
+
             return ValidationResult.Success!;
         }
     }

@@ -20,10 +20,10 @@ namespace RhythmFlow.Application.DTOs.Workspaces
                 Name = entity.Name,
             };
         }
+
         public Workspace ToEntity()
         {
             return new Workspace(Name, OwnerId);
         }
-
     }
 }

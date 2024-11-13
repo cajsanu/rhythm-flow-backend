@@ -18,7 +18,5 @@ namespace RhythmFlow.Application.src.DTOs.Users
                 Email = entity.Email.Value,
             };
         }
-
-
     }
 }

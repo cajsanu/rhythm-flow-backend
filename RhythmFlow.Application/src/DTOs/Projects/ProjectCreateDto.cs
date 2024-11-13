@@ -31,14 +31,12 @@ namespace RhythmFlow.Application.src.DTOs.Projects
                 Status = entity.Status,
                 WorkspaceId = entity.WorkspaceId,
                 UsersId = entity.Users.Select(u => u.Id).ToList()
-
             };
         }
+
         public Project ToEntity()
         {
             return new Project(Name, Description, StartDate, EndDate, Status, WorkspaceId);
         }
-
-
     }
 }

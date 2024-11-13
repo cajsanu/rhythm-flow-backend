@@ -1,5 +1,4 @@
 using RhythmFlow.Application.src.DTOs.Shared;
-using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
 
@@ -28,13 +27,12 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
                 ProjectId = entity.ProjectId,
                 Type = entity.Type,
                 UsersId = entity.Users.Select(u => u.Id).ToList()
-               
             };
         }
+
         public Ticket ToEntity()
         {
             return new Ticket(Title!, Description!, Priority, Deadline, Status, ProjectId, Type);
         }
-
     }
 }
