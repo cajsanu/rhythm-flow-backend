@@ -1,14 +1,11 @@
 using RhythmFlow.Application.src.DTOs.Shared;
-using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.Application.src.DTOs.Tickets
 {
-    public class TicketReadDto : IBaseReadDto<Ticket>
+    public class TicketUpdateDto : IBaseUpdateDto<Ticket>
     {
-        // Addded the Id property to the TicketReadDto because the BaseController needs it
-        public Guid Id { get; set; }
         required public string Title { get; set; }
         required public string Description { get; set; }
         public Priority Priority { get; set; }
@@ -16,20 +13,26 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
         public Status Status { get; set; }
         public Guid ProjectId { get; set; }
         public TicketType Type { get; set; }
+        public ICollection<Guid> UsersId { get; set; } = [];
 
-        public IBaseReadDto<Ticket> ToDto(Ticket entity)
+        public IBaseUpdateDto<Ticket> ToDto(Ticket entity)
         {
-            return new TicketReadDto()
+            return new TicketUpdateDto()
             {
-                Id = entity.Id,
                 Title = entity.Title,
                 Description = entity.Description,
                 Priority = entity.Priority,
                 Deadline = entity.Deadline,
                 Status = entity.Status,
                 ProjectId = entity.ProjectId,
-                Type = entity.Type
+                Type = entity.Type,
+                UsersId = entity.Users.Select(u => u.Id).ToList()
             };
+        }
+
+        public Ticket ToEntity()
+        {
+            return new Ticket(Title!, Description!, Priority, Deadline, Status, ProjectId, Type);
         }
     }
 }
