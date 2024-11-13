@@ -5,15 +5,32 @@ using RhythmFlow.Domain.src.RepoInterfaces;
 
 namespace RhythmFlow.Application.src.Services
 {
-    public class AssignmentService<T, TReadDto>(IBaseRepo<T> repository) : IAssignmentService<T, TReadDto>
+    public class AssignmentService<T, TReadDto>(IUserRepo userRepo, IBaseRepo<T> entityRepo) : IAssignmentService<T, TReadDto>
         where T : BaseEntity
-        where TReadDto : IBaseReadDto<T>
+        where TReadDto : IBaseReadDto<T>, new()
     {
-        private readonly IBaseRepo<T> _repository = repository;
+        private readonly IUserRepo _userRepo = userRepo;
+        private readonly IBaseRepo<T> _entityRepo = entityRepo;
 
         public async Task<TReadDto> AssignUserToEntityAsync(Guid userId, Guid entityId)
         {
-            throw new NotImplementedException();
+            var user = await _userRepo.GetByIdAsync(userId);
+            var entity = await _entityRepo.GetByIdAsync(entityId);
+
+            if (user == null || entity == null)
+            {
+                throw new KeyNotFoundException("User or entity not found.");
+            }
+
+            // Use reflection to add the user to the entity's collection
+            var entityUsers = (entity as dynamic).Users;
+            if (!entityUsers.Contains(user))
+            {
+                entityUsers.Add(user);
+                await _entityRepo.UpdateAsync(entity);
+            }
+
+            return (TReadDto)new TReadDto().ToDto(entity);
         }
 
         public async Task<TReadDto> RemoveUserFromEntityAsync(Guid userId, Guid entityId)
