@@ -6,7 +6,7 @@ namespace RhythmFlow.Controller.src.Middleware
     public class ExceptionHandlerMiddleware : IMiddleware
     {
         // Define a single, shared JsonSerialiserOptions instance
-        private static readonly JsonSerializerOptions JsonOptions = new()
+        private static readonly JsonSerializerOptions JsonOptions = new ()
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
@@ -27,12 +27,11 @@ namespace RhythmFlow.Controller.src.Middleware
         {
             var (status, message) = ExceptionMapper.MapException(exception);
 
-            // Customise response
+            // Customise response, for development purposes we can add <Details = exception.Message>
             var exceptionResponse = new
             {
                 StatusCode = status,
                 Message = message,
-                // Details = exception.Message, // Only for development
                 Timestamp = DateTime.UtcNow
             };
 

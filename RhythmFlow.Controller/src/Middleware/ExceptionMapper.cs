@@ -5,7 +5,7 @@ namespace RhythmFlow.Controller.src.Middleware
     // Static helper class for mapping exceptions to status codes and messages
     public static class ExceptionMapper
     {
-        private static readonly Dictionary<Type, (int StatusCode, string Message)> ExceptionMappings = new()
+        private static readonly Dictionary<Type, (int StatusCode, string Message)> ExceptionMappings = new ()
     {
         { typeof(InvalidOperationException), ((int)HttpStatusCode.BadRequest, "The operation is not valid.") },
         { typeof(KeyNotFoundException), ((int)HttpStatusCode.NotFound, "The requested resource was not found.") },
