@@ -6,11 +6,11 @@ using RhythmFlow.Domain.src.RepoInterfaces;
 namespace RhythmFlow.Application.src.Services
 {
     public class AssignmentService<T, TReadDto>(IUserRepo userRepo, IBaseRepo<T> entityRepo) : IAssignmentService<T, TReadDto>
-        where T : BaseEntity
-        where TReadDto : IBaseReadDto<T>, new()
+    where T : BaseEntity
+    where TReadDto : IBaseReadDto<T>, new()
     {
-        private readonly IUserRepo _userRepo = userRepo;
-        private readonly IBaseRepo<T> _entityRepo = entityRepo;
+        private readonly IUserRepo _userRepo = userRepo ?? throw new ArgumentNullException(nameof(userRepo));
+        private readonly IBaseRepo<T> _entityRepo = entityRepo ?? throw new ArgumentNullException(nameof(entityRepo));
 
         public async Task<TReadDto> AssignUserToEntityAsync(Guid userId, Guid entityId)
         {
