@@ -5,7 +5,7 @@ namespace RhythmFlow.Application.Tests.src.DTOsTests.UserDtoTests
 {
     public class UserCreateDtoTests
     {
-         private List<ValidationResult> ValidateModel(object model)
+        private List<ValidationResult> ValidateModel(object model)
         {
             var validationResults = new List<ValidationResult>();
             var validationContext = new ValidationContext(model, serviceProvider: null, items: null);
@@ -13,13 +13,13 @@ namespace RhythmFlow.Application.Tests.src.DTOsTests.UserDtoTests
             return validationResults;
         }
 
-         [Theory]
-         [InlineData("John", "Doe", "john.doe@example.com", "hashedPassword", true)]
-         [InlineData("", "Doe", "john.doe@example.com", "hashedPassword", false)] // Missing FirstName
-         [InlineData("John", "", "john.doe@example.com", "hashedPassword", false)] // Missing LastName
-         [InlineData("John", "Doe", "invalid-email", "hashedPassword", false)] // Invalid Email
-         [InlineData("John", "Doe", "john.doe@example.com", "", false)] // Missing PasswordHash
-         public void UserCreateDto_ValidationTests(string firstName, string lastName, string email, string passwordHash, bool isValid)
+        [Theory]
+        [InlineData("John", "Doe", "john.doe@example.com", "hashedPassword", true)]
+        [InlineData("", "Doe", "john.doe@example.com", "hashedPassword", false)] // Missing FirstName
+        [InlineData("John", "", "john.doe@example.com", "hashedPassword", false)] // Missing LastName
+        [InlineData("John", "Doe", "invalid-email", "hashedPassword", false)] // Invalid Email
+        [InlineData("John", "Doe", "john.doe@example.com", "", false)] // Missing PasswordHash
+        public void UserCreateDto_ValidationTests(string firstName, string lastName, string email, string passwordHash, bool isValid)
         {
             // Arrange
             var dto = new UserCreateDto
