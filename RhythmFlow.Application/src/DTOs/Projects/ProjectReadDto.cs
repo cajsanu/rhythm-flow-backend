@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using RhythmFlow.Application.src.DTOs.Shared;
 using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Domain.src.Entities;
@@ -10,8 +9,8 @@ namespace RhythmFlow.Application.src.DTOs.Projects
     {
         // Addded the Id property to the ProjectReadDto because the BaseController needs it
         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public Status Status { get; set; }

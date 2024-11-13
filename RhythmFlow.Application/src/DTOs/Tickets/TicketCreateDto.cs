@@ -1,27 +1,27 @@
+using System.ComponentModel.DataAnnotations;
 using RhythmFlow.Application.src.DTOs.Shared;
-using RhythmFlow.Application.src.DTOs.Users;
+using RhythmFlow.Application.src.DTOs.ValidationAttributes;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.Application.src.DTOs.Tickets
 {
-    public class TicketReadDto : IBaseReadDto<Ticket>
+    public class TicketCreateDto : IBaseCreateDto<Ticket>
     {
-        // Addded the Id property to the TicketReadDto because the BaseController needs it
-        public Guid Id { get; set; }
+        [Required]
         required public string Title { get; set; }
         required public string Description { get; set; }
         public Priority Priority { get; set; }
+        [FutureDate]
         public DateTime Deadline { get; set; }
         public Status Status { get; set; }
+        [NoEmptyGuid]
         public Guid ProjectId { get; set; }
         public TicketType Type { get; set; }
-
-        public IBaseReadDto<Ticket> ToDto(Ticket entity)
+        public IBaseCreateDto<Ticket> ToDto(Ticket entity)
         {
-            return new TicketReadDto()
+            return new TicketCreateDto()
             {
-                Id = entity.Id,
                 Title = entity.Title,
                 Description = entity.Description,
                 Priority = entity.Priority,
@@ -30,6 +30,11 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
                 ProjectId = entity.ProjectId,
                 Type = entity.Type
             };
+        }
+
+        public Ticket ToEntity()
+        {
+            return new Ticket(Title, Description, Priority, Deadline, Status, ProjectId, Type);
         }
     }
 }

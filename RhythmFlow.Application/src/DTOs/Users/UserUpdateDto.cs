@@ -3,22 +3,19 @@ using RhythmFlow.Domain.src.Entities;
 
 namespace RhythmFlow.Application.src.DTOs.Users
 {
-    public class UserReadDto : IBaseReadDto<User>
+    public class UserUpdateDto : IBaseUpdateDto<User>
     {
-        // Addded the Id property to the UserReadDto because the BaseController needs it
-        public Guid Id { get; set; }
         required public string FirstName { get; set; }
         required public string LastName { get; set; }
         required public string Email { get; set; }
 
-        public IBaseReadDto<User> ToDto(User entity)
+        public IBaseUpdateDto<User> ToDto(User entity)
         {
-            return new UserReadDto()
+            return new UserUpdateDto()
             {
-                Id = entity.Id,
                 FirstName = entity.FirstName,
                 LastName = entity.LastName,
-                Email = entity.Email.Value
+                Email = entity.Email.Value,
             };
         }
     }
