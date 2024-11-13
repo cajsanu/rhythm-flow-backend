@@ -1,34 +1,11 @@
 using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.Entities;
+using RhythmFlow.Domain.src.RepoInterfaces;
 
 namespace RhythmFlow.Application.src.Services
 {
-    public class UserService : IUserService
+    public class UserService(IUserRepo repository) : BaseService<User, UserReadDto>(repository), IUserService
     {
-        public Task<UserReadDto> AddAsync(User entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<UserReadDto>> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<UserReadDto> GetByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<User> UpdateAsync(Guid id, User entity)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

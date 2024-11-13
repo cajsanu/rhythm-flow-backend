@@ -1,27 +1,13 @@
 using RhythmFlow.Application.DTOs.Workspaces;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.Entities;
+using RhythmFlow.Domain.src.RepoInterfaces;
 
 namespace RhythmFlow.Application.src.Services
 {
-    public class WorkspaceService : IWorkspaceService
+    public class WorkspaceService(IWorkspaceRepo repository) : BaseService<Workspace, WorkspaceReadDto>(repository), IWorkspaceService
     {
-        public Task<WorkspaceReadDto> AddAsync(Workspace entity)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<User> AssignUserToEntityAsync(Guid userId, Guid entityId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<WorkspaceReadDto>> GetAllAsync()
         {
             throw new NotImplementedException();
         }
@@ -36,17 +22,7 @@ namespace RhythmFlow.Application.src.Services
             throw new NotImplementedException();
         }
 
-        public Task<WorkspaceReadDto> GetByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<User> RemoveUserFromEntityAsync(Guid userId, Guid entityId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Workspace> UpdateAsync(Guid id, Workspace entity)
         {
             throw new NotImplementedException();
         }

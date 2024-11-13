@@ -7,8 +7,8 @@ namespace RhythmFlow.Application.DTOs.Workspaces
     {
         // Addded the Id property to the UserReadDto because the BaseController needs it
         public Guid Id { get; set; }
-        required public string Name { get; set; }
-        required public Guid OwnerId { get; set; }
+        public string? Name { get; set; }
+        public Guid OwnerId { get; set; }
 
         public IBaseReadDto<Workspace> ToDto(Workspace entity)
         {
