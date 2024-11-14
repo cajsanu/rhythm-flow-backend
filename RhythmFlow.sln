@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RhythmFlow.Domain", "RhythmFlow.Domain\RhythmFlow.Domain.csproj", "{DB77A1D2-95B0-4834-B895-954B0AA12947}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RhythmFlow.Domain.Tests", "RhythmFlow.Domain.Tests\RhythmFlow.Domain.Tests.csproj", "{7F52EE46-DE90-424F-8C5C-D258A1C20A76}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RhythmFlow.Controller", "RhythmFlow.Controller\RhythmFlow.Controller.csproj", "{95025CC8-8681-4023-A08E-5613A0414969}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RhythmFlow.Application", "RhythmFlow.Application\RhythmFlow.Application.csproj", "{A98B48D4-DAFC-44DA-9908-2250B0F63786}"

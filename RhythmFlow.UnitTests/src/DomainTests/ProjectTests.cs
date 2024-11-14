@@ -1,7 +1,7 @@
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
 
-namespace RhythmFlow.Domain.Tests.src
+namespace RhythmFlow.UnitTests.src.DomainTests
 {
     public class ProjectTests
     {
