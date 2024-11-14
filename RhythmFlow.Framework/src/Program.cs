@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Application.src.Services;
+using RhythmFlow.Controller.src.Middleware;
 using RhythmFlow.Controller.src.RouteTransformer;
 using RhythmFlow.Framework.src.Data;
 
@@ -27,6 +28,9 @@ builder.Services.AddControllers(options =>
     options.Conventions.Add(new RouteTokenTransformerConvention(new SpinCaseTransformer()));
 });
 
+// add exception handling middleware
+builder.Services.AddTransient<ExceptionHandlerMiddleware>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -38,4 +42,5 @@ if (app.Environment.IsDevelopment())
 
 // app.UseHttpsRedirection();
 app.MapControllers();
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.Run();
