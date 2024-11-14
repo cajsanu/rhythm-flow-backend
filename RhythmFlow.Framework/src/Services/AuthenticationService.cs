@@ -7,13 +7,14 @@ using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
 using RhythmFlow.Domain.src.ValueObjects;
 
-// Basically, there is no role connected to the user directly, but a user has a role connected to a workspace through the UserWorkspace join table.
-// When a user logs in, the authentication service will check if the user exists and if the password is correct. Then a JWT token will be generated and returned.
-// The JWT token will be used to authenticate the user in the future requests. However, the role of the user is not checked in the authentication process.
-// The role of the user should be checked in the authorization process when the user tries perform an action on a entity in the workspace.
-// This also means, for tickets and projects, we first have to check if the user has a role in the workspace before we can check if the user has the right role to perform the action.
 namespace RhythmFlow.Framework.src.Services
 {
+    // After some thinking, I have come to the conclusion that there are two options for the Authorization part here.
+    // The first option is to use the JWT token as the authorization token,
+    // adding a tuple of workspaceId and Role to the claims for every workspce the user is in.
+    // The second option is to not include roles in the claims of the JWT token,
+    // and instead have separate logic for checking (querying the database on every request) if a user is authorized to perform an action.
+    // The first option is more efficient, but whenver a new role is added to a user, the token must be refreshed.
     public class AuthenticationService(IUserRepo userRepo, IPasswordService passwordService, IConfiguration configuration) : IAuthenticationService
     {
         private readonly IUserRepo _userRepo = userRepo;
@@ -44,7 +45,6 @@ namespace RhythmFlow.Framework.src.Services
             var claims = new List<Claim>
             {
                 new (ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new (ClaimTypes.Email, user.Email.Value.ToString())
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
