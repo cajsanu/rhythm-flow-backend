@@ -23,7 +23,6 @@ namespace RhythmFlow.Application.src.Services
             }
 
             return entities.Select(_dtoFactory.CreateDto).ToList();
-
         }
 
         public async Task<TReadDto> GetByIdAsync(Guid id)
@@ -47,7 +46,6 @@ namespace RhythmFlow.Application.src.Services
             var updatedEntity = await _repository.UpdateAsync(entity) ?? throw new InvalidOperationException($"Failed to update {typeof(T).Name} with ID {entity.Id}.");
             return _dtoFactory.CreateDto(updatedEntity);
         }
-
 
         public async Task DeleteAsync(Guid id)
         {

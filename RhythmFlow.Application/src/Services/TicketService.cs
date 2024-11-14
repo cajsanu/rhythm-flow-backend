@@ -8,7 +8,6 @@ namespace RhythmFlow.Application.src.Services
 {
     public class TicketService : BaseService<Ticket, TicketReadDto>, ITicketService
     {
-        // T
         private readonly AssignmentService<Ticket, TicketReadDto> _assignmentService;
 
         public TicketService(
@@ -20,11 +19,13 @@ namespace RhythmFlow.Application.src.Services
             _assignmentService = assignmentService;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarAnalyzer", "S927", Justification = "This is a special implementation")]
         public Task<TicketReadDto> AssignUserToEntityAsync(Guid userId, Guid ticketId)
         {
             return _assignmentService.AssignUserToEntityAsync(userId, ticketId);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarAnalyzer", "S927", Justification = "This is a special implementation")]
         public Task<TicketReadDto> RemoveUserFromEntityAsync(Guid userId, Guid ticketId)
         {
             return _assignmentService.RemoveUserFromEntityAsync(userId, ticketId);

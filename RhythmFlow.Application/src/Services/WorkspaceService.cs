@@ -23,7 +23,7 @@ namespace RhythmFlow.Application.src.Services
 
         public Task<WorkspaceReadDto> AssignUserToEntityAsync(Guid userId, Guid entityId)
         {
-            throw new NotImplementedException();
+            return _assignmentService.AssignUserToEntityAsync(userId, entityId);
         }
 
         public Task<IEnumerable<Workspace>> GetAllWorkspaceJoinedByUser(Guid userId)
@@ -38,7 +38,7 @@ namespace RhythmFlow.Application.src.Services
 
         public Task<WorkspaceReadDto> RemoveUserFromEntityAsync(Guid userId, Guid entityId)
         {
-            throw new NotImplementedException();
+            return _assignmentService.RemoveUserFromEntityAsync(userId, entityId);
         }
     }
 }

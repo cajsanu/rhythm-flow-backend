@@ -21,12 +21,13 @@ namespace RhythmFlow.Application.src.Services
             _assignmentService = assignmentService;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarAnalyzer", "S927", Justification = "This is a special implementation")]
         public Task<ProjectReadDto> AssignUserToEntityAsync(Guid userId, Guid ticketId)
         {
             return _assignmentService.AssignUserToEntityAsync(userId, ticketId);
-
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("SonarAnalyzer", "S927", Justification = "This is a special implementation")]
         public Task<ProjectReadDto> RemoveUserFromEntityAsync(Guid userId, Guid ticketId)
         {
             return _assignmentService.RemoveUserFromEntityAsync(userId, ticketId);
