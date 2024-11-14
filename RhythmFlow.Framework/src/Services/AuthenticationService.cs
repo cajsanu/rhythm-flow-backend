@@ -35,9 +35,9 @@ namespace RhythmFlow.Framework.src.Services
         {
             // Create key for the token
             var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Secret"]);
-            if (key.Length < 16)
+            if (key.Length < 32)
             {
-                throw new InvalidOperationException("JWT secret must be at least 16 characters long");
+                throw new InvalidOperationException("JWT secret must be at least 32 characters long");
             }
 
             // Add claims for the token
