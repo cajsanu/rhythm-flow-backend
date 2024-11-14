@@ -3,11 +3,7 @@ using RhythmFlow.Domain.src.Entities;
 
 namespace RhythmFlow.Application.src.ServiceInterfaces
 {
-<<<<<<< HEAD
-    public interface IWorkspaceService : IBaseService<Workspace, WorkspaceReadDto>, IAssignmentService<Workspace, WorkspaceReadDto>
-=======
     public interface IWorkspaceService : IBaseService<Workspace, WorkspaceReadDto>
->>>>>>> main
     {
         // Methdo to get all workspaces owned by a user'
         Task<IEnumerable<Workspace>> GetAllWorkspaceOwnedByUser(Guid userId);

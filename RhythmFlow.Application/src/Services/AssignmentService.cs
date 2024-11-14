@@ -1,9 +1,6 @@
 using RhythmFlow.Application.src.DTOs.Shared;
-<<<<<<< HEAD
 using RhythmFlow.Application.src.Factories;
 using RhythmFlow.Application.src.FactoryInterfaces;
-=======
->>>>>>> main
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
@@ -15,7 +12,6 @@ namespace RhythmFlow.Application.src.Services
     // This relationship is represented by a collection of users on the entity and collections of entities on the user.
     // The many-to-many table is implemented in the database as a implicit join table, which means that the table is not explicitly defined in the database schema.
     // Read more about it here: https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many
-<<<<<<< HEAD
     public class AssignmentService<T, TReadDto>(IUserRepo userRepo, IBaseRepo<T> entityRepo,  IDtoFactory<T, TReadDto> dtoFactory) : IAssignmentService<T, TReadDto>
     where T : BaseEntity
     where TReadDto : IBaseReadDto<T>
@@ -23,14 +19,6 @@ namespace RhythmFlow.Application.src.Services
         private readonly IUserRepo _userRepo = userRepo ?? throw new ArgumentNullException(nameof(userRepo));
         private readonly IBaseRepo<T> _entityRepo = entityRepo ?? throw new ArgumentNullException(nameof(entityRepo));
         private readonly IDtoFactory<T, TReadDto> _dtoFactory = dtoFactory ?? throw new ArgumentNullException(nameof(dtoFactory));
-=======
-    public class AssignmentService<T, TReadDto>(IUserRepo userRepo, IBaseRepo<T> entityRepo) : IAssignmentService<T, TReadDto>
-    where T : BaseEntity
-    where TReadDto : IBaseReadDto<T>, new()
-    {
-        private readonly IUserRepo _userRepo = userRepo ?? throw new ArgumentNullException(nameof(userRepo));
-        private readonly IBaseRepo<T> _entityRepo = entityRepo ?? throw new ArgumentNullException(nameof(entityRepo));
->>>>>>> main
 
         public async Task<TReadDto> AssignUserToEntityAsync(Guid userId, Guid entityId)
         {
@@ -50,11 +38,7 @@ namespace RhythmFlow.Application.src.Services
                 await _entityRepo.UpdateAsync(entity); // Need to make sure SaveChangesAsync is called
             }
 
-<<<<<<< HEAD
             return _dtoFactory.CreateDto(entity);
-=======
-            return (TReadDto)new TReadDto().ToDto(entity);
->>>>>>> main
         }
 
         public async Task<TReadDto> RemoveUserFromEntityAsync(Guid userId, Guid entityId)
@@ -75,11 +59,7 @@ namespace RhythmFlow.Application.src.Services
                 await _entityRepo.UpdateAsync(entity);
             }
 
-<<<<<<< HEAD
             return _dtoFactory.CreateDto(entity);
-=======
-            return (TReadDto)new TReadDto().ToDto(entity);
->>>>>>> main
         }
     }
 }
