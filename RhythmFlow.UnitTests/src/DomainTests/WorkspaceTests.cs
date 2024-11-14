@@ -1,6 +1,6 @@
 using RhythmFlow.Domain.src.Entities;
 
-namespace RhythmFlow.Domain.Tests.src
+namespace RhythmFlow.UnitTests.src.DomainTests
 {
     public class WorkspaceTests
     {

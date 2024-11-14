@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using RhythmFlow.Application.DTOs.Workspaces;
 
-namespace RhythmFlow.Application.Tests.src.DTOsTests.WorkspaceCreateDtoTests
+namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.WorkspaceDtoTests
 {
     public class WorkspaceCreateDtoTests
     {
