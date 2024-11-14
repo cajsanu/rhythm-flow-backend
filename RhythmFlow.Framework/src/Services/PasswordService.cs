@@ -1,6 +1,4 @@
-using RhythmFlow.Application.src.ServiceInterfaces;
-
-namespace RhythmFlow.Application.src.Services
+namespace RhythmFlow.Framework.src.Services
 {
     public class PasswordService : IPasswordService
     {
