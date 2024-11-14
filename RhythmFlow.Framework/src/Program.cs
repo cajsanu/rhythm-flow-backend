@@ -3,6 +3,7 @@ using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Application.src.Services;
 using RhythmFlow.Controller.src.RouteTransformer;
 using RhythmFlow.Framework.src.Data;
+using RhythmFlow.Framework.src.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,7 @@ builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IWorkspaceService, WorkspaceService>();
+builder.Services.AddScoped<IPasswordService, PasswordService>();
 
 // add controller
 builder.Services.AddControllers(options =>
