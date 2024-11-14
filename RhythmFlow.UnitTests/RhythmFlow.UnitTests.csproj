@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\RhythmFlow.Application\RhythmFlow.Application.csproj" />
     <ProjectReference Include="..\RhythmFlow.Domain\RhythmFlow.Domain.csproj" />
+    <ProjectReference Include="..\RhythmFlow.Framework\RhythmFlow.Framework.csproj" />
   </ItemGroup>
 
 </Project>
