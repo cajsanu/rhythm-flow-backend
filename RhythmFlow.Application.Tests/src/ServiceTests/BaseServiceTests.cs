@@ -5,18 +5,8 @@ using RhythmFlow.Application.src.Services;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
 
-namespace RhythmFlow.Application.Tests.src
+namespace RhythmFlow.Application.Tests.src.ServiceTests
 {
-    // Minimal concrete implementation for testing purposes
-    public class TestBaseReadDto : IBaseReadDto<BaseEntity>
-    {
-        public Guid Id { get; set; }
-        public IBaseReadDto<BaseEntity> ToDto(BaseEntity entity)
-        {
-            return new TestBaseReadDto { Id = entity.Id };
-        }
-    }
-
     public class BaseServiceTests
     {
         private readonly Mock<IBaseRepo<BaseEntity>> _mockRepo;
@@ -98,6 +88,16 @@ namespace RhythmFlow.Application.Tests.src
 
             // Assert
             _mockRepo.Verify(repo => repo.DeleteAsync(entity.Id), Times.Once);
+        }
+    }
+
+    // Minimal concrete implementation for testing purposes
+    public class TestBaseReadDto : IBaseReadDto<BaseEntity>
+    {
+        public Guid Id { get; set; }
+        public IBaseReadDto<BaseEntity> ToDto(BaseEntity entity)
+        {
+            return new TestBaseReadDto { Id = entity.Id };
         }
     }
 }
