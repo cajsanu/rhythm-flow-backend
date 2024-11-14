@@ -14,7 +14,7 @@ namespace RhythmFlow.Framework.src.Services
             // _passwordService = passwordService;
         }
 
-        public async Task<string?> AuthenticateUser(string username, string password)
+        public async Task<string?> AuthenticateUserAsync(string userEmail, string password)
         {
            throw new NotImplementedException();
         }
