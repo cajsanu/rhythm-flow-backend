@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RhythmFlow.Application.src.DTOs.ValidationAttributes
 {
-   [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-   public class NoEmptyGuidAttribute : ValidationAttribute
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
+    public class NoEmptyGuidAttribute : ValidationAttribute
     {
         public bool ValidateCollection { get; set; } = false;
 
