@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using RhythmFlow.Application.src.DTOs.Users;
 
-namespace RhythmFlow.Application.Tests.src.DTOsTests.UserDtoTests
+namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.UserDtoTests
 {
     public class UserCreateDtoTests
     {

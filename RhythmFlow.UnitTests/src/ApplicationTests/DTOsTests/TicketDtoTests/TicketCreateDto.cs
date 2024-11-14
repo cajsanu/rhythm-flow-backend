@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using RhythmFlow.Application.src.DTOs.Tickets;
 using RhythmFlow.Domain.src.ValueObjects;
 
-namespace RhythmFlow.Application.Tests.src.DTOsTests.TicketDtoTests
+namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.TicketDtoTests
 {
     public class TicketCreateDtoTests
     {

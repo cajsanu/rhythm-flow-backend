@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using RhythmFlow.Application.src.DTOs.UserWorkspaces;
 using RhythmFlow.Domain.src.ValueObjects;
 
-namespace RhythmFlow.Application.Tests.src.DTOsTests.UserWorkspaceCreateDtoTests
+namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.UserWorkspaceDtoTests
 {
     public class UserWorkspaceCreateDtoTests
     {
