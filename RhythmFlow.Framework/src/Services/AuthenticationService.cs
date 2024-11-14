@@ -15,11 +15,12 @@ namespace RhythmFlow.Framework.src.Services
     // The second option is to not include roles in the claims of the JWT token,
     // and instead have separate logic for checking (querying the database on every request) if a user is authorized to perform an action.
     // The first option is more efficient, but whenver a new role is added to a user, the token must be refreshed.
-    public class AuthenticationService(IUserRepo userRepo, IPasswordService passwordService, IConfiguration configuration) : IAuthenticationService
+    public class AuthenticationService(IUserRepo userRepo, IPasswordService passwordService, IConfiguration configuration, IUserWorkspaceService userWorkspaceService) : IAuthenticationService
     {
         private readonly IUserRepo _userRepo = userRepo;
         private readonly IPasswordService _passwordService = passwordService;
         private readonly IConfiguration _configuration = configuration;
+        private readonly IUserWorkspaceService _userWorkspaceService = userWorkspaceService;
 
         public async Task<string?> AuthenticateUserAsync(Email userEmail, string password)
         {
@@ -29,10 +30,10 @@ namespace RhythmFlow.Framework.src.Services
                 throw new UnauthorizedAccessException("Invalid email or password");
             }
 
-            return GenerateJwtToken(user);
+            return await GenerateJwtToken(user);
         }
 
-        private string GenerateJwtToken(User user)
+        private async Task<string> GenerateJwtToken(User user)
         {
             // Create key for the token
             var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Secret"]);
@@ -46,6 +47,15 @@ namespace RhythmFlow.Framework.src.Services
             {
                 new (ClaimTypes.NameIdentifier, user.Id.ToString()),
             };
+
+            // Get all workspaces the user is in
+            var userWorkspaces = await _userWorkspaceService.GetUserWorkspaceByUserIdAsync(user.Id);
+
+            // Add workspaceId and Role to the claims for every workspace the user is in
+            foreach (var userWorkspace in userWorkspaces)
+            {
+                claims.Add(new Claim($"workspace_role_{userWorkspace.WorkspaceId}", userWorkspace.Role.ToString()));
+            }
 
             var tokenHandler = new JwtSecurityTokenHandler();
 
