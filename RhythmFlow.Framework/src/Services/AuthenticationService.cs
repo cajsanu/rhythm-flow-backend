@@ -14,18 +14,11 @@ using RhythmFlow.Domain.src.ValueObjects;
 // This also means, for tickets and projects, we first have to check if the user has a role in the workspace before we can check if the user has the right role to perform the action.
 namespace RhythmFlow.Framework.src.Services
 {
-    public class AuthenticationService : IAuthenticationService
+    public class AuthenticationService(IUserRepo userRepo, IPasswordService passwordService, IConfiguration configuration) : IAuthenticationService
     {
-        private readonly IUserRepo _userRepo;
-        private readonly IPasswordService _passwordService;
-        private readonly IConfiguration _configuration;
-
-        public AuthenticationService(IUserRepo userRepo, IPasswordService passwordService, IConfiguration configuration)
-        {
-            _userRepo = userRepo;
-            _passwordService = passwordService;
-            _configuration = configuration;
-        }
+        private readonly IUserRepo _userRepo = userRepo;
+        private readonly IPasswordService _passwordService = passwordService;
+        private readonly IConfiguration _configuration = configuration;
 
         public async Task<string?> AuthenticateUserAsync(Email userEmail, string password)
         {
