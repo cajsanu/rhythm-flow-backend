@@ -5,7 +5,7 @@ using RhythmFlow.Application.src.Services;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
 
-namespace RhythmFlow.Application.Tests.src
+namespace RhythmFlow.UnitTests.src.ApplicationTests
 {
     // Minimal concrete implementation for testing purposes
     public class TestBaseReadDto : IBaseReadDto<BaseEntity>
