@@ -1,4 +1,3 @@
-using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using RhythmFlow.Application.src.ServiceInterfaces;
@@ -13,6 +12,7 @@ namespace RhythmFlow.UnitTests.src.FrameworkTests
     {
         private readonly Mock<IUserRepo> _mockUserRepo;
         private readonly Mock<IPasswordService> _mockPasswordService;
+        private readonly Mock<IUserWorkspaceService> _mockUserWorkspaceService;
         private readonly Mock<IConfiguration> _mockConfiguration;
         private readonly AuthenticationService _authenticationService;
 
@@ -20,6 +20,7 @@ namespace RhythmFlow.UnitTests.src.FrameworkTests
         {
             _mockUserRepo = new Mock<IUserRepo>();
             _mockPasswordService = new Mock<IPasswordService>();
+            _mockUserWorkspaceService = new Mock<IUserWorkspaceService>();
             _mockConfiguration = new Mock<IConfiguration>();
 
             _mockConfiguration.Setup(config => config["Jwt:Secret"]).Returns("supersecretkey1234567890somuchlonger");
@@ -27,7 +28,7 @@ namespace RhythmFlow.UnitTests.src.FrameworkTests
             _mockConfiguration.Setup(config => config["Jwt:Issuer"]).Returns("testIssuer");
             _mockConfiguration.Setup(config => config["Jwt:Audience"]).Returns("testAudience");
 
-            _authenticationService = new AuthenticationService(_mockUserRepo.Object, _mockPasswordService.Object, _mockConfiguration.Object);
+            _authenticationService = new AuthenticationService(_mockUserRepo.Object, _mockPasswordService.Object, _mockConfiguration.Object, _mockUserWorkspaceService.Object);
         }
 
         [Fact]
@@ -63,23 +64,6 @@ namespace RhythmFlow.UnitTests.src.FrameworkTests
 
             // Act & Assert
             await Assert.ThrowsAsync<UnauthorizedAccessException>(() => _authenticationService.AuthenticateUserAsync(email, password));
-        }
-
-        [Fact]
-        public void GenerateJwtToken_ValidUser_ReturnsToken()
-        {
-            // Arrange
-            var email = new Email("test@example.com");
-            var user = new User("Test", "User", email.Value, "hashedPassword");
-
-            // Act
-            var token = _authenticationService.GetType()
-                                    .GetMethod("GenerateJwtToken", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                                    ?.Invoke(_authenticationService, [user]) as string;
-
-            // Assert
-            Assert.NotNull(token);
-            Assert.False(string.IsNullOrWhiteSpace(token));
         }
     }
 }

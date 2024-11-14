@@ -8,9 +8,10 @@ namespace RhythmFlow.Application.src.Services
 {
     public class UserService(IUserRepo repository) : BaseService<User, UserReadDto>(repository), IUserService
     {
-        public static User GetUserByEmailAsync(Email email)
+        public async Task<User?> GetUserByEmailAsync(Email email)
         {
-            throw new NotImplementedException();
+            var user = await repository.GetUserByEmailAsync(email) ?? throw new KeyNotFoundException($"User with email {email} not found.");
+            return user;
         }
     }
 }
