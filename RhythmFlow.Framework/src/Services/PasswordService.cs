@@ -13,9 +13,12 @@ namespace RhythmFlow.Framework.src.Services
             return passwordHash;
         }
 
+        // Verify the password against a stored hash
         public bool VerifyPassword(string password, string passwordHash)
         {
-            throw new NotImplementedException();
+            // Verify password using BCrypt
+            var passwordIsValid = BCrypt.Net.BCrypt.Verify(password, passwordHash);
+            return passwordIsValid;
         }
     }
 }
