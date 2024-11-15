@@ -1,3 +1,5 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using RhythmFlow.Application.src.ServiceInterfaces;
@@ -64,6 +66,79 @@ namespace RhythmFlow.UnitTests.src.FrameworkTests
 
             // Act & Assert
             await Assert.ThrowsAsync<UnauthorizedAccessException>(() => _authenticationService.AuthenticateUserAsync(email, password));
+        }
+
+        [Fact]
+        public async Task GenerateJwtToken_ValidConfiguration_ReturnsToken()
+        {
+            // Arrange
+            var user = new User("Test", "User", "test@example.com", "hashedPassword");
+            var userWorkspaces = new List<UserWorkspace>
+            {
+                new (Guid.NewGuid(), Guid.NewGuid(), Role.ProjectManager)
+            };
+
+            _mockUserWorkspaceService.Setup(service => service.GetUserWorkspaceByUserIdAsync(user.Id)).ReturnsAsync(userWorkspaces);
+
+            // Act
+            var methodInfo = _authenticationService.GetType()
+                                .GetMethod("GenerateJwtToken", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+
+            if (methodInfo?.Invoke(_authenticationService, [user]) is not Task<string> task)
+            {
+                throw new InvalidOperationException("Failed to invoke GenerateJwtToken method.");
+            }
+
+            var token = await task;
+
+            // Assert
+            Assert.NotNull(token);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var jwtToken = tokenHandler.ReadJwtToken(token);
+            Assert.Equal("testIssuer", jwtToken.Issuer);
+            Assert.Equal("testAudience", jwtToken.Audiences.First());
+        }
+
+        [Fact]
+        public async Task GenerateJwtToken_ShouldIncludeRoleClaims()
+        {
+            // Arrange
+            var user = new User("Test", "User", "test@example.com", "hashedPassword");
+            var workspaceId1 = Guid.NewGuid();
+            var workspaceId2 = Guid.NewGuid();
+            var userWorkspaces = new List<UserWorkspace>
+            {
+                new (Guid.NewGuid(), workspaceId1, Role.Developer),
+                new (Guid.NewGuid(), workspaceId2, Role.ProjectManager)
+            };
+
+            _mockUserWorkspaceService.Setup(service => service.GetUserWorkspaceByUserIdAsync(user.Id)).ReturnsAsync(userWorkspaces);
+
+            // Act
+            var methodInfo = _authenticationService.GetType()
+                                .GetMethod("GenerateJwtToken", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+
+            if (methodInfo?.Invoke(_authenticationService, [user]) is not Task<string> task)
+            {
+                throw new InvalidOperationException("Failed to invoke GenerateJwtToken method.");
+            }
+
+            var token = await task;
+
+            // Assert
+            Assert.NotNull(token);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var jwtToken = tokenHandler.ReadJwtToken(token);
+
+            // Check the Role claims in the "workspaceId, role" format
+            var roleClaims = jwtToken.Claims
+                .Where(c => c.Type == "role")
+                .Select(c => c.Value)
+                .ToList();
+
+            Assert.Equal(2, roleClaims.Count);
+            Assert.Contains($"{workspaceId1}, {Role.Developer}", roleClaims);
+            Assert.Contains($"{workspaceId2}, {Role.ProjectManager}", roleClaims);
         }
     }
 }

@@ -13,6 +13,7 @@ namespace RhythmFlow.Application.src.Services
             {
                 throw new InvalidOperationException($"No workspaces found for user with ID {userId}.");
             }
+
             return workspaces;
         }
     }
