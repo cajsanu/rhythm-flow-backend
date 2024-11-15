@@ -9,6 +9,8 @@ using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.Framework.src.Services
 {
+    // For development purposes, the JWT token secrets are stored in the appsettings.Development.json file.
+    // Run the application with the ASPNETCORE_ENVIRONMENT environment variable set to Development to use the development settings.
     public class AuthenticationService(IUserRepo userRepo, IPasswordService passwordService, IConfiguration configuration, IUserWorkspaceService userWorkspaceService) : IAuthenticationService
     {
         private readonly IUserRepo _userRepo = userRepo;
