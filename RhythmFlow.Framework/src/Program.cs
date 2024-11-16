@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.IdentityModel.Tokens;
+using RhythmFlow.Application.src.Authorization;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Application.src.Services;
 using RhythmFlow.Controller.src.Middleware;
@@ -52,6 +53,17 @@ builder.Services.AddAuthentication(options =>
         ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]))
     };
+});
+
+// add authorization
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("WorkspaceProjectManagerPolicy", policy =>
+        policy.Requirements.Add(new RoleInWorkspaceRequirement("ProjectManager")));
+    options.AddPolicy("WorkspaceDeveloperPolicy", policy =>
+        policy.Requirements.Add(new RoleInWorkspaceRequirement("Developer")));
+    options.AddPolicy("WorkspaceOwnerPolicy", policy =>
+        policy.Requirements.Add(new RoleInWorkspaceRequirement("WorkspaceOwner")));
 });
 
 // add exception handling middleware
