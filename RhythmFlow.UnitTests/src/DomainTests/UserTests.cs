@@ -68,7 +68,7 @@ namespace RhythmFlow.UnitTests.src.DomainTests
         {
             // Arrange
             var user = new User("John", "Doe", "john.doe@example.com", "passwordHash");
-            var project = new Project("Project Name", "Project Description", DateTime.Now, DateTime.Now.AddDays(30), Status.InProgress, Guid.NewGuid());
+            var project = new Project("Project Name", "Project Description", DateTime.Now, DateTime.Now.AddDays(30), Status.InProgress, Guid.NewGuid(), Guid.NewGuid());
 
             // Act
             user.Projects.Add(project);

@@ -15,11 +15,11 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.ProjectDtoTests
         }
 
         [Theory]
-        [InlineData("Project Alpha", "A sample project", "2024-01-01", "2028-12-31", Status.InProgress, "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[] { "6fa85f64-5717-4562-b3fc-2c963f66afa6", "7fa85f64-5717-4562-b3fc-2c963f66afa7" }, true)]
-        [InlineData("", "A sample project", "2024-01-01", "2027-12-31", Status.InProgress, "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[] { "6fa85f64-5717-4562-b3fc-2c963f66afa6" }, false)] // Missing Name
-        [InlineData("Project Beta", "", "2024-01-01", "2027-01-01", Status.NotStarted, "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[0], true)] // Valid with empty Description and UsersId
-        [InlineData("Project Gamma", "Another project", "2025-01-01", "2026-12-31", Status.Completed, "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[] { "00000000-0000-0000-0000-000000000000" }, false)] // Invalid UsersId GUID
-        [InlineData("Project Delta", "Description", "2024-01-01", "2026-12-31", Status.Cancelled, "00000000-0000-0000-0000-000000000000", new string[] { "6fa85f64-5717-4562-b3fc-2c963f66afa6" }, false)] // Invalid WorkspaceId
+        [InlineData("Project Alpha", "A sample project", "2024-01-01", "2028-12-31", Status.InProgress, "6fa85f64-5717-4562-b3fc-2c963f66afa6", "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[] { "6fa85f64-5717-4562-b3fc-2c963f66afa6", "7fa85f64-5717-4562-b3fc-2c963f66afa7" }, true)]
+        [InlineData("", "A sample project", "2024-01-01", "2027-12-31", Status.InProgress, "6fa85f64-5717-4562-b3fc-2c963f66afa6", "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[] { "6fa85f64-5717-4562-b3fc-2c963f66afa6" }, false)] // Missing Name
+        [InlineData("Project Beta", "", "2024-01-01", "2027-01-01", Status.NotStarted, "6fa85f64-5717-4562-b3fc-2c963f66afa6", "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[0], true)] // Valid with empty Description and UsersId
+        [InlineData("Project Gamma", "Another project", "2025-01-01", "2026-12-31", Status.Completed, "6fa85f64-5717-4562-b3fc-2c963f66afa6", "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[] { "00000000-0000-0000-0000-000000000000" }, false)] // Invalid UsersId GUID
+        [InlineData("Project Delta", "Description", "2024-01-01", "2026-12-31", Status.Cancelled, "00000000-0000-0000-0000-000000000000", "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[] { "6fa85f64-5717-4562-b3fc-2c963f66afa6" }, false)] // Invalid WorkspaceId
         public void ProjectCreateDto_ValidationTests(
             string name,
             string description,
@@ -27,6 +27,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.ProjectDtoTests
             string endDate,
             Status status,
             string workspaceId,
+            string managerId,
             string[] usersId,
             bool isValid)
         {
@@ -39,6 +40,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.ProjectDtoTests
                 EndDate = DateTime.Parse(endDate),
                 Status = status,
                 WorkspaceId = Guid.Parse(workspaceId),
+                ManagerId = Guid.Parse(managerId),
                 UsersId = ParseGuids(usersId)
             };
 

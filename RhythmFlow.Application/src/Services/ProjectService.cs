@@ -5,8 +5,12 @@ using RhythmFlow.Domain.src.RepoInterfaces;
 
 namespace RhythmFlow.Application.src.Services
 {
-    public class ProjectService(IProjectRepo repository) : BaseService<Project, ProjectReadDto>(repository), IProjectService
+    public class ProjectService : BaseService<Project, ProjectReadDto>, IProjectService
     {
+        public ProjectService(IProjectRepo repository) : base(repository)
+        {
+        }
+
         public Task<User> AssignUserToEntityAsync(Guid userId, Guid entityId)
         {
             throw new NotImplementedException();

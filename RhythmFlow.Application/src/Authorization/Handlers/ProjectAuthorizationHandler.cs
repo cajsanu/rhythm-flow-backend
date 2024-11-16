@@ -3,24 +3,23 @@ using Microsoft.AspNetCore.Authorization;
 using RhythmFlow.Application.src.DTOs.Projects;
 using RhythmFlow.Application.src.ServiceInterfaces;
 
-namespace RhythmFlow.Application.src.Authorization
+namespace RhythmFlow.Application.src.Authorization.Handlers
 {
-    public class WorkspaceRoleHandler(IUserWorkspaceService userWorkspaceService) : AuthorizationHandler<RoleInWorkspaceRequirement>
+    public class ManagerInProjectHandler(IProjectService projectService) : AuthorizationHandler<ManagerInProjectRequirement>
     {
-        private readonly IUserWorkspaceService _userWorkspaceService = userWorkspaceService;
+        private readonly IProjectService _projectService = projectService;
 
         protected override async Task HandleRequirementAsync(
             AuthorizationHandlerContext context,
-            RoleInWorkspaceRequirement requirement)
+            ManagerInProjectRequirement requirement)
         {
-            // Extract the workspaceId from the request body (Resource)
-            if (context.Resource is not ProjectCreateDto createProjectDto)
+            // Get project ID from the request body (Resource)
+            var projectId = context.Resource as Guid? ?? Guid.Empty;
+            if (projectId == Guid.Empty)
             {
                 context.Fail();
-                return;
+                throw new InvalidOperationException("Project ID is missing or invalid");
             }
-
-            Guid workspaceId = createProjectDto.WorkspaceId;
 
             // Get user ID from the claims
             if (!Guid.TryParse(context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var userId))
@@ -29,8 +28,9 @@ namespace RhythmFlow.Application.src.Authorization
                 throw new InvalidOperationException("User ID claim is missing or invalid");
             }
 
-            var userRole = await _userWorkspaceService.GetUserRoleInWorkspaceAsync(userId, workspaceId);
-            if (userRole.ToString() == requirement.RequiredRole)
+            var project = await _projectService.GetByIdAsync(projectId);
+
+            if (project.ManagerId == userId)
             {
                 context.Succeed(requirement);
             }

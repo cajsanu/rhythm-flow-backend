@@ -15,6 +15,7 @@ namespace RhythmFlow.Application.src.DTOs.Projects
         public DateTime EndDate { get; set; }
         public Status Status { get; set; }
         public Guid WorkspaceId { get; set; }
+        public Guid ManagerId { get; set; }
         public ICollection<UserReadDto> Users { get; set; } = [];
 
         public IBaseReadDto<Project> ToDto(Project entity)
@@ -28,6 +29,7 @@ namespace RhythmFlow.Application.src.DTOs.Projects
                 EndDate = entity.EndDate,
                 Status = entity.Status,
                 WorkspaceId = entity.WorkspaceId,
+                ManagerId = entity.ManagerId,
                 Users = entity.Users.Select(u => new UserReadDto
                 {
                     FirstName = u.FirstName,
