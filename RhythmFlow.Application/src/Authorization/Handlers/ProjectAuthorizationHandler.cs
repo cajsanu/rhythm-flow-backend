@@ -12,24 +12,25 @@ namespace RhythmFlow.Application.src.Authorization.Handlers
             AuthorizationHandlerContext context,
             ManagerInProjectRequirement requirement)
         {
-            // Get project ID from the request body (Resource)
+            // Get project ID from the request resource
             var projectId = context.Resource as Guid? ?? Guid.Empty;
             if (projectId == Guid.Empty)
             {
                 context.Fail();
-                throw new InvalidOperationException("Project ID is missing or invalid");
+                return;
             }
 
             // Get user ID from the claims
             if (!Guid.TryParse(context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var userId))
             {
                 context.Fail();
-                throw new InvalidOperationException("User ID claim is missing or invalid");
+                return;
             }
 
+            // Validate if the user is the manager of the project
             var project = await _projectService.GetByIdAsync(projectId);
 
-            if (project.ManagerId == userId)
+            if (project != null && project.ManagerId == userId)
             {
                 context.Succeed(requirement);
             }

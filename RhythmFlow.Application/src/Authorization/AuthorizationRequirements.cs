@@ -7,8 +7,7 @@ namespace RhythmFlow.Application.src.Authorization
         public string RequiredRole { get; } = requiredRole;
     }
 
-    public class ManagerInProjectRequirement(string requiredRole) : IAuthorizationRequirement
+    public class ManagerInProjectRequirement : IAuthorizationRequirement
     {
-        public string RequiredRole { get; } = requiredRole;
     }
 }

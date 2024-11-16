@@ -12,14 +12,14 @@ namespace RhythmFlow.Application.src.Authorization.Handlers
             AuthorizationHandlerContext context,
             RoleInWorkspaceRequirement requirement)
         {
-            // Extract the workspaceId from the request body (Resource)
+            // Extract the workspaceId from the request resource
             var workspaceId = context.Resource as Guid? ?? Guid.Empty;
 
             // Get user ID from the claims
             if (!Guid.TryParse(context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var userId))
             {
                 context.Fail();
-                throw new InvalidOperationException("User ID claim is missing or invalid");
+                return;
             }
 
             var userRole = await _userWorkspaceService.GetUserRoleInWorkspaceAsync(userId, workspaceId);
