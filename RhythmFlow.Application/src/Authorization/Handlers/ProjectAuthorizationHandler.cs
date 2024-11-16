@@ -1,6 +1,5 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using RhythmFlow.Application.src.DTOs.Projects;
 using RhythmFlow.Application.src.ServiceInterfaces;
 
 namespace RhythmFlow.Application.src.Authorization.Handlers
