@@ -19,7 +19,9 @@ namespace RhythmFlow.Controller.src.Middleware
         { typeof(IndexOutOfRangeException), ((int)HttpStatusCode.BadRequest, "The index is out of range.") },
         { typeof(NullReferenceException), ((int)HttpStatusCode.BadRequest, "The object is null.") },
         { typeof(ArgumentNullException), ((int)HttpStatusCode.BadRequest, "The argument provided is null.") },
-        { typeof(ArgumentOutOfRangeException), ((int)HttpStatusCode.BadRequest, "The argument is out of range.") }
+        { typeof(ArgumentOutOfRangeException), ((int)HttpStatusCode.BadRequest, "The argument is out of range.") },
+        { typeof(BCrypt.Net.SaltParseException), ((int)HttpStatusCode.InternalServerError, "An error occurred while parsing the salt.") },
+        { typeof(Exception), ((int)HttpStatusCode.InternalServerError, "An unexpected error occurred. Please try again later.") }
     };
 
         public static (int StatusCode, string Message) MapException(Exception exception)
