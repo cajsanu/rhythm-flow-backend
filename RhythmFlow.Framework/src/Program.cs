@@ -66,6 +66,8 @@ builder.Services.AddAuthorization(options =>
         policy.Requirements.Add(new RoleInWorkspaceRequirement("WorkspaceOwner")));
     options.AddPolicy("ProjectManagerPolicy", policy =>
         policy.Requirements.Add(new ManagerInProjectRequirement()));
+    options.AddPolicy("UserInProjectPolicy", policy =>
+        policy.Requirements.Add(new UserInProjectRequirement()));
 });
 
 // add exception handling middleware

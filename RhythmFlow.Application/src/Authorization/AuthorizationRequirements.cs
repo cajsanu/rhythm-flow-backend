@@ -10,4 +10,8 @@ namespace RhythmFlow.Application.src.Authorization
     public class ManagerInProjectRequirement : IAuthorizationRequirement
     {
     }
+
+    public class UserInProjectRequirement : IAuthorizationRequirement
+    {
+    }
 }
