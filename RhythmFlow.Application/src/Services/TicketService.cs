@@ -1,20 +1,32 @@
 using RhythmFlow.Application.src.DTOs.Tickets;
+using RhythmFlow.Application.src.Factories;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
 
 namespace RhythmFlow.Application.src.Services
 {
-    public class TicketService(ITicketRepo repository) : BaseService<Ticket, TicketReadDto>(repository), ITicketService
+    public class TicketService : BaseService<Ticket, TicketReadDto>, ITicketService
     {
-        public Task<User> AssignUserToEntityAsync(Guid userId, Guid entityId)
+        private readonly AssignmentService<Ticket, TicketReadDto> _assignmentService;
+
+        public TicketService(
+            ITicketRepo ticketRepository,
+            AssignmentService<Ticket, TicketReadDto> assignmentService,
+            TicketDtoFactory ticketDtoFactory)
+            : base(ticketRepository, ticketDtoFactory)
         {
-            throw new NotImplementedException();
+            _assignmentService = assignmentService;
         }
 
-        public Task<User> RemoveUserFromEntityAsync(Guid userId, Guid entityId)
+        public Task<TicketReadDto> AssignUserToEntityAsync(Guid userId, Guid ticketId)
         {
-            throw new NotImplementedException();
+            return _assignmentService.AssignUserToEntityAsync(userId, ticketId);
+        }
+
+        public Task<TicketReadDto> RemoveUserFromEntityAsync(Guid userId, Guid ticketId)
+        {
+            return _assignmentService.RemoveUserFromEntityAsync(userId, ticketId);
         }
     }
 }

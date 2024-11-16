@@ -1,5 +1,6 @@
 using Moq;
 using RhythmFlow.Application.src.DTOs.Shared;
+using RhythmFlow.Application.src.FactoryInterfaces;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Application.src.Services;
 using RhythmFlow.Domain.src.Entities;
@@ -20,12 +21,19 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
     public class BaseServiceTests
     {
         private readonly Mock<IBaseRepo<BaseEntity>> _mockRepo;
+        private readonly Mock<IDtoFactory<BaseEntity, TestBaseReadDto>> _mockFactory;
         private readonly IBaseService<BaseEntity, TestBaseReadDto> _service;
 
         public BaseServiceTests()
         {
             _mockRepo = new Mock<IBaseRepo<BaseEntity>>();
-            _service = new BaseService<BaseEntity, TestBaseReadDto>(_mockRepo.Object);
+            _mockFactory = new Mock<IDtoFactory<BaseEntity, TestBaseReadDto>>();
+
+            // Setup factory to convert BaseEntity to TestBaseReadDto
+            _mockFactory.Setup(factory => factory.CreateDto(It.IsAny<BaseEntity>()))
+                .Returns((BaseEntity entity) => new TestBaseReadDto { Id = entity.Id });
+
+            _service = new BaseService<BaseEntity, TestBaseReadDto>(_mockRepo.Object, _mockFactory.Object);
         }
 
         [Fact]
@@ -74,7 +82,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
         public async Task UpdateAsync_ShouldReturnUpdatedEntity()
         {
             // Arrange
-            var entity = new BaseEntity();
+            var entity = new BaseEntity { Id = Guid.NewGuid() };
             _mockRepo.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(entity);
             _mockRepo.Setup(repo => repo.UpdateAsync(It.IsAny<BaseEntity>())).ReturnsAsync(entity);
 
@@ -82,7 +90,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             var result = await _service.UpdateAsync(entity.Id, entity);
 
             // Assert
-            Assert.Equal(entity, result);
+            Assert.Equal(entity.Id, result.Id);
         }
 
         [Fact]
