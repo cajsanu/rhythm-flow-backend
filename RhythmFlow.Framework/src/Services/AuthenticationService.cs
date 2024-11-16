@@ -44,15 +44,6 @@ namespace RhythmFlow.Framework.src.Services
                 new (ClaimTypes.NameIdentifier, user.Id.ToString()),
             };
 
-            // Get all workspaces the user is in
-            var userWorkspaces = await _userWorkspaceService.GetUserWorkspaceByUserIdAsync(user.Id);
-
-            // Add workspaceId and Role to the claims for every workspace the user is in
-            foreach (var userWorkspace in userWorkspaces)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, $"{userWorkspace.WorkspaceId}, {userWorkspace.Role}"));
-            }
-
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var tokenDescriptor = new SecurityTokenDescriptor

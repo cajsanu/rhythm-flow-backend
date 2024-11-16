@@ -4,6 +4,6 @@ namespace RhythmFlow.Domain.src.RepoInterfaces
 {
     public interface IUserWorkspaceRepo
     {
-        Task<IEnumerable<UserWorkspace>> GetUserWorkspaceByUserIdAsync(Guid userId);
+        Task<UserWorkspace> GetUserWorkspaceByUserIdAndWorkspaceIdAsync(Guid userId, Guid workspaceId);
     }
 }

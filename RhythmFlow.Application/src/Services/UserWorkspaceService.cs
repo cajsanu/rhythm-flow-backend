@@ -1,20 +1,16 @@
 using RhythmFlow.Application.src.ServiceInterfaces;
-using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
+using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.Application.src.Services
 {
     public class UserWorkspaceService(IUserWorkspaceRepo repository) : IUserWorkspaceService
     {
-        public async Task<IEnumerable<UserWorkspace>> GetUserWorkspaceByUserIdAsync(Guid userId)
+        public async Task<Role> GetUserRoleInWorkspaceAsync(Guid userId, Guid workspaceId)
         {
-            var workspaces = await repository.GetUserWorkspaceByUserIdAsync(userId);
-            if (workspaces == null || !workspaces.Any())
-            {
-                throw new InvalidOperationException($"No workspaces found for user with ID {userId}.");
-            }
-
-            return workspaces;
+            var userWorkspace = await repository.GetUserWorkspaceByUserIdAndWorkspaceIdAsync(userId, workspaceId)
+                ?? throw new InvalidOperationException($"User with ID {userId} is not a member of workspace with ID {workspaceId}.");
+            return userWorkspace.Role;
         }
     }
 }
