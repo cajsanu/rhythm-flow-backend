@@ -24,7 +24,7 @@ builder.Services.AddSwaggerGen();
 
 // Configure lowercase URLs
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
-builder.Services.AddScoped<AppDbContext>();
+builder.Services.AddSingleton<AppDbContext>();
 
 // Add Repo to scope
 builder.Services.AddScoped<IBaseRepo<Project>, ProjectRepo>();
@@ -72,7 +72,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection(); --this line is causing some http-https issue
 app.MapControllers();
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.Run();

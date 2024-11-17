@@ -96,3 +96,6 @@ dotnet_diagnostic.SA1010.severity = None
 
 # S6966: Awaitable method should be used
 dotnet_diagnostic.S6966.severity = none
+
+# S125: Sections of code should not be commented out
+dotnet_diagnostic.S125.severity = none
