@@ -18,11 +18,11 @@ namespace RhythmFlow.Framework.src.Data
         {
             get
             {
-            lock (_lock)
-            {
-                _instance ??= new AppDbContext();
-                return _instance;
-            }
+                lock (_lock)
+                {
+                    _instance ??= new AppDbContext();
+                    return _instance;
+                }
             }
         }
 
@@ -135,7 +135,7 @@ namespace RhythmFlow.Framework.src.Data
             where T : BaseEntity
         {
             // cannot use switch here
-            #pragma warning disable CS8603 // Possible null reference return.
+#pragma warning disable CS8603 // Possible null reference return.
             if (typeof(T) == typeof(User))
                 return Users as List<T>;
 
@@ -147,7 +147,7 @@ namespace RhythmFlow.Framework.src.Data
                 return Workspaces as List<T>;
             if (typeof(T) == typeof(UserWorkspace))
                 return UserWorkspaces as List<T>;
-            #pragma warning restore CS8603 // Possible null reference return.
+#pragma warning restore CS8603 // Possible null reference return.
             throw new InvalidOperationException("Invalid entity type");
         }
     }
