@@ -1,5 +1,4 @@
 using RhythmFlow.Application.src.DTOs.Shared;
-using RhythmFlow.Domain.src.Entities;
 
 namespace RhythmFlow.UnitTests.src.ApplicationTests.TestClasses
 {
