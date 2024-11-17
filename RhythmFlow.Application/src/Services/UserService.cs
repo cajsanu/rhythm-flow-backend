@@ -6,7 +6,7 @@ using RhythmFlow.Domain.src.RepoInterfaces;
 
 namespace RhythmFlow.Application.src.Services
 {
-    public class UserService(IBaseRepo<User> repository, IDtoFactory<User, UserReadDto> dtoFactory) : BaseService<User, UserReadDto>(repository, dtoFactory), IUserService
+    public class UserService(IUserRepo repository, IDtoFactory<User, UserReadDto> dtoFactory) : BaseService<User, UserReadDto>(repository, dtoFactory), IUserService
     {
     }
 }

@@ -1,3 +1,4 @@
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
 
@@ -67,13 +68,22 @@ namespace RhythmFlow.Framework.src.Data
         // CRUD Simulation Methods
         public void Add<T>(T entity)
             where T : BaseEntity
-            => GetDbSet<T>().Add(entity);
+        {
+            GetDbSet<T>().Add(entity);
+        }
+
         public IEnumerable<T> GetAll<T>()
-            where T : BaseEntity
-            => GetDbSet<T>().AsEnumerable();
+                    where T : BaseEntity
+        {
+            return GetDbSet<T>().AsEnumerable();
+        }
+
         public T? GetById<T>(Guid id)
-            where T : BaseEntity
-            => GetDbSet<T>().Find(e => e.Id == id);
+                    where T : BaseEntity
+        {
+            return GetDbSet<T>()?.Find(e => e.Id == id);
+        }
+
         public void Update<T>(T entity)
             where T : BaseEntity
         {
@@ -100,6 +110,7 @@ namespace RhythmFlow.Framework.src.Data
         private List<T> GetDbSet<T>()
             where T : BaseEntity
         {
+            // cannot use switch here
             if (typeof(T) == typeof(User))
                 return Users as List<T>;
             if (typeof(T) == typeof(Project))
