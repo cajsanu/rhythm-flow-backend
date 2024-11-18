@@ -19,9 +19,9 @@ namespace RhythmFlow.Application.src.DTOs.UserWorkspaces
             };
         }
 
-        public UserWorkspace ToEntity(UserWorkspaceUpdateDto dto)
+        public UserWorkspace ToEntity()
         {
-            return new UserWorkspace(dto.UserId, dto.WorkspaceId, dto.Role);
+            return new UserWorkspace(UserId, WorkspaceId, Role);
         }
     }
 }
