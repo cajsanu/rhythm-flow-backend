@@ -1,15 +1,29 @@
 using RhythmFlow.Application.DTOs.Workspaces;
+using RhythmFlow.Application.src.DTOs.Tickets;
+using RhythmFlow.Application.src.Factories;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
 
 namespace RhythmFlow.Application.src.Services
 {
-    public class WorkspaceService(IWorkspaceRepo repository) : BaseService<Workspace, WorkspaceReadDto>(repository), IWorkspaceService
+    public class WorkspaceService : BaseService<Workspace, WorkspaceReadDto>, IWorkspaceService
     {
-        public Task<User> AssignUserToEntityAsync(Guid userId, Guid entityId)
+        // T
+        private readonly AssignmentService<Workspace, WorkspaceReadDto> _assignmentService;
+
+        public WorkspaceService(
+            IWorkspaceRepo ticketRepository,
+            AssignmentService<Workspace, WorkspaceReadDto> assignmentService,
+            WorkspaceDtoFactory workspaceDtoFactory)
+            : base(ticketRepository, workspaceDtoFactory)
         {
-            throw new NotImplementedException();
+            _assignmentService = assignmentService;
+        }
+
+        public Task<WorkspaceReadDto> AssignUserToEntityAsync(Guid userId, Guid entityId)
+        {
+            return _assignmentService.AssignUserToEntityAsync(userId, entityId);
         }
 
         public Task<IEnumerable<Workspace>> GetAllWorkspaceJoinedByUser(Guid userId)
@@ -22,9 +36,9 @@ namespace RhythmFlow.Application.src.Services
             throw new NotImplementedException();
         }
 
-        public Task<User> RemoveUserFromEntityAsync(Guid userId, Guid entityId)
+        public Task<WorkspaceReadDto> RemoveUserFromEntityAsync(Guid userId, Guid entityId)
         {
-            throw new NotImplementedException();
+            return _assignmentService.RemoveUserFromEntityAsync(userId, entityId);
         }
     }
 }
