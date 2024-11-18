@@ -1,4 +1,5 @@
 using RhythmFlow.Application.src.DTOs.Projects;
+using RhythmFlow.Application.src.Factories;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
@@ -7,18 +8,25 @@ namespace RhythmFlow.Application.src.Services
 {
     public class ProjectService : BaseService<Project, ProjectReadDto>, IProjectService
     {
-        public ProjectService(IProjectRepo repository) : base(repository)
+        private readonly AssignmentService<Project, ProjectReadDto> _assignmentService;
+
+        public ProjectService(
+            IProjectRepo projectRepo,
+            AssignmentService<Project, ProjectReadDto> assignmentService,
+            ProjectDtoFactory projectDtoFactory)
+            : base(projectRepo, projectDtoFactory)
         {
+            _assignmentService = assignmentService;
         }
 
-        public Task<User> AssignUserToEntityAsync(Guid userId, Guid entityId)
+        public Task<ProjectReadDto> AssignUserToEntityAsync(Guid userId, Guid ticketId)
         {
-            throw new NotImplementedException();
+            return _assignmentService.AssignUserToEntityAsync(userId, ticketId);
         }
 
-        public Task<User> RemoveUserFromEntityAsync(Guid userId, Guid entityId)
+        public Task<ProjectReadDto> RemoveUserFromEntityAsync(Guid userId, Guid ticketId)
         {
-            throw new NotImplementedException();
+            return _assignmentService.RemoveUserFromEntityAsync(userId, ticketId);
         }
     }
 }
