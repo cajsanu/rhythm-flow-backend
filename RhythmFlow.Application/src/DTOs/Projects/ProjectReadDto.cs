@@ -28,14 +28,7 @@ namespace RhythmFlow.Application.src.DTOs.Projects
                 EndDate = entity.EndDate,
                 Status = entity.Status,
                 WorkspaceId = entity.WorkspaceId,
-                Users = entity.Users.Select(u => new UserReadDto
-                {
-                    FirstName = u.FirstName,
-                    LastName = u.LastName,
-                    Email = u.Email.Value
-
-                    // Add other properties as needed
-                }).ToList()
+                Users = entity.Users.Select(u => new UserReadDto().ToDto(u)).ToList()
             };
         }
     }
