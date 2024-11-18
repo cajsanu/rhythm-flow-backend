@@ -25,14 +25,14 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
             // Arrange
             var userId = Guid.NewGuid();
             var workspaceId = Guid.NewGuid();
-            var requiredRole = "ProjectManager";
+            var requiredRole = Role.ProjectManager;
 
             var user = new ClaimsPrincipal(new ClaimsIdentity(
             [
                 new (ClaimTypes.NameIdentifier, userId.ToString())
             ]));
 
-            var requirement = new RoleInWorkspaceRequirement(requiredRole);
+            var requirement = new RoleInWorkspaceRequirement([requiredRole]);
             var context = new AuthorizationHandlerContext([requirement], user, workspaceId);
 
             _mockUserWorkspaceService.Setup(service => service.GetUserRoleInWorkspaceAsync(userId, workspaceId))
@@ -51,14 +51,14 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
             // Arrange
             var userId = Guid.NewGuid();
             var workspaceId = Guid.NewGuid();
-            var requiredRole = "ProjectManager";
+            var requiredRole = Role.ProjectManager;
 
             var user = new ClaimsPrincipal(new ClaimsIdentity(
             [
                 new Claim(ClaimTypes.NameIdentifier, userId.ToString())
             ]));
 
-            var requirement = new RoleInWorkspaceRequirement(requiredRole);
+            var requirement = new RoleInWorkspaceRequirement([requiredRole]);
             var context = new AuthorizationHandlerContext([requirement], user, workspaceId);
 
             _mockUserWorkspaceService.Setup(service => service.GetUserRoleInWorkspaceAsync(userId, workspaceId))
@@ -76,11 +76,11 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
         {
             // Arrange
             var workspaceId = Guid.NewGuid();
-            var requiredRole = "Developer";
+            var requiredRole = Role.Developer;
 
             var user = new ClaimsPrincipal(new ClaimsIdentity());
 
-            var requirement = new RoleInWorkspaceRequirement(requiredRole);
+            var requirement = new RoleInWorkspaceRequirement([requiredRole]);
             var context = new AuthorizationHandlerContext([requirement], user, workspaceId);
 
             // Act
@@ -95,14 +95,14 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
         {
             // Arrange
             var userId = Guid.NewGuid();
-            var requiredRole = "Developer";
+            var requiredRole = Role.Developer;
 
             var user = new ClaimsPrincipal(new ClaimsIdentity(
             [
                 new Claim(ClaimTypes.NameIdentifier, userId.ToString())
             ]));
 
-            var requirement = new RoleInWorkspaceRequirement(requiredRole);
+            var requirement = new RoleInWorkspaceRequirement([requiredRole]);
             var context = new AuthorizationHandlerContext([requirement], user, null);
 
             // Act

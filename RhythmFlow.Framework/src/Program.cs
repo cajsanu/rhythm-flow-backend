@@ -7,6 +7,7 @@ using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Application.src.Services;
 using RhythmFlow.Controller.src.Middleware;
 using RhythmFlow.Controller.src.RouteTransformer;
+using RhythmFlow.Domain.src.ValueObjects;
 using RhythmFlow.Framework.src.Data;
 using RhythmFlow.Framework.src.Services;
 
@@ -58,14 +59,13 @@ builder.Services.AddAuthentication(options =>
 // add authorization
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("WorkspaceProjectManagerPolicy", policy =>
-        policy.Requirements.Add(new RoleInWorkspaceRequirement("ProjectManager")));
     options.AddPolicy("WorkspaceDeveloperPolicy", policy =>
-        policy.Requirements.Add(new RoleInWorkspaceRequirement("Developer")));
+        policy.Requirements.Add(new RoleInWorkspaceRequirement([Role.Developer, Role.ProjectManager, Role.WorkspaceOwner])));
+    options.AddPolicy("WorkspaceProjectManagerPolicy", policy =>
+        policy.Requirements.Add(new RoleInWorkspaceRequirement([Role.ProjectManager, Role.WorkspaceOwner])));
     options.AddPolicy("WorkspaceOwnerPolicy", policy =>
-        policy.Requirements.Add(new RoleInWorkspaceRequirement("WorkspaceOwner")));
-    options.AddPolicy("ProjectManagerPolicy", policy =>
-        policy.Requirements.Add(new ManagerInProjectRequirement()));
+        policy.Requirements.Add(new RoleInWorkspaceRequirement([Role.WorkspaceOwner])));
+
     options.AddPolicy("UserInProjectPolicy", policy =>
         policy.Requirements.Add(new UserInProjectRequirement()));
 });

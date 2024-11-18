@@ -15,10 +15,9 @@ namespace RhythmFlow.UnitTests.src.DomainTests
             var endDate = DateTime.Now.AddMonths(1);
             var status = Status.InProgress;
             var workspaceId = Guid.NewGuid();
-            var managerId = Guid.NewGuid();
 
             // Act
-            var project = new Project(name, description, startDate, endDate, status, workspaceId, managerId);
+            var project = new Project(name, description, startDate, endDate, status, workspaceId);
 
             // Assert
             Assert.Equal(name, project.Name);
@@ -39,10 +38,9 @@ namespace RhythmFlow.UnitTests.src.DomainTests
             var endDate = DateTime.Now.AddMonths(1);
             var status = Status.InProgress;
             var workspaceId = Guid.NewGuid();
-            var managerId = Guid.NewGuid();
 
             // Act & Assert
-            Assert.Throws<InvalidDataException>(() => new Project(name, description, startDate, endDate, status, workspaceId, managerId));
+            Assert.Throws<InvalidDataException>(() => new Project(name, description, startDate, endDate, status, workspaceId));
         }
 
         [Fact]
@@ -55,10 +53,9 @@ namespace RhythmFlow.UnitTests.src.DomainTests
             var endDate = DateTime.Now.AddMonths(1);
             var status = Status.InProgress;
             var workspaceId = Guid.NewGuid();
-            var managerId = Guid.NewGuid();
 
             // Act & Assert
-            Assert.Throws<InvalidDataException>(() => new Project(name, description, startDate, endDate, status, workspaceId, managerId));
+            Assert.Throws<InvalidDataException>(() => new Project(name, description, startDate, endDate, status, workspaceId));
         }
     }
 }

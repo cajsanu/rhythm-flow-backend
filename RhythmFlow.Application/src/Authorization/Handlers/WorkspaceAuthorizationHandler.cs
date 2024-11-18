@@ -23,7 +23,7 @@ namespace RhythmFlow.Application.src.Authorization.Handlers
             }
 
             var userRole = await _userWorkspaceService.GetUserRoleInWorkspaceAsync(userId, workspaceId);
-            if (userRole.ToString() == requirement.RequiredRole)
+            if (requirement.ValidRoles.Contains(userRole))
             {
                 context.Succeed(requirement);
             }

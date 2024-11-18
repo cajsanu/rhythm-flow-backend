@@ -17,8 +17,7 @@ namespace RhythmFlow.Application.src.DTOs.Projects
         public Status Status { get; set; }
         [NoEmptyGuid]
         public Guid WorkspaceId { get; set; }
-        [NoEmptyGuid]
-        public Guid ManagerId { get; set; }
+
         [NoEmptyGuid(ValidateCollection = true)]
         public ICollection<Guid> UsersId { get; set; } = [];
 
@@ -32,14 +31,13 @@ namespace RhythmFlow.Application.src.DTOs.Projects
                 EndDate = entity.EndDate,
                 Status = entity.Status,
                 WorkspaceId = entity.WorkspaceId,
-                ManagerId = entity.ManagerId,
                 UsersId = entity.Users.Select(u => u.Id).ToList()
             };
         }
 
         public Project ToEntity()
         {
-            return new Project(Name, Description, StartDate, EndDate, Status, WorkspaceId, ManagerId);
+            return new Project(Name, Description, StartDate, EndDate, Status, WorkspaceId);
         }
     }
 }

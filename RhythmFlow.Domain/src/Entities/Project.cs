@@ -11,12 +11,11 @@ namespace RhythmFlow.Domain.src.Entities
         public DateTime EndDate { get; set; }
         public Status Status { get; set; }
         public Guid WorkspaceId { get; set; }
-        public Guid ManagerId { get; set; }
 
         // Make a collection of users that are assigned to the project
         public ICollection<User> Users { get; set; } = [];
 
-        public Project(string name, string description, DateTime startDate, DateTime endDate, Status status, Guid workspaceId, Guid managerId)
+        public Project(string name, string description, DateTime startDate, DateTime endDate, Status status, Guid workspaceId)
         {
             if (DomainHelpers.IsNotValidStringValue(name) || DomainHelpers.IsNotValidStringValue(description)) throw new InvalidDataException("Name and description must not be null or empty");
 
@@ -26,7 +25,6 @@ namespace RhythmFlow.Domain.src.Entities
             EndDate = endDate;
             Status = status;
             WorkspaceId = workspaceId;
-            ManagerId = managerId;
         }
 
         public override string ToString()
