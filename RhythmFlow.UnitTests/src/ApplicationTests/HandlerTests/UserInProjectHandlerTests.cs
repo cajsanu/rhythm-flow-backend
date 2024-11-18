@@ -40,8 +40,6 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
             var requirement = new UserInProjectRequirement();
             var context = new AuthorizationHandlerContext([requirement], user, projectId);
 
-            Console.WriteLine("USER ID " + context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-
             _mockProjectService.Setup(service => service.GetByIdAsync(projectId)).Returns(Task.FromResult((ProjectReadDto)ProjectReadDto.ToDto(project)));
 
             // Act

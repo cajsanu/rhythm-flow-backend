@@ -30,7 +30,6 @@ namespace RhythmFlow.Application.src.Authorization.Handlers
 
             // Validate if the user is in the project
             var project = await _projectService.GetByIdAsync(projectId);
-            Console.WriteLine("PROJECT " + project);
             if (project == null)
             {
                 context.Fail();
@@ -38,7 +37,6 @@ namespace RhythmFlow.Application.src.Authorization.Handlers
             }
 
             var userInProject = project.Users.Any(u => u.Id == userId);
-            Console.WriteLine("USER IN PROJECT " + userInProject);
             if (userInProject)
             {
                 context.Succeed(requirement);
