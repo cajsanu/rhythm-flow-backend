@@ -42,7 +42,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
 
             Console.WriteLine("USER ID " + context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            _mockProjectService.Setup(service => service.GetByIdAsync(projectId)).Returns(Task.FromResult((ProjectReadDto)new ProjectReadDto().ToDto(project)));
+            _mockProjectService.Setup(service => service.GetByIdAsync(projectId)).Returns(Task.FromResult((ProjectReadDto)ProjectReadDto.ToDto(project)));
 
             // Act
             await _handler.HandleAsync(context);
@@ -70,7 +70,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
             var requirement = new UserInProjectRequirement();
             var context = new AuthorizationHandlerContext([requirement], user, projectId);
 
-            _mockProjectService.Setup(service => service.GetByIdAsync(projectId)).Returns(Task.FromResult((ProjectReadDto)new ProjectReadDto().ToDto(project)));
+            _mockProjectService.Setup(service => service.GetByIdAsync(projectId)).Returns(Task.FromResult((ProjectReadDto)ProjectReadDto.ToDto(project)));
 
             // Act
             await _handler.HandleAsync(context);

@@ -12,7 +12,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
     public class TestBaseReadDto : IBaseReadDto<BaseEntity>
     {
         public Guid Id { get; set; }
-        public IBaseReadDto<BaseEntity> ToDto(BaseEntity entity)
+        public static IBaseReadDto<BaseEntity> ToDto(BaseEntity entity)
         {
             return new TestBaseReadDto { Id = entity.Id };
         }

@@ -14,7 +14,7 @@ namespace RhythmFlow.Application.src.Services
         public async Task<UserReadDto?> GetUserByEmailAsync(Email email)
         {
             var user = await _userRepo.GetUserByEmailAsync(email) ?? throw new KeyNotFoundException($"User with email {email} not found.");
-            return (UserReadDto?)new UserReadDto().ToDto(user);
+            return (UserReadDto?)UserReadDto.ToDto(user);
         }
     }
 }

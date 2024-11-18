@@ -5,7 +5,7 @@ namespace RhythmFlow.Application.src.DTOs.Shared
         where T : BaseEntity
 
     {
-        public IBaseCreateDto<T> ToDto(T entity);
+        public static abstract IBaseCreateDto<T> ToDto(T entity);
         public T ToEntity();
     }
 }

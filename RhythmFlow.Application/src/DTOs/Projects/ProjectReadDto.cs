@@ -17,7 +17,7 @@ namespace RhythmFlow.Application.src.DTOs.Projects
         public Guid WorkspaceId { get; set; }
         public ICollection<UserReadDto> Users { get; set; } = [];
 
-        public IBaseReadDto<Project> ToDto(Project entity)
+        public static IBaseReadDto<Project> ToDto(Project entity)
         {
             return new ProjectReadDto()
             {
@@ -28,7 +28,7 @@ namespace RhythmFlow.Application.src.DTOs.Projects
                 EndDate = entity.EndDate,
                 Status = entity.Status,
                 WorkspaceId = entity.WorkspaceId,
-                Users = entity.Users.Select(u => new UserReadDto().ToDto(u)).ToList()
+                Users = entity.Users.Select(u => (UserReadDto)UserReadDto.ToDto(u)).ToList()
             };
         }
     }
