@@ -5,7 +5,7 @@ using RhythmFlow.Domain.src.Entities;
 
 namespace RhythmFlow.Controller.src.Controllers
 {
-    public class WorkspaceController(IWorkspaceService service) : BaseController<Workspace, WorkspaceReadDto>(service)
+    public class WorkspaceController(IWorkspaceService service) : BaseController<Workspace, WorkspaceReadDto, WorkspaceCreateReadDto, WorkspaceUpdateDto>(service)
     {
         [HttpPost("addUser/{userId}")]
         public async Task<ActionResult> AddUserToWorkspace(Guid userId)

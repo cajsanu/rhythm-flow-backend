@@ -5,7 +5,7 @@ using RhythmFlow.Domain.src.Entities;
 
 namespace RhythmFlow.Controller.src.Controllers
 {
-    public class TicketController(ITicketService service) : BaseController<Ticket, TicketReadDto>(service)
+    public class TicketController(ITicketService service) : BaseController<Ticket, TicketReadDto, TicketCreateReadDto, TicketUpdateDto>(service)
     {
         // Get Project by id should include all Tickets in the Project
         // so no need to have a separate method for this.

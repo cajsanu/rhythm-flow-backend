@@ -5,7 +5,7 @@ using RhythmFlow.Domain.src.Entities;
 
 namespace RhythmFlow.Application.DTOs.Workspaces
 {
-    public class WorkspaceCreateDto : IBaseCreateDto<Workspace>
+    public class WorkspaceCreateReadDto : IBaseCreateReadDto<Workspace>
     {
         [Required]
         required public string Name { get; set; }
@@ -13,9 +13,9 @@ namespace RhythmFlow.Application.DTOs.Workspaces
         [NoEmptyGuid]
         public Guid OwnerId { get; set; }
 
-        public IBaseCreateDto<Workspace> ToDto(Workspace entity)
+        public IBaseCreateReadDto<Workspace> ToDto(Workspace entity)
         {
-            return new WorkspaceCreateDto()
+            return new WorkspaceCreateReadDto()
             {
                 Name = entity.Name,
             };

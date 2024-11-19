@@ -7,11 +7,11 @@ namespace RhythmFlow.Controller.src.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]s")]
-    public class BaseController<T, TReadDto>(IBaseService<T, TReadDto> service) : ControllerBase
+    public class BaseController<T, TReadDto, TCreateReadDto, TUpdateDto>(IBaseService<T, TReadDto, TCreateReadDto, TUpdateDto> service) : ControllerBase
         where T : BaseEntity
         where TReadDto : IBaseReadDto<T>
     {
-        private readonly IBaseService<T, TReadDto> _service = service;
+        private readonly IBaseService<T, TReadDto, TCreateReadDto, TUpdateDto> _service = service;
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TReadDto>>> GetAllAsync()

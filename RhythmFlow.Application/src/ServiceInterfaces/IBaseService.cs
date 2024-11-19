@@ -3,9 +3,9 @@ using RhythmFlow.Domain.src.Entities;
 
 namespace RhythmFlow.Application.src.ServiceInterfaces
 {
-    public interface IBaseService<T, TReadDto>
+    public interface IBaseService<T, TReadDto, TCreateReadDto, TUpdateDto>
         where T : BaseEntity
-        where TReadDto : IBaseReadDto<T>
+      //  where TReadDto : IBaseReadDto<T>
     {
         Task<IEnumerable<TReadDto>> GetAllAsync();
         Task<TReadDto> GetByIdAsync(Guid id);

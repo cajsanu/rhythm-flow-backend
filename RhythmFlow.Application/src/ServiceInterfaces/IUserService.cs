@@ -3,7 +3,7 @@ using RhythmFlow.Domain.src.Entities;
 
 namespace RhythmFlow.Application.src.ServiceInterfaces
 {
-    public interface IUserService : IBaseService<User, UserReadDto>
+    public interface IUserService : IBaseService<User, UserReadDto, UserCreateReadDto, UserUpdateDto>
     {
     }
 }

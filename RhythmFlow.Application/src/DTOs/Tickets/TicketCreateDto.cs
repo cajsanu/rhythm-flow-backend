@@ -6,7 +6,7 @@ using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.Application.src.DTOs.Tickets
 {
-    public class TicketCreateDto : IBaseCreateDto<Ticket>
+    public class TicketCreateReadDto : IBaseCreateReadDto<Ticket>
     {
         [Required]
         required public string Title { get; set; }
@@ -18,9 +18,9 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
         [NoEmptyGuid]
         public Guid ProjectId { get; set; }
         public TicketType Type { get; set; }
-        public IBaseCreateDto<Ticket> ToDto(Ticket entity)
+        public IBaseCreateReadDto<Ticket> ToDto(Ticket entity)
         {
-            return new TicketCreateDto()
+            return new TicketCreateReadDto()
             {
                 Title = entity.Title,
                 Description = entity.Description,
@@ -32,7 +32,7 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
             };
         }
 
-        public Ticket ToEntity()
+        public  Ticket ToEntity()
         {
             return new Ticket(Title, Description, Priority, Deadline, Status, ProjectId, Type);
         }

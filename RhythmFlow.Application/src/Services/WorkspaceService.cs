@@ -7,14 +7,14 @@ using RhythmFlow.Domain.src.RepoInterfaces;
 
 namespace RhythmFlow.Application.src.Services
 {
-    public class WorkspaceService : BaseService<Workspace, WorkspaceReadDto>, IWorkspaceService
+    public class WorkspaceService : BaseService<Workspace, WorkspaceReadDto, WorkspaceCreateReadDto, WorkspaceUpdateDto>, IWorkspaceService
     {
         // T
-        private readonly AssignmentService<Workspace, WorkspaceReadDto> _assignmentService;
+        private readonly AssignmentService<Workspace, WorkspaceReadDto, WorkspaceCreateReadDto, WorkspaceUpdateDto> _assignmentService;
 
         public WorkspaceService(
             IWorkspaceRepo ticketRepository,
-            AssignmentService<Workspace, WorkspaceReadDto> assignmentService,
+            AssignmentService<Workspace, WorkspaceReadDto, WorkspaceCreateReadDto, WorkspaceUpdateDto> assignmentService,
             WorkspaceDtoFactory workspaceDtoFactory)
             : base(ticketRepository, workspaceDtoFactory)
         {

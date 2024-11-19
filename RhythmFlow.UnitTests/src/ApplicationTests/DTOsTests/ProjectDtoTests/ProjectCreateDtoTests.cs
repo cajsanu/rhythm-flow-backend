@@ -4,7 +4,7 @@ using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.ProjectDtoTests
 {
-    public class ProjectCreateDtoTests
+    public class ProjectCreateReadDtoTests
     {
         private List<ValidationResult> ValidateModel(object model)
         {
@@ -20,7 +20,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.ProjectDtoTests
         [InlineData("Project Beta", "", "2024-01-01", "2027-01-01", Status.NotStarted, "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[0], true)] // Valid with empty Description and UsersId
         [InlineData("Project Gamma", "Another project", "2025-01-01", "2026-12-31", Status.Completed, "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[] { "00000000-0000-0000-0000-000000000000" }, false)] // Invalid UsersId GUID
         [InlineData("Project Delta", "Description", "2024-01-01", "2026-12-31", Status.Cancelled, "00000000-0000-0000-0000-000000000000", new string[] { "6fa85f64-5717-4562-b3fc-2c963f66afa6" }, false)] // Invalid WorkspaceId
-        public void ProjectCreateDto_ValidationTests(
+        public void ProjectCreateReadDto_ValidationTests(
             string name,
             string description,
             string startDate,
@@ -31,7 +31,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.ProjectDtoTests
             bool isValid)
         {
             // Arrange
-            var dto = new ProjectCreateDto
+            var dto = new ProjectCreateReadDto
             {
                 Name = name,
                 Description = description,
