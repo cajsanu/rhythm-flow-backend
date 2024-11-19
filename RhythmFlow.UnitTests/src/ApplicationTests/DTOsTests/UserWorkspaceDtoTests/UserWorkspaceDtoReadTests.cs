@@ -26,7 +26,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.UserWorkspaceDtoTe
             bool isValid)
         {
             // Arrange
-            var dto = new UserWorkspaceCreateReadDto
+            var dto = new UserWorkspaceCreateDto
             {
                 UserId = Guid.Parse(userId),
                 WorkspaceId = Guid.Parse(workspaceId),

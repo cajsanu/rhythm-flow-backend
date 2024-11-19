@@ -22,7 +22,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.UserDtoTests
         public void UserCreateReadDto_ValidationTests(string firstName, string lastName, string email, string passwordHash, bool isValid)
         {
             // Arrange
-            var dto = new UserCreateReadDto
+            var dto = new UserCreateDto
             {
                 FirstName = firstName,
                 LastName = lastName,

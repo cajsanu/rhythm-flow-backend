@@ -31,7 +31,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.TicketDtoTests
             bool isValid)
         {
             // Arrange
-            var dto = new TicketCreateReadDto
+            var dto = new TicketCreateDto
             {
                 Title = title,
                 Description = description,

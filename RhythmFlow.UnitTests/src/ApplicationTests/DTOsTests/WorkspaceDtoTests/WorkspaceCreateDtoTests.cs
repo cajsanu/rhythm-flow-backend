@@ -23,7 +23,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.WorkspaceDtoTests
             bool isValid)
         {
             // Arrange
-            var dto = new WorkspaceCreateReadDto
+            var dto = new WorkspaceCreateDto
             {
                 Name = name,
                 OwnerId = Guid.Parse(ownerId)

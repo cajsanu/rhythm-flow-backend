@@ -31,7 +31,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.ProjectDtoTests
             bool isValid)
         {
             // Arrange
-            var dto = new ProjectCreateReadDto
+            var dto = new ProjectCreateDto
             {
                 Name = name,
                 Description = description,
