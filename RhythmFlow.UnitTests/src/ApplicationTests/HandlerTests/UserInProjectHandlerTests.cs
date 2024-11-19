@@ -4,6 +4,8 @@ using Moq;
 using RhythmFlow.Application.src.Authorization;
 using RhythmFlow.Application.src.Authorization.Handlers;
 using RhythmFlow.Application.src.DTOs.Projects;
+using RhythmFlow.Application.src.Factories;
+using RhythmFlow.Application.src.FactoryInterfaces;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
@@ -12,11 +14,15 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
 {
     public class UserInProjectHandlerTests
     {
+        private readonly IDtoFactory<Project, ProjectReadDto> _projectDtoFactoryForArranging;
+
         private readonly Mock<IProjectService> _mockProjectService;
         private readonly UserInProjectHandler _handler;
 
         public UserInProjectHandlerTests()
         {
+            _projectDtoFactoryForArranging = new ProjectDtoFactory();
+
             _mockProjectService = new Mock<IProjectService>();
             _handler = new UserInProjectHandler(_mockProjectService.Object);
         }
@@ -40,7 +46,8 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
             var requirement = new UserInProjectRequirement();
             var context = new AuthorizationHandlerContext([requirement], user, projectId);
 
-            _mockProjectService.Setup(service => service.GetByIdAsync(projectId)).Returns(Task.FromResult((ProjectReadDto)ProjectReadDto.ToDto(project)));
+            var projectDto = _projectDtoFactoryForArranging.CreateDto(project);
+            _mockProjectService.Setup(service => service.GetByIdAsync(projectId)).Returns(Task.FromResult(projectDto));
 
             // Act
             await _handler.HandleAsync(context);
@@ -68,7 +75,8 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
             var requirement = new UserInProjectRequirement();
             var context = new AuthorizationHandlerContext([requirement], user, projectId);
 
-            _mockProjectService.Setup(service => service.GetByIdAsync(projectId)).Returns(Task.FromResult((ProjectReadDto)ProjectReadDto.ToDto(project)));
+            var projectDto = _projectDtoFactoryForArranging.CreateDto(project);
+            _mockProjectService.Setup(service => service.GetByIdAsync(projectId)).Returns(Task.FromResult(projectDto));
 
             // Act
             await _handler.HandleAsync(context);
