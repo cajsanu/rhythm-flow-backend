@@ -71,9 +71,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    // putting this here since this can hide errors during development
+    app.UseMiddleware<ExceptionHandlerMiddleware>();
+}
 
 // app.UseHttpsRedirection(); --this line is causing some http-https issue
 app.MapControllers();
-
-// app.UseMiddleware<ExceptionHandlerMiddleware>(); --hmm
 app.Run();
