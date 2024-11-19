@@ -74,5 +74,5 @@ if (app.Environment.IsDevelopment())
 
 // app.UseHttpsRedirection(); --this line is causing some http-https issue
 app.MapControllers();
-app.UseMiddleware<ExceptionHandlerMiddleware>();
+// app.UseMiddleware<ExceptionHandlerMiddleware>(); --hmm
 app.Run();

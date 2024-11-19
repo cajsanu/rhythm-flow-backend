@@ -18,5 +18,10 @@ namespace RhythmFlow.Application.src.DTOs.Users
                 Email = entity.Email.Value,
             };
         }
+
+        public User ToEntity()
+        {
+            return new User(FirstName, LastName, Email, "");
+        }
     }
 }
