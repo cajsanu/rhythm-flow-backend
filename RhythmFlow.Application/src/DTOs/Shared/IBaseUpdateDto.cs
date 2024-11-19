@@ -5,6 +5,6 @@ namespace RhythmFlow.Application.src.DTOs.Shared
         where T : BaseEntity
     {
         public IBaseUpdateDto<T> ToDto(T entity);
-        public T ToEntity();
+        public T ToEntity(Guid guid);
     }
 }

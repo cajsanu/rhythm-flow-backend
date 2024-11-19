@@ -6,7 +6,6 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
 {
     public class TicketUpdateDto : IBaseUpdateDto<Ticket>
     {
-        required public Guid Id { get; init; }
         required public string Title { get; set; }
         required public string Description { get; set; }
         public Priority Priority { get; set; }
@@ -20,7 +19,6 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
         {
             return new TicketUpdateDto()
             {
-                Id = entity.Id,
                 Title = entity.Title,
                 Description = entity.Description,
                 Priority = entity.Priority,
@@ -32,9 +30,9 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
             };
         }
 
-        public Ticket ToEntity()
+        public Ticket ToEntity(Guid guid)
         {
-            return new Ticket(Title!, Description!, Priority, Deadline, Status, ProjectId, Type, Id);
+            return new Ticket(Title!, Description!, Priority, Deadline, Status, ProjectId, Type, guid);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace RhythmFlow.Framework.src.Repo
 
         public Task<T> UpdateAsync(T entity)
         {
-            _ = _context.GetById<T>(entity.Id) ?? throw new ArgumentException($"{typeof(T)} with ID {entity.Id} not found.");
+            _ = _context.GetById<T>(entity.Id) ?? throw new ArgumentException($"{typeof(T)} with ID {entity.Id} not found. ");
             _context.Update(entity);
             return Task.FromResult(entity);
         }

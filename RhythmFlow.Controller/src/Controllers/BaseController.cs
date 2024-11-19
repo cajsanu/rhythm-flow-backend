@@ -44,7 +44,7 @@ namespace RhythmFlow.Controller.src.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(Guid id, [FromBody] TUpdateDto updateDto)
         {
-            await _service.UpdateAsync(id, updateDto.ToEntity());
+            await _service.UpdateAsync(id, updateDto.ToEntity(id));
             return NoContent();
         }
 

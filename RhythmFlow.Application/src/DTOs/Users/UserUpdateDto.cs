@@ -5,7 +5,6 @@ namespace RhythmFlow.Application.src.DTOs.Users
 {
     public class UserUpdateDto : IBaseUpdateDto<User>
     {
-        required public Guid Id { get; init; }
         required public string FirstName { get; set; }
         required public string LastName { get; set; }
         required public string Email { get; set; }
@@ -15,7 +14,6 @@ namespace RhythmFlow.Application.src.DTOs.Users
         {
             return new UserUpdateDto()
             {
-                Id = entity.Id,
                 FirstName = entity.FirstName,
                 LastName = entity.LastName,
                 Email = entity.Email.Value,
@@ -23,9 +21,9 @@ namespace RhythmFlow.Application.src.DTOs.Users
             };
         }
 
-        public User ToEntity()
+        public User ToEntity(Guid guid)
         {
-            return new User(FirstName, LastName, Email, PasswordHash, Id);
+            return new User(FirstName, LastName, Email, PasswordHash, guid);
         }
     }
 }
