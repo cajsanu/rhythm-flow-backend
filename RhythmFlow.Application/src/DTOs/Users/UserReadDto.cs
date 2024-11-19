@@ -10,16 +10,5 @@ namespace RhythmFlow.Application.src.DTOs.Users
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? Email { get; set; }
-
-        public static IBaseReadDto<User> ToDto(User entity)
-        {
-            return new UserReadDto()
-            {
-                Id = entity.Id,
-                FirstName = entity.FirstName,
-                LastName = entity.LastName,
-                Email = entity.Email.Value
-            };
-        }
     }
 }
