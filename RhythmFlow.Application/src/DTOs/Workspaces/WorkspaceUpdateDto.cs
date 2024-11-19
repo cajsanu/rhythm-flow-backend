@@ -8,7 +8,7 @@ namespace RhythmFlow.Application.DTOs.Workspaces
         required public string Name { get; set; }
         public Guid OwnerId { get; set; }
 
-        public IBaseUpdateDto<Workspace> ToDto(Workspace entity)
+        public static IBaseUpdateDto<Workspace> ToDto(Workspace entity)
         {
             return new WorkspaceUpdateDto()
             {

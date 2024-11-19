@@ -5,7 +5,7 @@ using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.Application.src.DTOs.UserWorkspaces
 {
-    public class UserWorkspaceCreateReadDto
+    public class UserWorkspaceCreateDto
     {
         [Required]
         [NoEmptyGuid]
@@ -17,9 +17,9 @@ namespace RhythmFlow.Application.src.DTOs.UserWorkspaces
         [EnumDataType(typeof(Role))]
         public Role Role { get; set; }
 
-        public UserWorkspaceCreateReadDto ToDto(UserWorkspace entity)
+        public UserWorkspaceCreateDto ToDto(UserWorkspace entity)
         {
-            return new UserWorkspaceCreateReadDto()
+            return new UserWorkspaceCreateDto()
             {
                 UserId = entity.UserId,
                 WorkspaceId = entity.WorkspaceId,

@@ -13,7 +13,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
     public class TestBaseReadDto : IBaseReadDto<BaseEntity>
     {
         public Guid Id { get; set; }
-        public IBaseReadDto<BaseEntity> ToDto(BaseEntity entity)
+        public static IBaseReadDto<BaseEntity> ToDto(BaseEntity entity)
         {
             return new TestBaseReadDto { Id = entity.Id };
         }
@@ -23,19 +23,19 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
     public class BaseServiceTests
     {
         private readonly Mock<IBaseRepo<BaseEntity>> _mockRepo;
-        private readonly Mock<IDtoFactory<BaseEntity, TestReadDto, TestCreateReadDto, TestUpdateDto>> _mockFactory;
-        private readonly IBaseService<BaseEntity, TestReadDto, TestCreateReadDto, TestUpdateDto> _service;
+        private readonly Mock<IDtoFactory<BaseEntity, TestReadDto, TestCreateDto, TestUpdateDto>> _mockFactory;
+        private readonly IBaseService<BaseEntity, TestReadDto, TestCreateDto, TestUpdateDto> _service;
 
         public BaseServiceTests()
         {
             _mockRepo = new Mock<IBaseRepo<BaseEntity>>();
-            _mockFactory = new Mock<IDtoFactory<BaseEntity, TestReadDto, TestCreateReadDto, TestUpdateDto>>();
+            _mockFactory = new Mock<IDtoFactory<BaseEntity, TestReadDto, TestCreateDto, TestUpdateDto>>();
 
             // Setup factory to convert BaseEntity to TestBaseReadDto
             _mockFactory.Setup(factory => factory.CreateReadDto(It.IsAny<BaseEntity>()))
                 .Returns((BaseEntity entity) => new TestReadDto { Id = entity.Id });
 
-            _service = new BaseService<BaseEntity, TestReadDto, TestCreateReadDto, TestUpdateDto>(_mockRepo.Object, _mockFactory.Object);
+            _service = new BaseService<BaseEntity, TestReadDto, TestCreateDto, TestUpdateDto>(_mockRepo.Object, _mockFactory.Object);
         }
 
         [Fact]

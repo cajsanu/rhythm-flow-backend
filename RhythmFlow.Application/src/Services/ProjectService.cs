@@ -6,13 +6,13 @@ using RhythmFlow.Domain.src.RepoInterfaces;
 
 namespace RhythmFlow.Application.src.Services
 {
-    public class ProjectService : BaseService<Project, ProjectReadDto, ProjectCreateReadDto, ProjectUpdateDto>, IProjectService
+    public class ProjectService : BaseService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>, IProjectService
     {
-        private readonly AssignmentService<Project, ProjectReadDto, ProjectCreateReadDto, ProjectUpdateDto> _assignmentService;
+        private readonly AssignmentService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto> _assignmentService;
 
         public ProjectService(
             IProjectRepo projectRepo,
-            AssignmentService<Project, ProjectReadDto, ProjectCreateReadDto, ProjectUpdateDto> assignmentService,
+            AssignmentService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto> assignmentService,
             ProjectDtoFactory projectDtoFactory)
             : base(projectRepo, projectDtoFactory)
         {

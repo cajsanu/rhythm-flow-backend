@@ -6,13 +6,13 @@ using RhythmFlow.Domain.src.RepoInterfaces;
 
 namespace RhythmFlow.Application.src.Services
 {
-    public class TicketService : BaseService<Ticket, TicketReadDto, TicketCreateReadDto, TicketUpdateDto>, ITicketService
+    public class TicketService : BaseService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>, ITicketService
     {
-        private readonly AssignmentService<Ticket, TicketReadDto, TicketCreateReadDto, TicketUpdateDto> _assignmentService;
+        private readonly AssignmentService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> _assignmentService;
 
         public TicketService(
             ITicketRepo ticketRepository,
-            AssignmentService<Ticket, TicketReadDto, TicketCreateReadDto, TicketUpdateDto> assignmentService,
+            AssignmentService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> assignmentService,
             TicketDtoFactory ticketDtoFactory)
             : base(ticketRepository, ticketDtoFactory)
         {

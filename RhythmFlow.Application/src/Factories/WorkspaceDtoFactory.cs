@@ -4,11 +4,11 @@ using RhythmFlow.Domain.src.Entities;
 
 namespace RhythmFlow.Application.src.Factories
 {
-    public class WorkspaceDtoFactory : IDtoFactory<Workspace, WorkspaceReadDto, WorkspaceCreateReadDto, WorkspaceUpdateDto>
+    public class WorkspaceDtoFactory : IDtoFactory<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>
     {
-        public WorkspaceCreateReadDto CreateCreateReadDto(Workspace entity)
+        public WorkspaceCreateDto CreateCreateReadDto(Workspace entity)
         {
-            return new WorkspaceCreateReadDto
+            return new WorkspaceCreateDto
             {
                 Name = entity.Name,
                 OwnerId = entity.OwnerId

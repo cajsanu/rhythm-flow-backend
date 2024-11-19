@@ -11,16 +11,16 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
     {
         private readonly Mock<IUserRepo> _mockUserRepo;
         private readonly Mock<IBaseRepo<TestEntity>> _mockEntityRepo;
-        private readonly Mock<IDtoFactory<TestEntity, TestReadDto, TestCreateReadDto, TestUpdateDto>> _mockDtoFactory;
-        private readonly AssignmentService<TestEntity, TestReadDto, TestCreateReadDto, TestUpdateDto> _service;
+        private readonly Mock<IDtoFactory<TestEntity, TestReadDto, TestCreateDto, TestUpdateDto>> _mockDtoFactory;
+        private readonly AssignmentService<TestEntity, TestReadDto, TestCreateDto, TestUpdateDto> _service;
 
         public AssignmentServiceTests()
         {
             _mockUserRepo = new Mock<IUserRepo>();
             _mockEntityRepo = new Mock<IBaseRepo<TestEntity>>();
-            _mockDtoFactory = new Mock<IDtoFactory<TestEntity, TestReadDto, TestCreateReadDto, TestUpdateDto>>();
+            _mockDtoFactory = new Mock<IDtoFactory<TestEntity, TestReadDto, TestCreateDto, TestUpdateDto>>();
 
-            _service = new AssignmentService<TestEntity, TestReadDto, TestCreateReadDto, TestUpdateDto>(
+            _service = new AssignmentService<TestEntity, TestReadDto, TestCreateDto, TestUpdateDto>(
                 _mockUserRepo.Object,
                 _mockEntityRepo.Object,
                 _mockDtoFactory.Object

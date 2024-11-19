@@ -1,16 +1,16 @@
 using RhythmFlow.Application.src.DTOs.Projects;
-using RhythmFlow.Application.src.DTOs.Tickets;
+using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Application.src.FactoryInterfaces;
 using RhythmFlow.Domain.src.Entities;
 
 
 namespace RhythmFlow.Application.src.Factories
 {
-    public class ProjectDtoFactory : IDtoFactory<Project, ProjectReadDto, ProjectCreateReadDto, ProjectUpdateDto>
+    public class ProjectDtoFactory : IDtoFactory<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>
     {
-        public ProjectCreateReadDto CreateCreateReadDto(Project entity)
+        public ProjectCreateDto CreateCreateReadDto(Project entity)
         {
-            return new ProjectCreateReadDto
+            return new ProjectCreateDto
             {
                 Name = entity.Name,
                 Description = entity.Description,
@@ -26,6 +26,15 @@ namespace RhythmFlow.Application.src.Factories
                 Name = entity.Name,
                 Description = entity.Description,
                 Status = entity.Status,
+
+                // Need to add this because the UserInProjectHandler requires it
+                Users = entity.Users.Select(u => new UserReadDto
+                {
+                    Id = u.Id,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email.Value
+                }).ToList()
             };
         }
 

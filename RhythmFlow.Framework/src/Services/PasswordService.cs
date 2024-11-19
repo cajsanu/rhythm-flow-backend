@@ -8,7 +8,7 @@ namespace RhythmFlow.Framework.src.Services
         public string HashPassword(string password)
         {
             // Hash password using BCrypt, which automatically salts the password
-            // and has a default work factor of 11
+            // and has a default work factor of 11. BCrypt will generate a random salt and include it in the returned hash.
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
             return passwordHash;
         }

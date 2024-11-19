@@ -6,7 +6,7 @@ using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.Application.src.DTOs.Projects
 {
-    public class ProjectCreateReadDto : IBaseCreateReadDto<Project>
+    public class ProjectCreateDto : IBaseCreateDto<Project>
     {
         [Required]
         required public string Name { get; set; }
@@ -17,12 +17,13 @@ namespace RhythmFlow.Application.src.DTOs.Projects
         public Status Status { get; set; }
         [NoEmptyGuid]
         public Guid WorkspaceId { get; set; }
+
         [NoEmptyGuid(ValidateCollection = true)]
         public ICollection<Guid> UsersId { get; set; } = [];
 
-        public IBaseCreateReadDto<Project> ToDto(Project entity)
+        public IBaseCreateDto<Project> ToDto(Project entity)
         {
-            return new ProjectCreateReadDto()
+            return new ProjectCreateDto()
             {
                 Name = entity.Name,
                 Description = entity.Description,

@@ -4,7 +4,7 @@ using RhythmFlow.Domain.src.Entities;
 
 namespace RhythmFlow.Application.src.DTOs.Users
 {
-    public class UserCreateReadDto : IBaseCreateReadDto<User>
+    public class UserCreateDto : IBaseCreateDto<User>
     {
         [Required]
         required public string FirstName { get; set; }
@@ -16,9 +16,9 @@ namespace RhythmFlow.Application.src.DTOs.Users
         [Required]
         public string? PasswordHash { get; set; }
 
-        public IBaseCreateReadDto<User> ToDto(User entity)
+        public IBaseCreateDto<User> ToDto(User entity)
         {
-            return new UserCreateReadDto()
+            return new UserCreateDto()
             {
                 FirstName = entity.FirstName,
                 LastName = entity.LastName,

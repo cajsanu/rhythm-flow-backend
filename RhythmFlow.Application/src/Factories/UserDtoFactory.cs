@@ -4,11 +4,11 @@ using RhythmFlow.Domain.src.Entities;
 
 namespace RhythmFlow.Application.src.Factories
 {
-    public class UserDtoFactory : IDtoFactory<User, UserReadDto, UserCreateReadDto, UserUpdateDto>
+    public class UserDtoFactory : IDtoFactory<User, UserReadDto, UserCreateDto, UserUpdateDto>
     {
-        public UserCreateReadDto CreateCreateReadDto(User entity)
+        public UserCreateDto CreateCreateReadDto(User entity)
         {
-            return new UserCreateReadDto
+            return new UserCreateDto
             {
                 FirstName = entity.FirstName,
                 LastName = entity.LastName,

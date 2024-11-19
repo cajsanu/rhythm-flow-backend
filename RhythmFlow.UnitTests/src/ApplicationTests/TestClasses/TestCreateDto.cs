@@ -2,12 +2,12 @@ using RhythmFlow.Application.src.DTOs.Shared;
 
 namespace RhythmFlow.UnitTests.src.ApplicationTests.TestClasses
 {
-    public class TestCreateReadDto : IBaseCreateReadDto<TestEntity>
+    public class TestCreateDto : IBaseCreateDto<TestEntity>
     {
         public Guid Id { get; set; }
-        public IBaseCreateReadDto<TestEntity> ToDto(TestEntity entity)
+        public IBaseCreateDto<TestEntity> ToDto(TestEntity entity)
         {
-            return new TestCreateReadDto { Id = entity.Id };
+            return new TestCreateDto { Id = entity.Id };
         }
 
         public TestEntity ToEntity()

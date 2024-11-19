@@ -1,5 +1,4 @@
 using RhythmFlow.Application.src.DTOs.Shared;
-using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
 
@@ -16,20 +15,5 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
         public Status Status { get; set; }
         public Guid ProjectId { get; set; }
         public TicketType Type { get; set; }
-
-        public IBaseReadDto<Ticket> ToDto(Ticket entity)
-        {
-            return new TicketReadDto()
-            {
-                Id = entity.Id,
-                Title = entity.Title,
-                Description = entity.Description,
-                Priority = entity.Priority,
-                Deadline = entity.Deadline,
-                Status = entity.Status,
-                ProjectId = entity.ProjectId,
-                Type = entity.Type
-            };
-        }
     }
 }
