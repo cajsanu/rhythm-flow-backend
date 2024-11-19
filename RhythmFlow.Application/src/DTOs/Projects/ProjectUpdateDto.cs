@@ -24,7 +24,6 @@ namespace RhythmFlow.Application.src.DTOs.Projects
                 EndDate = entity.EndDate,
                 Status = entity.Status,
                 WorkspaceId = entity.WorkspaceId,
-                UsersId = entity.Users.Select(u => u.Id).ToList()
             };
         }
 
