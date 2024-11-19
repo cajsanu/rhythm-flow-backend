@@ -1,8 +1,13 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.IdentityModel.Tokens;
+using RhythmFlow.Application.src.Authorization;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Application.src.Services;
 using RhythmFlow.Controller.src.Middleware;
 using RhythmFlow.Controller.src.RouteTransformer;
+using RhythmFlow.Domain.src.ValueObjects;
 using RhythmFlow.Framework.src.Data;
 using RhythmFlow.Framework.src.Services;
 
@@ -23,11 +28,46 @@ builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IWorkspaceService, WorkspaceService>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 // add controller
 builder.Services.AddControllers(options =>
 {
     options.Conventions.Add(new RouteTokenTransformerConvention(new SpinCaseTransformer()));
+});
+
+// add authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]))
+    };
+});
+
+// add authorization
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("WorkspaceDeveloperPolicy", policy =>
+        policy.Requirements.Add(new RoleInWorkspaceRequirement([Role.Developer, Role.ProjectManager, Role.WorkspaceOwner])));
+    options.AddPolicy("WorkspaceProjectManagerPolicy", policy =>
+        policy.Requirements.Add(new RoleInWorkspaceRequirement([Role.ProjectManager, Role.WorkspaceOwner])));
+    options.AddPolicy("WorkspaceOwnerPolicy", policy =>
+        policy.Requirements.Add(new RoleInWorkspaceRequirement([Role.WorkspaceOwner])));
+
+    options.AddPolicy("UserInProjectPolicy", policy =>
+        policy.Requirements.Add(new UserInProjectRequirement()));
 });
 
 // add exception handling middleware
@@ -42,7 +82,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// app.UseHttpsRedirection();
+app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.Run();

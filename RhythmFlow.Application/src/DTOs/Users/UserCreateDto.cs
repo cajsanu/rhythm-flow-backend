@@ -16,7 +16,7 @@ namespace RhythmFlow.Application.src.DTOs.Users
         [Required]
         public string? PasswordHash { get; set; }
 
-        public IBaseCreateDto<User> ToDto(User entity)
+        public static IBaseCreateDto<User> ToDto(User entity)
         {
             return new UserCreateDto()
             {

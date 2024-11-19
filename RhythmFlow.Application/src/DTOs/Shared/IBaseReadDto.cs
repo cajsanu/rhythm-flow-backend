@@ -5,6 +5,5 @@ namespace RhythmFlow.Application.src.DTOs.Shared
         where T : BaseEntity
     {
         public Guid Id { get; } // This is needed for some of the methods using Read DTOs in the BaseController
-        public IBaseReadDto<T> ToDto(T entity);
     }
 }

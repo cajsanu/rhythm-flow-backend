@@ -9,7 +9,7 @@ namespace RhythmFlow.Application.src.DTOs.Users
         required public string LastName { get; set; }
         required public string Email { get; set; }
 
-        public IBaseUpdateDto<User> ToDto(User entity)
+        public static IBaseUpdateDto<User> ToDto(User entity)
         {
             return new UserUpdateDto()
             {

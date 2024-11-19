@@ -17,10 +17,11 @@ namespace RhythmFlow.Application.src.DTOs.Projects
         public Status Status { get; set; }
         [NoEmptyGuid]
         public Guid WorkspaceId { get; set; }
+
         [NoEmptyGuid(ValidateCollection = true)]
         public ICollection<Guid> UsersId { get; set; } = [];
 
-        public IBaseCreateDto<Project> ToDto(Project entity)
+        public static IBaseCreateDto<Project> ToDto(Project entity)
         {
             return new ProjectCreateDto()
             {
