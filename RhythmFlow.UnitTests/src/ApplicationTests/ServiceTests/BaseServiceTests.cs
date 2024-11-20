@@ -7,7 +7,7 @@ using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
 using RhythmFlow.UnitTests.src.ApplicationTests.TestClasses;
 
-namespace RhythmFlow.UnitTests.src.ApplicationTests
+namespace RhythmFlow.UnitTests.src.ApplicationTests.ServiceTests
 {
     // Minimal concrete implementation for testing purposes
     public class TestBaseReadDto : IBaseReadDto<BaseEntity>
@@ -18,7 +18,6 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             return new TestBaseReadDto { Id = entity.Id };
         }
     }
-
 
     public class BaseServiceTests
     {
@@ -74,7 +73,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             _mockRepo.Setup(repo => repo.AddAsync(It.IsAny<BaseEntity>())).ReturnsAsync(entity);
 
             // Act
-            var result = await _service.AddAsync(entity);
+            var result = await _service.AddAsync(new TestCreateDto());
 
             // Assert
             Assert.Equal(entity.Id, result.Id);
