@@ -107,7 +107,7 @@ namespace RhythmFlow.Application.Tests.src.ServiceTests
     public class ProjectReadDto : IBaseReadDto<Project>
     {
         public Guid Id { get; set; }
-        public IBaseReadDto<Project> ToDto(Project entity)
+        public static IBaseReadDto<Project> ToDto(Project entity)
         {
             return new ProjectReadDto { Id = entity.Id };
         }

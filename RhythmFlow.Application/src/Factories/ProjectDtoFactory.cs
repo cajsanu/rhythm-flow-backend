@@ -1,4 +1,5 @@
 using RhythmFlow.Application.src.DTOs.Projects;
+using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Application.src.FactoryInterfaces;
 using RhythmFlow.Domain.src.Entities;
 
@@ -14,6 +15,15 @@ namespace RhythmFlow.Application.src.Factories
                 Name = entity.Name,
                 Description = entity.Description,
                 Status = entity.Status,
+
+                // Need to add this because the UserInProjectHandler requires it
+                Users = entity.Users.Select(u => new UserReadDto
+                {
+                    Id = u.Id,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email.Value
+                }).ToList()
             };
         }
     }
