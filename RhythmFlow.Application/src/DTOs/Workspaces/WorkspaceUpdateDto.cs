@@ -17,9 +17,9 @@ namespace RhythmFlow.Application.DTOs.Workspaces
             };
         }
 
-        public Workspace ToEntity()
+        public Workspace ToEntity(Guid guid)
         {
-            return new Workspace(Name, OwnerId);
+            return new Workspace(Name, OwnerId, guid);
         }
     }
 }

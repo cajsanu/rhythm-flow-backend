@@ -7,7 +7,7 @@ namespace RhythmFlow.Domain.src.Entities
         public string Name { get; set; }
         public Guid OwnerId { get; set; }
 
-        public Workspace(string name, Guid ownerId)
+        public Workspace(string name, Guid ownerId, Guid? guid = null) : base(guid)
         {
             if (DomainHelpers.IsNotValidStringValue(name)) throw new InvalidDataException("Name and description must not be null or empty");
 

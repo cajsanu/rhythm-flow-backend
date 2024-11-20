@@ -4,7 +4,6 @@ using RhythmFlow.Application.src.Services;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
 using RhythmFlow.UnitTests.src.ApplicationTests.TestClasses;
-using Xunit.Abstractions;
 
 namespace RhythmFlow.UnitTests.src.ApplicationTests
 {

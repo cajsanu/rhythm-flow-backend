@@ -1,5 +1,4 @@
 using RhythmFlow.Application.src.DTOs.Shared;
-using RhythmFlow.Application.src.Factories;
 using RhythmFlow.Application.src.FactoryInterfaces;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.Entities;
@@ -12,7 +11,7 @@ namespace RhythmFlow.Application.src.Services
     // This relationship is represented by a collection of users on the entity and collections of entities on the user.
     // The many-to-many table is implemented in the database as a implicit join table, which means that the table is not explicitly defined in the database schema.
     // Read more about it here: https://learn.microsoft.com/en-us/ef/core/modeling/relationships/many-to-many
-    public class AssignmentService<T, TReadDto>(IUserRepo userRepo, IBaseRepo<T> entityRepo,  IDtoFactory<T, TReadDto> dtoFactory) : IAssignmentService<T, TReadDto>
+    public class AssignmentService<T, TReadDto>(IUserRepo userRepo, IBaseRepo<T> entityRepo, IDtoFactory<T, TReadDto> dtoFactory) : IAssignmentService<T, TReadDto>
     where T : BaseEntity
     where TReadDto : IBaseReadDto<T>
     {

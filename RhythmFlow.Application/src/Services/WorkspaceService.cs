@@ -1,25 +1,19 @@
 using RhythmFlow.Application.DTOs.Workspaces;
-using RhythmFlow.Application.src.DTOs.Tickets;
 using RhythmFlow.Application.src.Factories;
+using RhythmFlow.Application.src.FactoryInterfaces;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
 
 namespace RhythmFlow.Application.src.Services
 {
-    public class WorkspaceService : BaseService<Workspace, WorkspaceReadDto>, IWorkspaceService
+    public class WorkspaceService(
+        IWorkspaceRepo workspaceRepo,
+        AssignmentService<Workspace, WorkspaceReadDto> assignmentService,
+        IDtoFactory<Workspace, WorkspaceReadDto> workspaceDtoFactory) : BaseService<Workspace, WorkspaceReadDto>(workspaceRepo, workspaceDtoFactory), IWorkspaceService
     {
         // T
-        private readonly AssignmentService<Workspace, WorkspaceReadDto> _assignmentService;
-
-        public WorkspaceService(
-            IWorkspaceRepo ticketRepository,
-            AssignmentService<Workspace, WorkspaceReadDto> assignmentService,
-            WorkspaceDtoFactory workspaceDtoFactory)
-            : base(ticketRepository, workspaceDtoFactory)
-        {
-            _assignmentService = assignmentService;
-        }
+        private readonly AssignmentService<Workspace, WorkspaceReadDto> _assignmentService = assignmentService;
 
         public Task<WorkspaceReadDto> AssignUserToEntityAsync(Guid userId, Guid entityId)
         {
