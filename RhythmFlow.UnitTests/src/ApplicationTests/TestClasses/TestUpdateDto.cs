@@ -6,7 +6,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.TestClasses
     {
         public Guid Id { get; set; }
 
-        public static IBaseUpdateDto<TestEntity> ToDto(TestEntity entity)
+        public IBaseUpdateDto<TestEntity> ToDto(TestEntity entity)
         {
             throw new NotImplementedException();
         }

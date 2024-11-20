@@ -1,6 +1,6 @@
 using RhythmFlow.Application.DTOs.Workspaces;
 using RhythmFlow.Application.src.DTOs.Workspaces;
-using RhythmFlow.Application.src.Factories;
+using RhythmFlow.Application.src.FactoryInterfaces;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
@@ -10,7 +10,7 @@ namespace RhythmFlow.Application.src.Services
     public class WorkspaceService(
         IWorkspaceRepo workspaceRepository,
         AssignmentService<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto> assignmentService,
-        WorkspaceDtoFactory workspaceDtoFactory) : BaseService<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>(workspaceRepository, workspaceDtoFactory), IWorkspaceService
+        IDtoFactory<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto> workspaceDtoFactory) : BaseService<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>(workspaceRepository, workspaceDtoFactory), IWorkspaceService
     {
         private readonly AssignmentService<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto> _assignmentService = assignmentService;
 

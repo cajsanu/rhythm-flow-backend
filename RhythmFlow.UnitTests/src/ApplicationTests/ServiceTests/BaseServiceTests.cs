@@ -1,47 +1,35 @@
 using Moq;
-using RhythmFlow.Application.src.DTOs.Shared;
 using RhythmFlow.Application.src.FactoryInterfaces;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Application.src.Services;
-using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
 using RhythmFlow.UnitTests.src.ApplicationTests.TestClasses;
 
 namespace RhythmFlow.UnitTests.src.ApplicationTests.ServiceTests
 {
-    // Minimal concrete implementation for testing purposes
-    public class TestBaseReadDto : IBaseReadDto<BaseEntity>
-    {
-        public Guid Id { get; set; }
-        public static IBaseReadDto<BaseEntity> ToDto(BaseEntity entity)
-        {
-            return new TestBaseReadDto { Id = entity.Id };
-        }
-    }
-
     public class BaseServiceTests
     {
-        private readonly Mock<IBaseRepo<BaseEntity>> _mockRepo;
-        private readonly Mock<IDtoFactory<BaseEntity, TestReadDto, TestCreateDto, TestUpdateDto>> _mockFactory;
-        private readonly IBaseService<BaseEntity, TestReadDto, TestCreateDto, TestUpdateDto> _service;
+        private readonly Mock<IBaseRepo<TestEntity>> _mockRepo;
+        private readonly Mock<IDtoFactory<TestEntity, TestReadDto, TestCreateDto, TestUpdateDto>> _mockFactory;
+        private readonly IBaseService<TestEntity, TestReadDto, TestCreateDto, TestUpdateDto> _service;
 
         public BaseServiceTests()
         {
-            _mockRepo = new Mock<IBaseRepo<BaseEntity>>();
-            _mockFactory = new Mock<IDtoFactory<BaseEntity, TestReadDto, TestCreateDto, TestUpdateDto>>();
+            _mockRepo = new Mock<IBaseRepo<TestEntity>>();
+            _mockFactory = new Mock<IDtoFactory<TestEntity, TestReadDto, TestCreateDto, TestUpdateDto>>();
 
-            // Setup factory to convert BaseEntity to TestBaseReadDto
-            _mockFactory.Setup(factory => factory.CreateReadDto(It.IsAny<BaseEntity>()))
-                .Returns((BaseEntity entity) => new TestReadDto { Id = entity.Id });
+            // Setup factory to convert TestEntity to TestReadDto
+            _mockFactory.Setup(factory => factory.CreateReadDto(It.IsAny<TestEntity>()))
+                .Returns((TestEntity entity) => new TestReadDto { Id = entity.Id });
 
-            _service = new BaseService<BaseEntity, TestReadDto, TestCreateDto, TestUpdateDto>(_mockRepo.Object, _mockFactory.Object);
+            _service = new BaseService<TestEntity, TestReadDto, TestCreateDto, TestUpdateDto>(_mockRepo.Object, _mockFactory.Object);
         }
 
         [Fact]
         public async Task GetAllAsync_ShouldReturnEntities()
         {
             // Arrange
-            var entities = new List<BaseEntity> { new(), new() };
+            var entities = new List<TestEntity> { new(), new() };
             _mockRepo.Setup(repo => repo.GetAllAsync()).ReturnsAsync(entities);
 
             // Act
@@ -55,7 +43,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.ServiceTests
         public async Task GetByIdAsync_ShouldReturnEntity()
         {
             // Arrange
-            var entity = new BaseEntity();
+            var entity = new TestEntity();
             _mockRepo.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(entity);
 
             // Act
@@ -69,8 +57,8 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.ServiceTests
         public async Task AddAsync_ShouldReturnNewEntity()
         {
             // Arrange
-            var entity = new BaseEntity();
-            _mockRepo.Setup(repo => repo.AddAsync(It.IsAny<BaseEntity>())).ReturnsAsync(entity);
+            var entity = new TestEntity();
+            _mockRepo.Setup(repo => repo.AddAsync(It.IsAny<TestEntity>())).ReturnsAsync(entity);
 
             // Act
             var result = await _service.AddAsync(new TestCreateDto());
@@ -83,9 +71,9 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.ServiceTests
         public async Task UpdateAsync_ShouldReturnUpdatedEntity()
         {
             // Arrange
-            var entity = new BaseEntity { Id = Guid.NewGuid() };
+            var entity = new TestEntity { Id = Guid.NewGuid() };
             _mockRepo.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(entity);
-            _mockRepo.Setup(repo => repo.UpdateAsync(It.IsAny<BaseEntity>())).ReturnsAsync(entity);
+            _mockRepo.Setup(repo => repo.UpdateAsync(It.IsAny<TestEntity>())).ReturnsAsync(entity);
 
             // Act
             var result = await _service.UpdateAsync(entity.Id, entity);
@@ -98,7 +86,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.ServiceTests
         public async Task DeleteAsync_ShouldCallDeleteOnRepo()
         {
             // Arrange
-            var entity = new BaseEntity();
+            var entity = new TestEntity();
             _mockRepo.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(entity);
             _mockRepo.Setup(repo => repo.DeleteAsync(It.IsAny<Guid>())).Returns(Task.CompletedTask);
 
