@@ -33,7 +33,8 @@ namespace RhythmFlow.Application.src.Factories
             {
                 FirstName = entity.FirstName,
                 LastName = entity.LastName,
-                Email = entity.Email.Value
+                Email = entity.Email.Value,
+                PasswordHash = entity.PasswordHash
             };
         }
     }

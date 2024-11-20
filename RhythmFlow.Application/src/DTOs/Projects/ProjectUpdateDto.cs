@@ -24,14 +24,13 @@ namespace RhythmFlow.Application.src.DTOs.Projects
                 EndDate = entity.EndDate,
                 Status = entity.Status,
                 WorkspaceId = entity.WorkspaceId,
-                UsersId = entity.Users.Select(u => u.Id).ToList()
             };
         }
 
         // Exlamation mark is used to tell the compiler that the value is not null
-        public Project ToEntity()
+        public Project ToEntity(Guid guid)
         {
-            return new Project(Name, Description, StartDate, EndDate, Status, WorkspaceId);
+            return new Project(Name, Description, StartDate, EndDate, Status, WorkspaceId, guid);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace RhythmFlow.Domain.src.Entities
 
         public ICollection<Ticket> Tickets { get; set; } = [];
 
-        public User(string firstName, string lastName, string email, string password) : base() // Call the base constructor to generate a unique ID
+        public User(string firstName, string lastName, string email, string password, Guid? guid = null) : base(guid) // Call the base constructor to generate a unique ID
         {
             // firstName and lastName validation in the constructor and email validation in the setter.
             // This is mainly because the users name will probably not change wile the email might.

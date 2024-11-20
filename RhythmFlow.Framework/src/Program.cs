@@ -2,13 +2,22 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.IdentityModel.Tokens;
+using RhythmFlow.Application.DTOs.Workspaces;
 using RhythmFlow.Application.src.Authorization;
+using RhythmFlow.Application.src.DTOs.Projects;
+using RhythmFlow.Application.src.DTOs.Tickets;
+using RhythmFlow.Application.src.DTOs.Users;
+using RhythmFlow.Application.src.Factories;
+using RhythmFlow.Application.src.FactoryInterfaces;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Application.src.Services;
 using RhythmFlow.Controller.src.Middleware;
 using RhythmFlow.Controller.src.RouteTransformer;
+using RhythmFlow.Domain.src.Entities;
+using RhythmFlow.Domain.src.RepoInterfaces;
 using RhythmFlow.Domain.src.ValueObjects;
 using RhythmFlow.Framework.src.Data;
+using RhythmFlow.Framework.src.Repo;
 using RhythmFlow.Framework.src.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,9 +29,30 @@ builder.Services.AddSwaggerGen();
 
 // Configure lowercase URLs
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
-builder.Services.AddScoped<AppDbContext>();
+builder.Services.AddSingleton<AppDbContext>();
 
-// add services to scope
+// Add Repo to scope
+builder.Services.AddScoped<IBaseRepo<Project>, ProjectRepo>();
+builder.Services.AddScoped<IProjectRepo, ProjectRepo>();
+builder.Services.AddScoped<IBaseRepo<Ticket>, TicketRepo>();
+builder.Services.AddScoped<ITicketRepo, TicketRepo>();
+builder.Services.AddScoped<IBaseRepo<User>, UserRepo>();
+builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IBaseRepo<Workspace>, WorkspaceRepo>();
+builder.Services.AddScoped<IWorkspaceRepo, WorkspaceRepo>();
+
+// Add Factory
+builder.Services.AddScoped<IDtoFactory<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>, TicketDtoFactory>();
+builder.Services.AddScoped<IDtoFactory<User, UserReadDto, UserCreateDto, UserUpdateDto>, UserDtoFactory>();
+builder.Services.AddScoped<IDtoFactory<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>, ProjectDtoFactory>();
+builder.Services.AddScoped<IDtoFactory<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>, WorkspaceDtoFactory>();
+
+// add assignmentService to scope
+builder.Services.AddScoped<AssignmentService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>>();
+builder.Services.AddScoped<AssignmentService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>>();
+builder.Services.AddScoped<AssignmentService<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>>();
+
+// Add services to scope
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -30,7 +60,7 @@ builder.Services.AddScoped<IWorkspaceService, WorkspaceService>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
-// add controller
+// Add controller
 builder.Services.AddControllers(options =>
 {
     options.Conventions.Add(new RouteTokenTransformerConvention(new SpinCaseTransformer()));
@@ -44,6 +74,7 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
 {
+#pragma warning disable CS8604 // Possible null reference argument.
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
@@ -54,6 +85,7 @@ builder.Services.AddAuthentication(options =>
         ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]))
     };
+#pragma warning restore CS8604 // Possible null reference argument.
 });
 
 // add authorization
@@ -81,10 +113,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    // putting this here since this can hide errors during development
+    app.UseMiddleware<ExceptionHandlerMiddleware>();
+}
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.Run();

@@ -12,6 +12,22 @@ namespace RhythmFlow.Framework.src.Data
         public List<Workspace> Workspaces { get; set; } = [];
         public List<UserWorkspace> UserWorkspaces { get; set; } = [];
 
+        private static readonly object _lock = new ();
+
+        public static AppDbContext Instance
+        {
+            get
+            {
+                lock (_lock)
+                {
+                    _instance ??= new AppDbContext();
+                    return _instance;
+                }
+            }
+        }
+
+        private static AppDbContext? _instance;
+
         public AppDbContext()
         {
             SeedData(); // Initialize with some dummy data
@@ -39,15 +55,24 @@ namespace RhythmFlow.Framework.src.Data
             var workspace5 = new Workspace("HR", user5.Id);
             Workspaces.AddRange([workspace1, workspace2, workspace3, workspace4, workspace5]);
 
+            // Generate Project
+            var project1 = new Project("Alpha", "Conquer the Galaxy", DateTime.Now.AddDays(2), DateTime.Now.AddDays(50), Status.InProgress, workspace1.Id);
+            var project2 = new Project("Beta", "Develop AI Assistant", DateTime.Now.AddDays(5), DateTime.Now.AddDays(60), Status.NotStarted, workspace2.Id);
+            var project3 = new Project("Gamma", "Revamp Website Design", DateTime.Now.AddDays(3), DateTime.Now.AddDays(45), Status.InProgress, workspace3.Id);
+            var project4 = new Project("Delta", "Launch Mobile App", DateTime.Now.AddDays(7), DateTime.Now.AddDays(90), Status.InProgress, workspace4.Id);
+            var project5 = new Project("Epsilon", "Implement Cloud Migration", DateTime.Now.AddDays(1), DateTime.Now.AddDays(120), Status.Cancelled, workspace5.Id);
+            var project6 = new Project("Zeta", "Optimize Data Pipeline", DateTime.Now.AddDays(10), DateTime.Now.AddDays(80), Status.InProgress, workspace5.Id);
+            Projects.AddRange([project1, project2, project3, project4, project5, project6]);
+
             // Generate tickets
-            var ticket1 = new Ticket("Create Database", "using Postgres", Priority.High, DateTime.Now.AddDays(7), Status.InProgress, workspace1.Id, TicketType.Bug);
-            var ticket2 = new Ticket("Fix Login Issue", "Resolve authentication error", Priority.High, DateTime.Now.AddDays(3), Status.InProgress, workspace1.Id, TicketType.Bug);
-            var ticket3 = new Ticket("Design Landing Page", "Create wireframe for new landing page", Priority.Medium, DateTime.Now.AddDays(14), Status.Cancelled, workspace1.Id, TicketType.Feature);
-            var ticket4 = new Ticket("Update Privacy Policy", "Review and update policy document", Priority.Low, DateTime.Now.AddDays(30), Status.NotStarted, workspace2.Id, TicketType.TechnicalDebt);
-            var ticket5 = new Ticket("Optimize API", "Enhance performance of existing API calls", Priority.High, DateTime.Now.AddDays(10), Status.InProgress, workspace2.Id, TicketType.Feature);
-            var ticket6 = new Ticket("Schedule Training", "Plan onboarding session for new hires", Priority.Medium, DateTime.Now.AddDays(7), Status.NotStarted, workspace2.Id, TicketType.TechnicalDebt);
-            var ticket7 = new Ticket("Add Dark Mode", "Implement dark mode toggle for users", Priority.High, DateTime.Now.AddDays(21), Status.Cancelled, workspace3.Id, TicketType.Bug);
-            var ticket8 = new Ticket("Bug in Report Generation", "Fix issue with incorrect data rendering", Priority.High, DateTime.Now.AddDays(5), Status.InProgress, workspace4.Id, TicketType.Feature);
+            var ticket1 = new Ticket("Create Database", "using Postgres", Priority.High, DateTime.Now.AddDays(7), Status.InProgress, project1.Id, TicketType.Bug);
+            var ticket2 = new Ticket("Fix Login Issue", "Resolve authentication error", Priority.High, DateTime.Now.AddDays(3), Status.InProgress, project1.Id, TicketType.Bug);
+            var ticket3 = new Ticket("Design Landing Page", "Create wireframe for new landing page", Priority.Medium, DateTime.Now.AddDays(14), Status.Cancelled, project1.Id, TicketType.Feature);
+            var ticket4 = new Ticket("Update Privacy Policy", "Review and update policy document", Priority.Low, DateTime.Now.AddDays(30), Status.NotStarted, project2.Id, TicketType.TechnicalDebt);
+            var ticket5 = new Ticket("Optimize API", "Enhance performance of existing API calls", Priority.High, DateTime.Now.AddDays(10), Status.InProgress, project2.Id, TicketType.Feature);
+            var ticket6 = new Ticket("Schedule Training", "Plan onboarding session for new hires", Priority.Medium, DateTime.Now.AddDays(7), Status.NotStarted, project2.Id, TicketType.TechnicalDebt);
+            var ticket7 = new Ticket("Add Dark Mode", "Implement dark mode toggle for users", Priority.High, DateTime.Now.AddDays(21), Status.Cancelled, project5.Id, TicketType.Bug);
+            var ticket8 = new Ticket("Bug in Report Generation", "Fix issue with incorrect data rendering", Priority.High, DateTime.Now.AddDays(5), Status.InProgress, project6.Id, TicketType.Feature);
             Tickets.AddRange([ticket1, ticket2, ticket3, ticket4, ticket5, ticket6, ticket7, ticket8]);
 
             // Generate user workspace
@@ -67,13 +92,22 @@ namespace RhythmFlow.Framework.src.Data
         // CRUD Simulation Methods
         public void Add<T>(T entity)
             where T : BaseEntity
-            => GetDbSet<T>().Add(entity);
+        {
+            GetDbSet<T>().Add(entity);
+        }
+
         public IEnumerable<T> GetAll<T>()
-            where T : BaseEntity
-            => GetDbSet<T>().AsEnumerable();
+                    where T : BaseEntity
+        {
+            return GetDbSet<T>().AsEnumerable();
+        }
+
         public T? GetById<T>(Guid id)
-            where T : BaseEntity
-            => GetDbSet<T>().Find(e => e.Id == id);
+                    where T : BaseEntity
+        {
+            return GetDbSet<T>()?.Find(e => e.Id == id);
+        }
+
         public void Update<T>(T entity)
             where T : BaseEntity
         {
@@ -100,8 +134,11 @@ namespace RhythmFlow.Framework.src.Data
         private List<T> GetDbSet<T>()
             where T : BaseEntity
         {
+            // cannot use switch here
+#pragma warning disable CS8603 // Possible null reference return.
             if (typeof(T) == typeof(User))
                 return Users as List<T>;
+
             if (typeof(T) == typeof(Project))
                 return Projects as List<T>;
             if (typeof(T) == typeof(Ticket))
@@ -110,7 +147,7 @@ namespace RhythmFlow.Framework.src.Data
                 return Workspaces as List<T>;
             if (typeof(T) == typeof(UserWorkspace))
                 return UserWorkspaces as List<T>;
-
+#pragma warning restore CS8603 // Possible null reference return.
             throw new InvalidOperationException("Invalid entity type");
         }
     }

@@ -5,9 +5,16 @@ namespace RhythmFlow.Domain.src.Entities
         // Make the Id immutable
         public Guid Id { get; init; }
 
-        public BaseEntity()
+        public BaseEntity(Guid? guid = null)
         {
-            Id = Guid.NewGuid();
+            if (guid != null)
+            {
+                Id = (Guid)guid;
+            }
+            else
+            {
+                Id = Guid.NewGuid();
+            }
         }
     }
 }

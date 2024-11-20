@@ -2,10 +2,7 @@ using RhythmFlow.Domain.src.Entities;
 
 namespace RhythmFlow.UnitTests.src.ApplicationTests.TestClasses
 {
-    public class TestUser : User
+    public class TestUser(string firstName, string lastName, string email, string password) : User(firstName, lastName, email, password)
     {
-        public TestUser(string firstName, string lastName, string email, string password) : base(firstName, lastName, email, password)
-        {
-        }
     }
 }

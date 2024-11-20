@@ -5,17 +5,15 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.TestClasses
     public class TestUpdateDto : IBaseUpdateDto<TestEntity>
     {
         public Guid Id { get; set; }
-        
+
         public static IBaseUpdateDto<TestEntity> ToDto(TestEntity entity)
         {
-            return new TestUpdateDto { Id = entity.Id };
+            throw new NotImplementedException();
         }
 
-        public TestEntity ToEntity()
+        public TestEntity ToEntity(Guid guid)
         {
-            return new TestEntity { Id = Id };
+            return new TestEntity { Id = guid };
         }
-
-        
     }
 }
