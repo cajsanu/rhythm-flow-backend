@@ -9,7 +9,7 @@ namespace RhythmFlow.Application.src.DTOs.UserWorkspaces
         public Guid WorkspaceId { get; set; }
         public Role Role { get; set; }
 
-        public static UserWorkspaceUpdateDto ToDto(UserWorkspace entity)
+        public UserWorkspaceUpdateDto ToDto(UserWorkspace entity)
         {
             return new UserWorkspaceUpdateDto()
             {
