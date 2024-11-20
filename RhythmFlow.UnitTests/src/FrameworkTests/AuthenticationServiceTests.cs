@@ -37,9 +37,8 @@ namespace RhythmFlow.UnitTests.src.FrameworkTests
             var email = "test@example.com";
             var password = "password";
             var user = new User("Test", "User", email, "hashedPassword");
-            Email emailObj = new Email(email);
 
-            _mockUserRepo.Setup(repo => repo.GetUserByEmailAsync(emailObj)).ReturnsAsync(user);
+            _mockUserRepo.Setup(repo => repo.GetUserByEmailAsync(It.IsAny<Email>())).ReturnsAsync(user);
             _mockPasswordService.Setup(service => service.VerifyPassword(password, user.PasswordHash)).Returns(true);
 
             // Act
