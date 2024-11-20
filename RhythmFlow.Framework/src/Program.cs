@@ -7,6 +7,7 @@ using RhythmFlow.Application.src.Authorization;
 using RhythmFlow.Application.src.DTOs.Projects;
 using RhythmFlow.Application.src.DTOs.Tickets;
 using RhythmFlow.Application.src.DTOs.Users;
+using RhythmFlow.Application.src.DTOs.Workspaces;
 using RhythmFlow.Application.src.Factories;
 using RhythmFlow.Application.src.FactoryInterfaces;
 using RhythmFlow.Application.src.ServiceInterfaces;

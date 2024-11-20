@@ -13,6 +13,8 @@ namespace RhythmFlow.Controller.src.Controllers
         where TUpdateDto : IBaseUpdateDto<T>
         where TCreateDto : IBaseCreateDto<T>
     {
+        // Read more here: https://stackoverflow.com/questions/39459348/asp-net-core-web-api-no-route-matches-the-supplied-values
+        // ASP automatically removes the Async from action name by default so we should avoid naming functions in controller with suffix Async to avoid 3am confusions
         private readonly IBaseService<T, TReadDto, TCreateDto, TUpdateDto> _service = service;
 
         [HttpGet]
@@ -35,7 +37,7 @@ namespace RhythmFlow.Controller.src.Controllers
             Console.WriteLine(entity);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var createdEntity = await _service.AddAsync(entity.ToEntity());
+            var createdEntity = await _service.AddAsync(entity);
             return CreatedAtAction(nameof(GetById), new { id = createdEntity.Id }, createdEntity);
         }
 

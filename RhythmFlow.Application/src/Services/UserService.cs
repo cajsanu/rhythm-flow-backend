@@ -13,10 +13,11 @@ namespace RhythmFlow.Application.src.Services
         private readonly IDtoFactory<User, UserReadDto, UserCreateDto, UserUpdateDto> _dtoFactory = dtoFactory;
         private readonly IPasswordService _passwordService = passwordService;
 
-        public override async Task<UserReadDto> AddAsync(User entity)
+        public override async Task<UserReadDto> AddAsync(UserCreateDto entity)
         {
             // Check if user with email already exists
-            var user = await _userRepo.GetUserByEmailAsync(entity.Email);
+            Email email = new(entity.Email);
+            var user = await _userRepo.GetUserByEmailAsync(email);
             if (user != null)
             {
                 throw new InvalidOperationException($"User with email {entity.Email} already exists.");
@@ -24,7 +25,7 @@ namespace RhythmFlow.Application.src.Services
 
             var hashedPassword = _passwordService.HashPassword(entity.PasswordHash);
 
-            return await base.AddAsync(new User(entity.FirstName, entity.LastName, entity.Email.Value, hashedPassword));
+            return await base.AddAsync(new UserCreateDto { FirstName = entity.FirstName, LastName = entity.LastName, Email = entity.Email, PasswordHash = hashedPassword });
         }
 
         public async Task<UserReadDto?> GetUserByEmailAsync(Email email)
