@@ -4,7 +4,7 @@ using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.TicketDtoTests
 {
-    public class TicketCreateDtoTests
+    public class TicketCreateReadDtoTests
     {
         private List<ValidationResult> ValidateModel(object model)
         {
@@ -20,7 +20,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.TicketDtoTests
         [InlineData("Ticket 3", "", Priority.Medium, "2025-01-01", Status.Completed, "00000000-0000-0000-0000-000000000000", TicketType.Feature, false)] // Invalid ProjectId
         [InlineData("Ticket 4", "Deadline in the past", Priority.High, "2020-01-01", Status.InProgress, "6fa85f64-5717-4562-b3fc-2c963f66afa6", TicketType.Feature, false)] // Past Deadline
         [InlineData("Ticket 5", "A valid ticket", Priority.Low, "2026-07-15", Status.Completed, "6fa85f64-5717-4562-b3fc-2c963f66afa6", TicketType.Bug, true)] // Valid Case
-        public void TicketCreateDto_ValidationTests(
+        public void TicketCreateReadDto_ValidationTests(
             string title,
             string description,
             Priority priority,

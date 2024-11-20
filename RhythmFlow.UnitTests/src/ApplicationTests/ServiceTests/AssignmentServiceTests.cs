@@ -11,16 +11,16 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
     {
         private readonly Mock<IUserRepo> _mockUserRepo;
         private readonly Mock<IBaseRepo<TestEntity>> _mockEntityRepo;
-        private readonly Mock<IDtoFactory<TestEntity, TestReadDto>> _mockDtoFactory;
-        private readonly AssignmentService<TestEntity, TestReadDto> _service;
+        private readonly Mock<IDtoFactory<TestEntity, TestReadDto, TestCreateDto, TestUpdateDto>> _mockDtoFactory;
+        private readonly AssignmentService<TestEntity, TestReadDto, TestCreateDto, TestUpdateDto> _service;
 
         public AssignmentServiceTests()
         {
             _mockUserRepo = new Mock<IUserRepo>();
             _mockEntityRepo = new Mock<IBaseRepo<TestEntity>>();
-            _mockDtoFactory = new Mock<IDtoFactory<TestEntity, TestReadDto>>();
+            _mockDtoFactory = new Mock<IDtoFactory<TestEntity, TestReadDto, TestCreateDto, TestUpdateDto>>();
 
-            _service = new AssignmentService<TestEntity, TestReadDto>(
+            _service = new AssignmentService<TestEntity, TestReadDto, TestCreateDto, TestUpdateDto>(
                 _mockUserRepo.Object,
                 _mockEntityRepo.Object,
                 _mockDtoFactory.Object
@@ -38,7 +38,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             var dto = new TestReadDto { Id = entity.Id };
             _mockUserRepo.Setup(repo => repo.GetByIdAsync(userId)).ReturnsAsync(user);
             _mockEntityRepo.Setup(repo => repo.GetByIdAsync(entityId)).ReturnsAsync(entity);
-            _mockDtoFactory.Setup(factory => factory.CreateDto(entity)).Returns(dto);
+            _mockDtoFactory.Setup(factory => factory.CreateReadDto(entity)).Returns(dto);
 
             // Act
             var result = await _service.AssignUserToEntityAsync(userId, entityId);
@@ -59,7 +59,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             var dto = new TestReadDto { Id = entity.Id };
             _mockUserRepo.Setup(repo => repo.GetByIdAsync(userId)).ReturnsAsync(user);
             _mockEntityRepo.Setup(repo => repo.GetByIdAsync(entityId)).ReturnsAsync(entity);
-            _mockDtoFactory.Setup(factory => factory.CreateDto(entity)).Returns(dto);
+            _mockDtoFactory.Setup(factory => factory.CreateReadDto(entity)).Returns(dto);
 
             // Act
             var result = await _service.RemoveUserFromEntityAsync(userId, entityId);

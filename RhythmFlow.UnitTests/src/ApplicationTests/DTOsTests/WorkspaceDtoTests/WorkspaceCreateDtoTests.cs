@@ -3,7 +3,7 @@ using RhythmFlow.Application.DTOs.Workspaces;
 
 namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.WorkspaceDtoTests
 {
-    public class WorkspaceCreateDtoTests
+    public class WorkspaceCreateReadDtoTests
     {
         private List<ValidationResult> ValidateModel(object model)
         {
@@ -17,7 +17,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.WorkspaceDtoTests
         [InlineData("Workspace Alpha", "6fa85f64-5717-4562-b3fc-2c963f66afa6", true)] // Valid case
         [InlineData("", "6fa85f64-5717-4562-b3fc-2c963f66afa6", false)] // Missing Name
         [InlineData("Workspace Beta", "00000000-0000-0000-0000-000000000000", false)] // Invalid OwnerId (empty GUID)
-        public void WorkspaceCreateDto_ValidationTests(
+        public void WorkspaceCreateReadDto_ValidationTests(
             string name,
             string ownerId,
             bool isValid)

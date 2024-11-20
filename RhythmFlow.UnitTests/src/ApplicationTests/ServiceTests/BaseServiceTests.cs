@@ -5,6 +5,7 @@ using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Application.src.Services;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
+using RhythmFlow.UnitTests.src.ApplicationTests.TestClasses;
 
 namespace RhythmFlow.UnitTests.src.ApplicationTests
 {
@@ -18,29 +19,30 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
         }
     }
 
+
     public class BaseServiceTests
     {
         private readonly Mock<IBaseRepo<BaseEntity>> _mockRepo;
-        private readonly Mock<IDtoFactory<BaseEntity, TestBaseReadDto>> _mockFactory;
-        private readonly IBaseService<BaseEntity, TestBaseReadDto> _service;
+        private readonly Mock<IDtoFactory<BaseEntity, TestReadDto, TestCreateDto, TestUpdateDto>> _mockFactory;
+        private readonly IBaseService<BaseEntity, TestReadDto, TestCreateDto, TestUpdateDto> _service;
 
         public BaseServiceTests()
         {
             _mockRepo = new Mock<IBaseRepo<BaseEntity>>();
-            _mockFactory = new Mock<IDtoFactory<BaseEntity, TestBaseReadDto>>();
+            _mockFactory = new Mock<IDtoFactory<BaseEntity, TestReadDto, TestCreateDto, TestUpdateDto>>();
 
             // Setup factory to convert BaseEntity to TestBaseReadDto
-            _mockFactory.Setup(factory => factory.CreateDto(It.IsAny<BaseEntity>()))
-                .Returns((BaseEntity entity) => new TestBaseReadDto { Id = entity.Id });
+            _mockFactory.Setup(factory => factory.CreateReadDto(It.IsAny<BaseEntity>()))
+                .Returns((BaseEntity entity) => new TestReadDto { Id = entity.Id });
 
-            _service = new BaseService<BaseEntity, TestBaseReadDto>(_mockRepo.Object, _mockFactory.Object);
+            _service = new BaseService<BaseEntity, TestReadDto, TestCreateDto, TestUpdateDto>(_mockRepo.Object, _mockFactory.Object);
         }
 
         [Fact]
         public async Task GetAllAsync_ShouldReturnEntities()
         {
             // Arrange
-            var entities = new List<BaseEntity> { new (), new () };
+            var entities = new List<BaseEntity> { new(), new() };
             _mockRepo.Setup(repo => repo.GetAllAsync()).ReturnsAsync(entities);
 
             // Act

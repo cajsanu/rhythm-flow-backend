@@ -7,12 +7,18 @@ using RhythmFlow.Domain.src.RepoInterfaces;
 
 namespace RhythmFlow.Application.src.Services
 {
-    public class ProjectService(
-        IProjectRepo projectRepo,
-        AssignmentService<Project, ProjectReadDto> assignmentService,
-        IDtoFactory<Project, ProjectReadDto> projectDtoFactory) : BaseService<Project, ProjectReadDto>(projectRepo, projectDtoFactory), IProjectService
+    public class ProjectService : BaseService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>, IProjectService
     {
-        private readonly AssignmentService<Project, ProjectReadDto> _assignmentService = assignmentService;
+        private readonly AssignmentService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto> _assignmentService;
+
+        public ProjectService(
+            IProjectRepo projectRepo,
+            AssignmentService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto> assignmentService,
+            ProjectDtoFactory projectDtoFactory)
+            : base(projectRepo, projectDtoFactory)
+        {
+            _assignmentService = assignmentService;
+        }
 
         public Task<ProjectReadDto> AssignUserToEntityAsync(Guid userId, Guid ticketId)
         {

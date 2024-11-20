@@ -13,7 +13,7 @@ namespace RhythmFlow.Application.DTOs.Workspaces
         [NoEmptyGuid]
         public Guid OwnerId { get; set; }
 
-        public static IBaseCreateDto<Workspace> ToDto(Workspace entity)
+        public IBaseCreateDto<Workspace> ToDto(Workspace entity)
         {
             return new WorkspaceCreateDto()
             {
