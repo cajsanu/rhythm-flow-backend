@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using RhythmFlow.Application.src.DTOs.Authentication;
 using RhythmFlow.Application.src.ServiceInterfaces;
-using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.Controller.src.Controllers
 {

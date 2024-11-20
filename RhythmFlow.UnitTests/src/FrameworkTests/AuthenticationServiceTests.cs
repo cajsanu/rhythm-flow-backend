@@ -34,11 +34,12 @@ namespace RhythmFlow.UnitTests.src.FrameworkTests
         public async Task AuthenticateUserAsync_WithValidCredentials_ShouldReturnJwtToken()
         {
             // Arrange
-            var email = new Email("test@example.com");
+            var email = "test@example.com";
             var password = "password";
-            var user = new User("Test", "User", email.Value, "hashedPassword");
+            var user = new User("Test", "User", email, "hashedPassword");
+            Email emailObj = new Email(email);
 
-            _mockUserRepo.Setup(repo => repo.GetUserByEmailAsync(email)).ReturnsAsync(user);
+            _mockUserRepo.Setup(repo => repo.GetUserByEmailAsync(emailObj)).ReturnsAsync(user);
             _mockPasswordService.Setup(service => service.VerifyPassword(password, user.PasswordHash)).Returns(true);
 
             // Act
@@ -55,10 +56,11 @@ namespace RhythmFlow.UnitTests.src.FrameworkTests
         public async Task AuthenticateUserAsync_WithInvalidCredentials_ShouldThrowUnauthorizedAccessException(string emailStr, string password)
         {
             // Arrange
-            var email = new Email(emailStr);
-            User? user = emailStr == "invalid@example.com" ? null : new User("Test", "User", email.Value, "hashedPassword");
+            var email = emailStr;
+            User? user = emailStr == "invalid@example.com" ? null : new User("Test", "User", email, "hashedPassword");
+            Email emailObj = new Email(email);
 
-            _mockUserRepo.Setup(repo => repo.GetUserByEmailAsync(email)).ReturnsAsync(user);
+            _mockUserRepo.Setup(repo => repo.GetUserByEmailAsync(emailObj)).ReturnsAsync(user);
             _mockPasswordService.Setup(service => service.VerifyPassword(password, It.IsAny<string>())).Returns(false);
 
             // Act & Assert

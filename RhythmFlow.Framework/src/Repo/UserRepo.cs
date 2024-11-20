@@ -9,7 +9,7 @@ namespace RhythmFlow.Framework.src.Repo
     {
         public async Task<User?> GetUserByEmailAsync(Email email)
         {
-            return await Task.FromResult(_context.Users.Find(u => u.Email == email));
+            return await Task.FromResult(_context.GetUserByEmail(email));
         }
     }
 }
