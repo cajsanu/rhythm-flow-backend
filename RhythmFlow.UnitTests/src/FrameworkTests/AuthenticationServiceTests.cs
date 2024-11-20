@@ -30,25 +30,25 @@ namespace RhythmFlow.UnitTests.src.FrameworkTests
             _authenticationService = new AuthenticationService(_mockUserRepo.Object, _mockPasswordService.Object, _mockConfiguration.Object);
         }
 
-        // [Fact]
-        // public async Task AuthenticateUserAsync_WithValidCredentials_ShouldReturnJwtToken()
-        // {
-        //     // Arrange
-        //     var email = "test@example.com";
-        //     var password = "password";
-        //     var user = new User("Test", "User", email, "hashedPassword");
-        //     Email emailObj = new Email(email);
+        [Fact]
+        public async Task AuthenticateUserAsync_WithValidCredentials_ShouldReturnJwtToken()
+        {
+            // Arrange
+            var email = "test@example.com";
+            var password = "password";
+            var user = new User("Test", "User", email, "hashedPassword");
+            Email emailObj = new Email(email);
 
-        //     _mockUserRepo.Setup(repo => repo.GetUserByEmailAsync(emailObj)).ReturnsAsync(user);
-        //     _mockPasswordService.Setup(service => service.VerifyPassword(password, user.PasswordHash)).Returns(true);
+            _mockUserRepo.Setup(repo => repo.GetUserByEmailAsync(emailObj)).ReturnsAsync(user);
+            _mockPasswordService.Setup(service => service.VerifyPassword(password, user.PasswordHash)).Returns(true);
 
-        //     // Act
-        //     var token = await _authenticationService.AuthenticateUserAsync(email, password);
+            // Act
+            var token = await _authenticationService.AuthenticateUserAsync(email, password);
 
-        //     // Assert
-        //     Assert.NotNull(token);
-        //     Assert.False(string.IsNullOrWhiteSpace(token));
-        // }
+            // Assert
+            Assert.NotNull(token);
+            Assert.False(string.IsNullOrWhiteSpace(token));
+        }
 
         [Theory]
         [InlineData("invalid@example.com", "validPassword")]

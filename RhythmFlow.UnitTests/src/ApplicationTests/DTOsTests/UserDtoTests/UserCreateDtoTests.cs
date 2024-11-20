@@ -27,7 +27,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.UserDtoTests
                 FirstName = firstName,
                 LastName = lastName,
                 Email = email,
-                PasswordHash = passwordHash
+                Password = passwordHash
             };
 
             // Act

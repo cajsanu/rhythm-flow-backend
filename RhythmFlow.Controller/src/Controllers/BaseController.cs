@@ -34,7 +34,6 @@ namespace RhythmFlow.Controller.src.Controllers
         [HttpPost]
         public async Task<ActionResult<TReadDto>> Add([FromBody] TCreateDto entity)
         {
-            Console.WriteLine(entity);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var createdEntity = await _service.AddAsync(entity);
