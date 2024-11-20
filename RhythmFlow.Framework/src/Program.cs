@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.IdentityModel.Tokens;
 using RhythmFlow.Application.DTOs.Workspaces;
+using RhythmFlow.Application.src.Authorization;
 using RhythmFlow.Application.src.DTOs.Projects;
 using RhythmFlow.Application.src.DTOs.Tickets;
 using RhythmFlow.Application.src.DTOs.Users;
@@ -88,18 +89,18 @@ builder.Services.AddAuthentication(options =>
 });
 
 // add authorization
-// builder.Services.AddAuthorization(options =>
-// {
-//     options.AddPolicy("WorkspaceDeveloperPolicy", policy =>
-//         policy.Requirements.Add(new RoleInWorkspaceRequirement([Role.Developer, Role.ProjectManager, Role.WorkspaceOwner])));
-//     options.AddPolicy("WorkspaceProjectManagerPolicy", policy =>
-//         policy.Requirements.Add(new RoleInWorkspaceRequirement([Role.ProjectManager, Role.WorkspaceOwner])));
-//     options.AddPolicy("WorkspaceOwnerPolicy", policy =>
-//         policy.Requirements.Add(new RoleInWorkspaceRequirement([Role.WorkspaceOwner])));
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("WorkspaceDeveloperPolicy", policy =>
+        policy.Requirements.Add(new RoleInWorkspaceRequirement([Role.Developer, Role.ProjectManager, Role.WorkspaceOwner])));
+    options.AddPolicy("WorkspaceProjectManagerPolicy", policy =>
+        policy.Requirements.Add(new RoleInWorkspaceRequirement([Role.ProjectManager, Role.WorkspaceOwner])));
+    options.AddPolicy("WorkspaceOwnerPolicy", policy =>
+        policy.Requirements.Add(new RoleInWorkspaceRequirement([Role.WorkspaceOwner])));
 
-//     options.AddPolicy("UserInProjectPolicy", policy =>
-//         policy.Requirements.Add(new UserInProjectRequirement()));
-// });
+    options.AddPolicy("UserInProjectPolicy", policy =>
+        policy.Requirements.Add(new UserInProjectRequirement()));
+});
 
 // add exception handling middleware
 builder.Services.AddTransient<ExceptionHandlerMiddleware>();
@@ -120,6 +121,6 @@ else
 
 // app.UseHttpsRedirection();
 app.UseAuthentication();
-// app.UseAuthorization();
+app.UseAuthorization();
 app.MapControllers();
 app.Run();

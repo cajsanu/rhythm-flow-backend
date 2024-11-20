@@ -32,7 +32,7 @@ namespace RhythmFlow.Application.src.Services
             return _dtoFactory.CreateReadDto(entity);
         }
 
-        public async Task<TReadDto> AddAsync(T entity)
+        public virtual async Task<TReadDto> AddAsync(T entity)
         {
             // Do we want to check for duplicates before adding?
             var newEntity = await _repository.AddAsync(entity);
