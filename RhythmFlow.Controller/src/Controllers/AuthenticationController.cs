@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using RhythmFlow.Application.src.DTOs.Authentication;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.ValueObjects;
 
@@ -11,9 +12,9 @@ namespace RhythmFlow.Controller.src.Controllers
         private readonly IAuthenticationService _authenticationService = authenticationService;
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Login([FromBody] Email email, [FromBody] string password)
+        public async Task<ActionResult<string>> Login([FromBody] AuthenticationDto authenticationDto)
         {
-            var token = await _authenticationService.AuthenticateUserAsync(email, password);
+            var token = await _authenticationService.AuthenticateUserAsync(authenticationDto.Email, authenticationDto.Password);
             return Ok(token);
         }
     }
