@@ -29,6 +29,7 @@ builder.Services.AddSwaggerGen();
 
 // Configure lowercase URLs
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
 // builder.Services.AddSingleton<AppDbContext>();
 builder.Services.AddDbContext<AppDbContext>();
 
