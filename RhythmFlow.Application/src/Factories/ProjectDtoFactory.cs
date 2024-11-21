@@ -16,7 +16,6 @@ namespace RhythmFlow.Application.src.Factories
         //         Status = entity.Status,
         //     };
         // }
-
         public ProjectReadDto CreateReadDto(Project entity)
         {
             return new ProjectReadDto

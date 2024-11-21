@@ -18,7 +18,6 @@ namespace RhythmFlow.Application.src.Factories
         //         ProjectId = entity.ProjectId,
         //     };
         // }
-
         public TicketReadDto CreateReadDto(Ticket entity)
         {
             return new TicketReadDto

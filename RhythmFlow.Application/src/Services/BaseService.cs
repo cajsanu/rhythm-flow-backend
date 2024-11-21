@@ -6,7 +6,6 @@ using RhythmFlow.Domain.src.RepoInterfaces;
 
 namespace RhythmFlow.Application.src.Services
 {
-
     public class BaseService<T, TReadDto, TCreateDto, TUpdateDto>(IBaseRepo<T> repository, IDtoFactory<T, TReadDto, TCreateDto, TUpdateDto> dtoFactory) : IBaseService<T, TReadDto, TCreateDto, TUpdateDto>
         where T : BaseEntity
 
