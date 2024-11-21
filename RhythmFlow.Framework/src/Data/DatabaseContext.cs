@@ -97,6 +97,9 @@ namespace RhythmFlow.Framework.src.Data
             var userWorkspace6 = new UserWorkspace(user6.Id, workspace2.Id, Role.Developer);
             var userWorkspace7 = new UserWorkspace(user7.Id, workspace2.Id, Role.Developer);
             UserWorkspaces.AddRange([userWorkspace1, userWorkspace2, userWorkspace3, userWorkspace4, userWorkspace5, userWorkspace6, userWorkspace7, userWorkspace8]);
+
+            // assign test user to projects
+            project6.Users = [user10];
         }
 
         // CRUD Simulation Methods

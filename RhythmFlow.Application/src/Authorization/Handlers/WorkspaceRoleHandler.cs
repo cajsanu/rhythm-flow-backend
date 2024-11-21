@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using RhythmFlow.Application.src.ServiceInterfaces;
 
-
 namespace RhythmFlow.Application.src.Authorization.Handlers
 {
     public class WorkspaceRoleHandler(IUserWorkspaceService userWorkspaceService, IHttpContextAccessor httpContextAccessor) : AuthorizationHandler<RoleInWorkspaceRequirement>

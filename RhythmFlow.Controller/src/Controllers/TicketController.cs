@@ -9,6 +9,8 @@ namespace RhythmFlow.Controller.src.Controllers
     [Authorize]
     [Authorize(Policy = "WorkspaceDeveloperPolicy")]
     [Authorize(Policy = "UserInProjectPolicy")]
+    [ApiController]
+    [Route("api/v1/workspaces/{workspaceId}/projects/{projectId}/[controller]s")]
     public class TicketController(ITicketService service) : BaseController<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>(service)
     {
         public override async Task<ActionResult<TicketReadDto>> Add([FromBody] TicketCreateDto createDto, Guid workspaceId)

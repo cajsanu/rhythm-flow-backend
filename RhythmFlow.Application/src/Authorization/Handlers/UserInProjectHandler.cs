@@ -1,41 +1,28 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using RhythmFlow.Application.src.ServiceInterfaces;
 
 namespace RhythmFlow.Application.src.Authorization.Handlers
 {
-    public class UserInProjectHandler(IProjectService projectService) : AuthorizationHandler<UserInProjectRequirement>
+    public class UserInProjectHandler(IProjectService projectService, IHttpContextAccessor httpContextAccessor) : AuthorizationHandler<UserInProjectRequirement>
     {
         private readonly IProjectService _projectService = projectService;
+        private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
         protected override async Task HandleRequirementAsync(
             AuthorizationHandlerContext context,
             UserInProjectRequirement requirement)
         {
-            // Get project ID from the request resource
-            var projectId = context.Resource as Guid? ?? Guid.Empty;
-
-            if (projectId == Guid.Empty)
+            // Extract workspace ID from route data
+            var routeData = _httpContextAccessor.HttpContext?.GetRouteData();
+            if (routeData == null || !routeData.Values.TryGetValue("projectId", out var projectIdValue)
+                || !Guid.TryParse(projectIdValue?.ToString(), out var projectId))
             {
                 context.Fail();
                 return;
             }
-
-            // // Ensure context.Resource is an HttpContext
-            // if (context.Resource is not HttpContext httpContext)
-            // {
-            //     context.Fail();
-            //     return;
-            // }
-
-            // // Extract workspaceId from the query string
-            // var workspaceIdQuery = httpContext.Request.Query["workspaceId"];
-            // if (!Guid.TryParse(workspaceIdQuery, out var workspaceId))
-            // {
-            //     context.Fail();
-            //     return;
-            // }
 
             // Get user ID from the claims
             if (!Guid.TryParse(context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var userId))
