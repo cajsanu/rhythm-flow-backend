@@ -14,22 +14,17 @@ namespace RhythmFlow.Application.src.DTOs.Users
         [EmailAddress]
         required public string Email { get; set; }
         [Required]
+        required public string Password { get; set; }
         public string? PasswordHash { get; set; }
-
-        public IBaseCreateDto<User> ToDto(User entity)
-        {
-            return new UserCreateDto()
-            {
-                FirstName = entity.FirstName,
-                LastName = entity.LastName,
-                Email = entity.Email.Value,
-                PasswordHash = entity.PasswordHash
-            };
-        }
 
         public User ToEntity()
         {
-            return new User(FirstName, LastName, Email!, PasswordHash!);
+            if (PasswordHash == null)
+            {
+                throw new InvalidOperationException("PasswordHash cannot be null.");
+            }
+
+            return new User(FirstName, LastName, Email, PasswordHash);
         }
     }
 }

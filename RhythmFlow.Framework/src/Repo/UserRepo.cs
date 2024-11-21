@@ -7,9 +7,9 @@ namespace RhythmFlow.Framework.src.Repo
 {
     public class UserRepo(AppDbContext _context) : BaseRepo<User>(_context), IUserRepo
     {
-        public Task<User> GetUserByEmailAsync(Email email)
+        public async Task<User?> GetUserByEmailAsync(Email email)
         {
-            throw new NotImplementedException();
+            return await Task.FromResult(_context.GetUserByEmail(email));
         }
     }
 }

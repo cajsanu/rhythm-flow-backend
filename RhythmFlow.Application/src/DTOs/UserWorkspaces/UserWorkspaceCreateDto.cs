@@ -17,16 +17,6 @@ namespace RhythmFlow.Application.src.DTOs.UserWorkspaces
         [EnumDataType(typeof(Role))]
         public Role Role { get; set; }
 
-        public UserWorkspaceCreateDto ToDto(UserWorkspace entity)
-        {
-            return new UserWorkspaceCreateDto()
-            {
-                UserId = entity.UserId,
-                WorkspaceId = entity.WorkspaceId,
-                Role = entity.Role
-            };
-        }
-
         public UserWorkspace ToEntity()
         {
             return new UserWorkspace(UserId, WorkspaceId, Role);

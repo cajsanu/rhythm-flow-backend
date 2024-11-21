@@ -17,9 +17,10 @@ namespace RhythmFlow.Framework.src.Services
         private readonly IPasswordService _passwordService = passwordService;
         private readonly IConfiguration _configuration = configuration;
 
-        public async Task<string?> AuthenticateUserAsync(Email userEmail, string password)
+        public async Task<string?> AuthenticateUserAsync(string userEmail, string password)
         {
-            var user = await _userRepo.GetUserByEmailAsync(userEmail);
+            Email email = new Email(userEmail);
+            var user = await _userRepo.GetUserByEmailAsync(email);
             if (user == null || !_passwordService.VerifyPassword(password, user.PasswordHash))
             {
                 throw new UnauthorizedAccessException("Invalid email or password");

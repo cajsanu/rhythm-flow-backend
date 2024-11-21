@@ -15,7 +15,7 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
         public TicketType Type { get; set; }
         public ICollection<Guid> UsersId { get; set; } = [];
 
-        public static IBaseUpdateDto<Ticket> ToDto(Ticket entity)
+        public IBaseUpdateDto<Ticket> ToDto(Ticket entity)
         {
             return new TicketUpdateDto()
             {

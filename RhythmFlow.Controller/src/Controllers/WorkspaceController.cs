@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using RhythmFlow.Application.DTOs.Workspaces;
+using RhythmFlow.Application.src.DTOs.Workspaces;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.Entities;
 
