@@ -6,20 +6,37 @@ using RhythmFlow.Domain.src.Entities;
 
 namespace RhythmFlow.Controller.src.Controllers
 {
-    // [Authorize(Policy = "UserInProjectPolicy")]
+    [Authorize]
+    [Authorize(Policy = "WorkspaceDeveloperPolicy")]
     public class ProjectController(IProjectService service) : BaseController<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>(service)
     {
-        // Get workspace by id should include all projects in the workspace
-        // so no need to have a separate method for this.
+        [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
+        public override async Task<ActionResult<ProjectReadDto>> Add([FromBody] ProjectCreateDto createDto, Guid workspaceId)
+        {
+            return await base.Add(createDto, workspaceId);
+        }
+
+        [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
+        public override async Task<ActionResult> Delete(Guid id)
+        {
+            return await base.Delete(id);
+        }
+
+        [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
+        public override async Task<ActionResult> Update(Guid id, [FromBody] ProjectUpdateDto updateDto)
+        {
+            return await base.Update(id, updateDto);
+        }
+
+        [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
         [HttpPost("assignUser/{userId}")]
-        // [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
         public async Task<ActionResult> AssignUserToProject(Guid userId)
         {
             throw new NotImplementedException();
         }
 
+        [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
         [HttpDelete("removeUser/{userId}")]
-        // [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
         public async Task<ActionResult> RemoveUserFromProject(Guid userId)
         {
             throw new NotImplementedException();
