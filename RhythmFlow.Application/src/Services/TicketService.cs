@@ -12,15 +12,6 @@ namespace RhythmFlow.Application.src.Services
         private readonly AssignmentService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> _assignmentService;
         private readonly IProjectRepo _projectRepo;
         private readonly ITicketRepo _ticketRepo;
-
-        private bool CheckUserInTheProject(Guid userId, Guid ticketId)
-        {
-            Ticket ticket = _ticketRepo.GetByIdAsync(ticketId).Result;
-            Project project = _projectRepo.GetByIdAsync(ticket.ProjectId).Result;
-            var userInProject = project.Users.FirstOrDefault(u => u.Id == userId);
-            if (userInProject != null) return true;
-            else throw new InvalidOperationException("User is not in the project");
-        }
         public TicketService(
         ITicketRepo ticketRepository,
         AssignmentService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> assignmentService,
@@ -30,6 +21,14 @@ namespace RhythmFlow.Application.src.Services
             _assignmentService = assignmentService;
             _ticketRepo = ticketRepository;
             _projectRepo = projectRepo;
+        }
+        private bool CheckUserInTheProject(Guid userId, Guid ticketId)
+        {
+            Ticket ticket = _ticketRepo.GetByIdAsync(ticketId).Result;
+            Project project = _projectRepo.GetByIdAsync(ticket.ProjectId).Result;
+            var userInProject = project.Users.FirstOrDefault(u => u.Id == userId);
+            if (userInProject != null) return true;
+            else throw new InvalidOperationException("User is not in the project");
         }
 
         public Task<TicketReadDto> AssignUserToEntityAsync(Guid userId, Guid ticketId)
