@@ -32,17 +32,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 // builder.Services.AddSingleton<AppDbContext>();
-builder.Services.AddDbContext<AppDbContext>(
-        options => options
-
-            // .UseLazyLoadingProxies() // Lazy loading for virtual navigation properties
-            .UseNpgsql(
-                builder.Configuration.GetConnectionString("DefaultConnection"),
-                npgsqlOptions => npgsqlOptions.CommandTimeout(30)
-            )
-            .EnableSensitiveDataLogging() // Disable in production
-            .UseSnakeCaseNamingConvention()
-);
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 // Add Repo to scope
 builder.Services.AddScoped<IBaseRepo<Project>, ProjectRepo>();

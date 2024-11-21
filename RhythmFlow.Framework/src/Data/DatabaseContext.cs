@@ -4,7 +4,7 @@ using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.Framework.src.Data
 {
-    public class AppDbContext(DbContextOptions<AppDbContext> dbContextOptions, IConfiguration configuration) : DbContext(dbContextOptions)
+    public class AppDbContext() : DbContext()
     {
         // In-memory storage for each entity type
         public DbSet<User> Users { get; set; }
@@ -13,16 +13,16 @@ namespace RhythmFlow.Framework.src.Data
         public DbSet<Workspace> Workspaces { get; set; }
         public DbSet<UserWorkspace> UserWorkspaces { get; set; }
 
-        private readonly IConfiguration _configuration = configuration;
-
-        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        // {
-        //     optionsBuilder
-        //     .UseNpgsql(_configuration.GetConnectionString("DefaultConnection"))
-        //     .EnableDetailedErrors() // not in production
-        //     .EnableSensitiveDataLogging() // not in production
-        //     .UseSnakeCaseNamingConvention();
-        // }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            // more here: https://stackoverflow.com/questions/78836133/net-entity-framework-core-database-update-fails-with-host-cant-be-null
+            var _configuration = new ConfigurationBuilder().SetBasePath(AppDomain.CurrentDomain.BaseDirectory).AddJsonFile("appsettings.json").Build();
+            optionsBuilder
+            .UseNpgsql(_configuration.GetConnectionString("DefaultConnection"))
+            .EnableDetailedErrors() // not in production
+            .EnableSensitiveDataLogging() // not in production
+            .UseSnakeCaseNamingConvention();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
