@@ -1,4 +1,5 @@
 using RhythmFlow.Application.DTOs.Workspaces;
+using RhythmFlow.Application.src.DTOs.UserWorkspaces;
 using RhythmFlow.Application.src.Factories;
 using RhythmFlow.Application.src.FactoryInterfaces;
 using RhythmFlow.Application.src.ServiceInterfaces;
@@ -11,14 +12,17 @@ namespace RhythmFlow.Application.src.Services
     {
         // T
         private readonly AssignmentService<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto> _assignmentService;
-
+        private readonly IUserWorkspaceRepo _userWorkspaceRepo;
+        private readonly IDtoFactory<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto> _workspaceDtoFactory;
         public WorkspaceService(
             IWorkspaceRepo ticketRepository,
             AssignmentService<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto> assignmentService,
-            WorkspaceDtoFactory workspaceDtoFactory)
+            WorkspaceDtoFactory workspaceDtoFactory, IUserWorkspaceRepo userWorkspaceRepo)
             : base(ticketRepository, workspaceDtoFactory)
         {
             _assignmentService = assignmentService;
+            _userWorkspaceRepo = userWorkspaceRepo;
+            _workspaceDtoFactory = workspaceDtoFactory;
         }
 
         public Task<WorkspaceReadDto> AssignUserToEntityAsync(Guid userId, Guid entityId)
@@ -26,14 +30,16 @@ namespace RhythmFlow.Application.src.Services
             return _assignmentService.AssignUserToEntityAsync(userId, entityId);
         }
 
-        public Task<IEnumerable<Workspace>> GetAllWorkspaceJoinedByUser(Guid userId)
+        public Task<IEnumerable<WorkspaceReadDto>> GetAllWorkspaceJoinedByUser(Guid userId)
         {
-            throw new NotImplementedException();
+            IEnumerable<WorkspaceReadDto> workspacesJoinedByUser = _userWorkspaceRepo.GetAllUserWorkspacesByUserIdAsync(userId).Result.Select(_workspaceDtoFactory.CreateReadDto);
+            return Task.FromResult(workspacesJoinedByUser);
         }
 
-        public Task<IEnumerable<Workspace>> GetAllWorkspaceOwnedByUser(Guid userId)
-        {
-            throw new NotImplementedException();
+        public Task<IEnumerable<WorkspaceReadDto>> GetAllWorkspaceOwnedByUser(Guid userId)
+        {   
+            IEnumerable<WorkspaceReadDto> workspacesOwnedByUser = _userWorkspaceRepo.GetWorkspacesOwnedByUserAsync(userId).Result.Select(_workspaceDtoFactory.CreateReadDto);
+            return Task.FromResult(workspacesOwnedByUser);
         }
 
         public Task<WorkspaceReadDto> RemoveUserFromEntityAsync(Guid userId, Guid entityId)

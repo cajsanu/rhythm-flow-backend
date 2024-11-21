@@ -6,7 +6,7 @@ namespace RhythmFlow.Application.src.Factories
 {
     public class UserDtoFactory : IDtoFactory<User, UserReadDto, UserCreateDto, UserUpdateDto>
     {
-        public UserCreateDto CreateCreateReadDto(User entity)
+        public UserCreateDto CreateCreateDto(User entity)
         {
             return new UserCreateDto
             {

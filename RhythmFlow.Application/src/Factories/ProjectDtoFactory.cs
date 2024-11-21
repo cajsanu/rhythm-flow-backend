@@ -8,7 +8,8 @@ namespace RhythmFlow.Application.src.Factories
 {
     public class ProjectDtoFactory : IDtoFactory<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>
     {
-        public ProjectCreateDto CreateCreateReadDto(Project entity)
+
+        public ProjectCreateDto CreateCreateDto(Project entity)
         {
             return new ProjectCreateDto
             {

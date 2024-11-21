@@ -6,7 +6,7 @@ namespace RhythmFlow.Application.src.Factories
 {
     public class WorkspaceDtoFactory : IDtoFactory<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>
     {
-        public WorkspaceCreateDto CreateCreateReadDto(Workspace entity)
+        public WorkspaceCreateDto CreateCreateDto(Workspace entity)
         {
             return new WorkspaceCreateDto
             {
