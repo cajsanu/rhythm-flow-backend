@@ -8,6 +8,5 @@ namespace RhythmFlow.Application.src.FactoryInterfaces
         TReadDto CreateReadDto(T entity);
         TCreateReadDto CreateCreateReadDto(T entity);
         TUpdateDto CreateUpdateDto(T entity);
-
     }
 }

@@ -32,7 +32,7 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
             };
         }
 
-        public  Ticket ToEntity()
+        public Ticket ToEntity()
         {
             return new Ticket(Title, Description, Priority, Deadline, Status, ProjectId, Type);
         }

@@ -19,7 +19,6 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
         }
     }
 
-
     public class BaseServiceTests
     {
         private readonly Mock<IBaseRepo<BaseEntity>> _mockRepo;
@@ -42,7 +41,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
         public async Task GetAllAsync_ShouldReturnEntities()
         {
             // Arrange
-            var entities = new List<BaseEntity> { new(), new() };
+            var entities = new List<BaseEntity> { new (), new () };
             _mockRepo.Setup(repo => repo.GetAllAsync()).ReturnsAsync(entities);
 
             // Act

@@ -31,7 +31,7 @@ namespace RhythmFlow.Application.src.Factories
                 Type = entity.Type,
                 ProjectId = entity.ProjectId,
             };
-    }
+        }
 
         public TicketUpdateDto CreateUpdateDto(Ticket entity)
         {

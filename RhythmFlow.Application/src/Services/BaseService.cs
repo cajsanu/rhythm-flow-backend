@@ -8,7 +8,8 @@ namespace RhythmFlow.Application.src.Services
 {
     public class BaseService<T, TReadDto, TCreateReadDto, TUpdateDto>(IBaseRepo<T> repository, IDtoFactory<T, TReadDto, TCreateReadDto, TUpdateDto> dtoFactory) : IBaseService<T, TReadDto, TCreateReadDto, TUpdateDto>
         where T : BaseEntity
-       // where TReadDto : IBaseReadDto<T>
+
+        // where TReadDto : IBaseReadDto<T>
     {
         private readonly IBaseRepo<T> _repository = repository;
         private readonly IDtoFactory<T, TReadDto, TCreateReadDto, TUpdateDto> _dtoFactory = dtoFactory;

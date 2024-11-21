@@ -14,7 +14,5 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.TestClasses
         {
             return new TestEntity { Id = Id };
         }
-
-        
     }
 }
