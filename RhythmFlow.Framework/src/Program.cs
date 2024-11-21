@@ -36,6 +36,9 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 // this should probably be scoped but right now it does not work as anything else than singleton
 builder.Services.AddSingleton<AppDbContext>();
 
+// add http context accessor
+builder.Services.AddHttpContextAccessor();
+
 // Add Repo to scope
 builder.Services.AddScoped<IBaseRepo<Project>, ProjectRepo>();
 builder.Services.AddScoped<IProjectRepo, ProjectRepo>();
