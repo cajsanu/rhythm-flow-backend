@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using RhythmFlow.Application.src.ServiceInterfaces;
 
 namespace RhythmFlow.Application.src.Authorization.Handlers
@@ -20,6 +21,21 @@ namespace RhythmFlow.Application.src.Authorization.Handlers
                 context.Fail();
                 return;
             }
+
+            // // Ensure context.Resource is an HttpContext
+            // if (context.Resource is not HttpContext httpContext)
+            // {
+            //     context.Fail();
+            //     return;
+            // }
+
+            // // Extract workspaceId from the query string
+            // var workspaceIdQuery = httpContext.Request.Query["workspaceId"];
+            // if (!Guid.TryParse(workspaceIdQuery, out var workspaceId))
+            // {
+            //     context.Fail();
+            //     return;
+            // }
 
             // Get user ID from the claims
             if (!Guid.TryParse(context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var userId))

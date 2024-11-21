@@ -13,9 +13,6 @@ namespace RhythmFlow.Application.src.Authorization.Handlers
             AuthorizationHandlerContext context,
             RoleInWorkspaceRequirement requirement)
         {
-            Console.WriteLine("WS REQUIERMENT " + string.Join(", ", requirement.ValidRoles));
-            Console.WriteLine("USER " + context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-
             // Ensure context.Resource is an HttpContext
             if (context.Resource is not HttpContext httpContext)
             {
@@ -30,8 +27,6 @@ namespace RhythmFlow.Application.src.Authorization.Handlers
                 context.Fail();
                 return;
             }
-
-            Console.WriteLine("RESOURCE GUID " + workspaceId);
 
             // Get user ID from the claims
             if (!Guid.TryParse(context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var userId))
