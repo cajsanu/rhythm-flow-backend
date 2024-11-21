@@ -18,19 +18,6 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
         [NoEmptyGuid]
         public Guid ProjectId { get; set; }
         public TicketType Type { get; set; }
-        public IBaseCreateDto<Ticket> ToDto(Ticket entity)
-        {
-            return new TicketCreateDto()
-            {
-                Title = entity.Title,
-                Description = entity.Description,
-                Priority = entity.Priority,
-                Deadline = entity.Deadline,
-                Status = entity.Status,
-                ProjectId = entity.ProjectId,
-                Type = entity.Type
-            };
-        }
 
         public  Ticket ToEntity()
         {

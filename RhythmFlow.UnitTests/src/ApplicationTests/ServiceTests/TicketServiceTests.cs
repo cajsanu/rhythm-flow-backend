@@ -16,21 +16,19 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
         private readonly Mock<IDtoFactory<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>> _mockDtoFactory;
         private readonly Mock<IUserRepo> _mockUserRepo;
         private readonly AssignmentService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> _serviceAssignment;
-        private readonly Mock<IProjectRepo> _mockProjectRepo;
         private readonly TicketService _service;
 
         public TicketServiceTests()
         {
             _mockTicketRepo = new Mock<ITicketRepo>();
             _mockDtoFactory = new Mock<IDtoFactory<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>>();
-            _mockProjectRepo = new Mock<IProjectRepo>();
             _mockUserRepo = new Mock<IUserRepo>();
             _serviceAssignment = new AssignmentService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>(
                 _mockUserRepo.Object,
                 _mockTicketRepo.Object,
                 _mockDtoFactory.Object
             );
-            _service = new TicketService(_mockTicketRepo.Object, _serviceAssignment, new TicketDtoFactory(), _mockProjectRepo.Object);
+            _service = new TicketService(_mockTicketRepo.Object, _serviceAssignment, new TicketDtoFactory());
         }
 
         [Fact]

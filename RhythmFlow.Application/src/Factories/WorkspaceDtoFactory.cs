@@ -1,4 +1,5 @@
 using RhythmFlow.Application.DTOs.Workspaces;
+using RhythmFlow.Application.src.DTOs.Workspaces;
 using RhythmFlow.Application.src.FactoryInterfaces;
 using RhythmFlow.Domain.src.Entities;
 
@@ -6,14 +7,14 @@ namespace RhythmFlow.Application.src.Factories
 {
     public class WorkspaceDtoFactory : IDtoFactory<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>
     {
-        public WorkspaceCreateDto CreateCreateDto(Workspace entity)
-        {
-            return new WorkspaceCreateDto
-            {
-                Name = entity.Name,
-                OwnerId = entity.OwnerId
-            };
-        }
+        // public WorkspaceCreateDto CreateCreateReadDto(Workspace entity)
+        // {
+        //     return new WorkspaceCreateDto
+        //     {
+        //         Name = entity.Name,
+        //         OwnerId = entity.OwnerId
+        //     };
+        // }
 
         public WorkspaceReadDto CreateReadDto(Workspace entity)
         {

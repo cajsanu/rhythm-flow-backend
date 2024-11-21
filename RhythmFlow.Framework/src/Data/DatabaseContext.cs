@@ -1,3 +1,4 @@
+using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
 
@@ -129,6 +130,11 @@ namespace RhythmFlow.Framework.src.Data
             {
                 dbSet.Remove(entity);
             }
+        }
+
+        public User? GetUserByEmail(Email email)
+        {
+            return Users.Find(u => u.Email.Value == email.Value);
         }
 
         private List<T> GetDbSet<T>()

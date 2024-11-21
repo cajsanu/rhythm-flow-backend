@@ -6,6 +6,7 @@ using RhythmFlow.Application.src.Services;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
 using RhythmFlow.Domain.src.ValueObjects;
+using RhythmFlow.Framework.src.Services;
 using RhythmFlow.UnitTests.src.ApplicationTests.TestClasses;
 
 namespace RhythmFlow.UnitTests.src.ApplicationTests
@@ -15,12 +16,14 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
         private readonly Mock<IUserRepo> _mockUserRepo;
         private readonly Mock<IDtoFactory<User, UserReadDto, UserCreateDto, UserUpdateDto>> _mockDtoFactory;
         private readonly UserService _service;
+        private readonly PasswordService passwordService;
 
         public UserServiceTests()
         {
+            passwordService = new PasswordService();
             _mockUserRepo = new Mock<IUserRepo>();
             _mockDtoFactory = new Mock<IDtoFactory<User, UserReadDto, UserCreateDto, UserUpdateDto>>();
-            _service = new UserService(_mockUserRepo.Object, _mockDtoFactory.Object);
+            _service = new UserService(_mockUserRepo.Object, _mockDtoFactory.Object, passwordService);
         }
 
         [Fact]

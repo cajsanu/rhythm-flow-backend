@@ -21,19 +21,6 @@ namespace RhythmFlow.Application.src.DTOs.Projects
         [NoEmptyGuid(ValidateCollection = true)]
         public ICollection<Guid> UsersId { get; set; } = [];
 
-        public IBaseCreateDto<Project> ToDto(Project entity)
-        {
-            return new ProjectCreateDto()
-            {
-                Name = entity.Name,
-                Description = entity.Description,
-                StartDate = entity.StartDate,
-                EndDate = entity.EndDate,
-                Status = entity.Status,
-                WorkspaceId = entity.WorkspaceId,
-            };
-        }
-
         public Project ToEntity()
         {
             return new Project(Name, Description, StartDate, EndDate, Status, WorkspaceId);
