@@ -1,9 +1,11 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.IdentityModel.Tokens;
 using RhythmFlow.Application.DTOs.Workspaces;
 using RhythmFlow.Application.src.Authorization;
+using RhythmFlow.Application.src.Authorization.Handlers;
 using RhythmFlow.Application.src.DTOs.Projects;
 using RhythmFlow.Application.src.DTOs.Tickets;
 using RhythmFlow.Application.src.DTOs.Users;
@@ -30,7 +32,7 @@ builder.Services.AddSwaggerGen();
 
 // Configure lowercase URLs
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
-builder.Services.AddSingleton<AppDbContext>();
+builder.Services.AddScoped<AppDbContext>();
 
 // Add Repo to scope
 builder.Services.AddScoped<IBaseRepo<Project>, ProjectRepo>();
@@ -41,6 +43,7 @@ builder.Services.AddScoped<IBaseRepo<User>, UserRepo>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IBaseRepo<Workspace>, WorkspaceRepo>();
 builder.Services.AddScoped<IWorkspaceRepo, WorkspaceRepo>();
+builder.Services.AddScoped<IUserWorkspaceRepo, UserWorkspaceRepo>();
 
 // Add Factory
 builder.Services.AddScoped<IDtoFactory<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>, TicketDtoFactory>();
@@ -60,6 +63,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IWorkspaceService, WorkspaceService>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IUserWorkspaceService, UserWorkspaceService>();
 
 // Add controller
 builder.Services.AddControllers(options =>
@@ -89,7 +93,13 @@ builder.Services.AddAuthentication(options =>
 #pragma warning restore CS8604 // Possible null reference argument.
 });
 
-// add authorization
+// add services for authorization requirements
+builder.Services.AddScoped<IAuthorizationHandler, WorkspaceRoleHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, UserInProjectHandler>();
+// builder.Services.AddScoped<IAuthorizationRequirement, RoleInWorkspaceRequirement>();
+// builder.Services.AddScoped<IAuthorizationRequirement, UserInProjectRequirement>();
+
+// add authorization policies
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("WorkspaceDeveloperPolicy", policy =>

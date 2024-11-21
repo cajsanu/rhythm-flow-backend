@@ -7,8 +7,6 @@ namespace RhythmFlow.Controller.src.Controllers
 {
     public class TicketController(ITicketService service) : BaseController<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>(service)
     {
-        // Get Project by id should include all Tickets in the Project
-        // so no need to have a separate method for this.
         [HttpPost("assignUser/{userId}")]
         public async Task<ActionResult> AssignUserToTicket(Guid userId)
         {

@@ -12,6 +12,8 @@ namespace RhythmFlow.Application.src.Authorization.Handlers
             AuthorizationHandlerContext context,
             RoleInWorkspaceRequirement requirement)
         {
+            Console.WriteLine("WS REQUIERMENT " + requirement.ValidRoles);
+            Console.WriteLine("USER " + context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             // Extract the workspaceId from the request resource
             var workspaceId = context.Resource as Guid? ?? Guid.Empty;
 

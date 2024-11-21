@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RhythmFlow.Application.src.DTOs.Shared;
 using RhythmFlow.Application.src.ServiceInterfaces;
@@ -17,6 +18,8 @@ namespace RhythmFlow.Controller.src.Controllers
         // ASP automatically removes the Async from action name by default so we should avoid naming functions in controller with suffix Async to avoid 3am confusions
         private readonly IBaseService<T, TReadDto, TCreateDto, TUpdateDto> _service = service;
 
+        [Authorize]
+        [Authorize(Policy = "WorkspaceDeveloperPolicy")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TReadDto>>> GetAll()
         {
@@ -24,6 +27,7 @@ namespace RhythmFlow.Controller.src.Controllers
             return Ok(entities);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<TReadDto>> GetById(Guid id)
         {
@@ -32,7 +36,7 @@ namespace RhythmFlow.Controller.src.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<TReadDto>> Add([FromBody] TCreateDto entity)
+        public virtual async Task<ActionResult<TReadDto>> Add([FromBody] TCreateDto entity)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -40,6 +44,7 @@ namespace RhythmFlow.Controller.src.Controllers
             return CreatedAtAction(nameof(GetById), new { id = createdEntity.Id }, createdEntity);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(Guid id, [FromBody] TUpdateDto updateDto)
         {
@@ -47,8 +52,9 @@ namespace RhythmFlow.Controller.src.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(Guid id)
+        public virtual async Task<ActionResult> Delete(Guid id)
         {
             await _service.DeleteAsync(id);
             return NoContent();

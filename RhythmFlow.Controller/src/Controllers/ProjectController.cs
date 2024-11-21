@@ -9,8 +9,19 @@ namespace RhythmFlow.Controller.src.Controllers
     // [Authorize(Policy = "UserInProjectPolicy")]
     public class ProjectController(IProjectService service) : BaseController<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>(service)
     {
-        // Get workspace by id should include all projects in the workspace
-        // so no need to have a separate method for this.
+        [Authorize]
+        [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
+        public override async Task<ActionResult<ProjectReadDto>> Add([FromBody] ProjectCreateDto createDto)
+        {
+            return await base.Add(createDto);
+        }
+
+        [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
+        public override async Task<ActionResult> Delete(Guid id)
+        {
+            return await base.Delete(id);
+        }
+
         [HttpPost("assignUser/{userId}")]
         // [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
         public async Task<ActionResult> AssignUserToProject(Guid userId)
