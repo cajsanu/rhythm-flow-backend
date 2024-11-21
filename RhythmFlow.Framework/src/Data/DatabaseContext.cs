@@ -54,7 +54,10 @@ namespace RhythmFlow.Framework.src.Data
             var workspace3 = new Workspace("Design", user3.Id);
             var workspace4 = new Workspace("Sales", user4.Id);
             var workspace5 = new Workspace("HR", user5.Id);
-            Workspaces.AddRange([workspace1, workspace2, workspace3, workspace4, workspace5]);
+
+            // Workspace with explicit id for testing
+            var workspace6 = new Workspace("Testing", Guid.Parse("00045000-5400-0080-4000-000000006906"));
+            Workspaces.AddRange([workspace1, workspace2, workspace3, workspace4, workspace5, workspace6]);
 
             // Generate Project
             var project1 = new Project("Alpha", "Conquer the Galaxy", DateTime.Now.AddDays(2), DateTime.Now.AddDays(50), Status.InProgress, workspace1.Id);

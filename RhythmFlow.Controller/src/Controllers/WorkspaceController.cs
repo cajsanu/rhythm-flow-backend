@@ -9,14 +9,16 @@ namespace RhythmFlow.Controller.src.Controllers
 {
     [Authorize]
     [Authorize(Policy = "WorkspaceOwnerPolicy")]
+    [Route("api/v1/[controller]")]
+    [ApiController]
     public class WorkspaceController(IWorkspaceService service) : BaseController<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>(service)
     {
-        public override async Task<ActionResult<WorkspaceReadDto>> Add([FromBody] WorkspaceCreateDto createDto, [FromQuery] Guid workspaceId)
+        public override async Task<ActionResult<WorkspaceReadDto>> Add([FromBody] WorkspaceCreateDto createDto, Guid workspaceId)
         {
             return await base.Add(createDto, workspaceId);
         }
 
-        public override async Task<ActionResult> Delete(Guid id, [FromQuery] Guid workspaceId)
+        public override async Task<ActionResult> Delete(Guid id, Guid workspaceId)
         {
             return await base.Delete(id, workspaceId);
         }

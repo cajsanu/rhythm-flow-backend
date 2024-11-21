@@ -6,6 +6,8 @@ namespace RhythmFlow.Controller.src.Controllers
 {
     [Authorize]
     [Authorize(Policy = "WorkspaceOwnerPolicy")]
+    [Route("api/v1/[controller]")]
+    [ApiController]
     public class UserWorkspaceController(IUserWorkspaceService service)
     {
         [HttpGet("userworkspaces/{userId}")]
