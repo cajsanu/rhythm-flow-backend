@@ -7,15 +7,13 @@ namespace RhythmFlow.Controller.src.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]s")]
-    public class BaseController<T, TReadDto, TUpdateDto, TCreateDto>(IBaseService<T, TReadDto> service) : ControllerBase
+    public class BaseController<T, TReadDto, TCreateDto, TUpdateDto>(IBaseService<T, TReadDto, TCreateDto, TUpdateDto> service) : ControllerBase
         where T : BaseEntity
         where TReadDto : IBaseReadDto<T>
         where TUpdateDto : IBaseUpdateDto<T>
         where TCreateDto : IBaseCreateDto<T>
     {
-        // Read more here: https://stackoverflow.com/questions/39459348/asp-net-core-web-api-no-route-matches-the-supplied-values
-        // ASP automatically removes the Async from action name by default so we should avoid naming functions in controller with suffix Async to avoid 3am confusions
-        private readonly IBaseService<T, TReadDto> _service = service;
+        private readonly IBaseService<T, TReadDto, TCreateDto, TUpdateDto> _service = service;
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TReadDto>>> GetAll()

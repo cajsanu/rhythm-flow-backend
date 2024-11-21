@@ -14,7 +14,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
 {
     public class UserInProjectHandlerTests
     {
-        private readonly IDtoFactory<Project, ProjectReadDto> _projectDtoFactoryForArranging;
+        private readonly IDtoFactory<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto> _projectDtoFactoryForArranging;
 
         private readonly Mock<IProjectService> _mockProjectService;
         private readonly UserInProjectHandler _handler;
@@ -46,7 +46,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
             var requirement = new UserInProjectRequirement();
             var context = new AuthorizationHandlerContext([requirement], user, projectId);
 
-            var projectDto = _projectDtoFactoryForArranging.CreateDto(project);
+            var projectDto = _projectDtoFactoryForArranging.CreateReadDto(project);
             _mockProjectService.Setup(service => service.GetByIdAsync(projectId)).Returns(Task.FromResult(projectDto));
 
             // Act
@@ -75,7 +75,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
             var requirement = new UserInProjectRequirement();
             var context = new AuthorizationHandlerContext([requirement], user, projectId);
 
-            var projectDto = _projectDtoFactoryForArranging.CreateDto(project);
+            var projectDto = _projectDtoFactoryForArranging.CreateReadDto(project);
             _mockProjectService.Setup(service => service.GetByIdAsync(projectId)).Returns(Task.FromResult(projectDto));
 
             // Act

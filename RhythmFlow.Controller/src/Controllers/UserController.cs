@@ -4,7 +4,7 @@ using RhythmFlow.Domain.src.Entities;
 
 namespace RhythmFlow.Controller.src.Controllers
 {
-    public class UserController(IUserService service) : BaseController<User, UserReadDto, UserUpdateDto, UserCreateDto>(service)
+    public class UserController(IUserService service) : BaseController<User, UserReadDto, UserCreateDto, UserUpdateDto>(service)
     {
     }
 }

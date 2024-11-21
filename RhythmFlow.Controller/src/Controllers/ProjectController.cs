@@ -6,8 +6,7 @@ using RhythmFlow.Domain.src.Entities;
 
 namespace RhythmFlow.Controller.src.Controllers
 {
-    [Authorize(Policy = "UserInProjectPolicy")]
-    public class ProjectController(IProjectService service) : BaseController<Project, ProjectReadDto, ProjectUpdateDto, ProjectCreateDto>(service)
+    public class ProjectController(IProjectService service) : BaseController<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>(service)
     {
         // Get workspace by id should include all projects in the workspace
         // so no need to have a separate method for this.

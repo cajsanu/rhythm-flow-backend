@@ -3,7 +3,7 @@ using RhythmFlow.Application.src.DTOs.Users;
 
 namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.UserDtoTests
 {
-    public class UserCreateDtoTests
+    public class UserCreateReadDtoTests
     {
         private List<ValidationResult> ValidateModel(object model)
         {
@@ -19,7 +19,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.UserDtoTests
         [InlineData("John", "", "john.doe@example.com", "hashedPassword", false)] // Missing LastName
         [InlineData("John", "Doe", "invalid-email", "hashedPassword", false)] // Invalid Email
         [InlineData("John", "Doe", "john.doe@example.com", "", false)] // Missing PasswordHash
-        public void UserCreateDto_ValidationTests(string firstName, string lastName, string email, string passwordHash, bool isValid)
+        public void UserCreateReadDto_ValidationTests(string firstName, string lastName, string email, string passwordHash, bool isValid)
         {
             // Arrange
             var dto = new UserCreateDto

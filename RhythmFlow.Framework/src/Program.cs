@@ -44,15 +44,15 @@ builder.Services.AddScoped<IBaseRepo<Workspace>, WorkspaceRepo>();
 builder.Services.AddScoped<IWorkspaceRepo, WorkspaceRepo>();
 
 // Add Factory
-builder.Services.AddScoped<IDtoFactory<Ticket, TicketReadDto>, TicketDtoFactory>();
-builder.Services.AddScoped<IDtoFactory<User, UserReadDto>, UserDtoFactory>();
-builder.Services.AddScoped<IDtoFactory<Project, ProjectReadDto>, ProjectDtoFactory>();
-builder.Services.AddScoped<IDtoFactory<Workspace, WorkspaceReadDto>, WorkspaceDtoFactory>();
+builder.Services.AddScoped<IDtoFactory<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>, TicketDtoFactory>();
+builder.Services.AddScoped<IDtoFactory<User, UserReadDto, UserCreateDto, UserUpdateDto>, UserDtoFactory>();
+builder.Services.AddScoped<IDtoFactory<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>, ProjectDtoFactory>();
+builder.Services.AddScoped<IDtoFactory<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>, WorkspaceDtoFactory>();
 
 // add assignmentService to scope
-builder.Services.AddScoped<AssignmentService<Project, ProjectReadDto>>();
-builder.Services.AddScoped<AssignmentService<Ticket, TicketReadDto>>();
-builder.Services.AddScoped<AssignmentService<Workspace, WorkspaceReadDto>>();
+builder.Services.AddScoped<AssignmentService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>>();
+builder.Services.AddScoped<AssignmentService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>>();
+builder.Services.AddScoped<AssignmentService<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>>();
 
 // Add services to scope
 builder.Services.AddScoped<IProjectService, ProjectService>();
