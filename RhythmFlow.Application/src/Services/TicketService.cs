@@ -13,15 +13,17 @@ namespace RhythmFlow.Application.src.Services
         private readonly IProjectRepo _projectRepo;
         private readonly ITicketRepo _ticketRepo;
         public TicketService(
-        ITicketRepo ticketRepository,
-        AssignmentService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> assignmentService,
-        TicketDtoFactory ticketDtoFactory, IProjectRepo projectRepo)
-        : base(ticketRepository, ticketDtoFactory)
+            ITicketRepo ticketRepository,
+            AssignmentService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> assignmentService,
+            TicketDtoFactory ticketDtoFactory,
+            IProjectRepo projectRepo)
+            : base(ticketRepository, ticketDtoFactory)
         {
             _assignmentService = assignmentService;
             _ticketRepo = ticketRepository;
             _projectRepo = projectRepo;
         }
+
         private bool CheckUserInTheProject(Guid userId, Guid ticketId)
         {
             Ticket ticket = _ticketRepo.GetByIdAsync(ticketId).Result;
@@ -33,13 +35,13 @@ namespace RhythmFlow.Application.src.Services
 
         public Task<TicketReadDto> AssignUserToEntityAsync(Guid userId, Guid ticketId)
         {
-            CheckUserInTheProject(userId, ticketId);
+          //  CheckUserInTheProject(userId, ticketId);
             return _assignmentService.AssignUserToEntityAsync(userId, ticketId);
         }
 
         public Task<TicketReadDto> RemoveUserFromEntityAsync(Guid userId, Guid ticketId)
         {
-            CheckUserInTheProject(userId, ticketId);
+        //    CheckUserInTheProject(userId, ticketId);
             return _assignmentService.RemoveUserFromEntityAsync(userId, ticketId);
         }
     }

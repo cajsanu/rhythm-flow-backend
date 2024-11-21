@@ -19,7 +19,6 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
         }
     }
 
-
     public class BaseServiceTests
     {
         private readonly Mock<IBaseRepo<BaseEntity>> _mockRepo;

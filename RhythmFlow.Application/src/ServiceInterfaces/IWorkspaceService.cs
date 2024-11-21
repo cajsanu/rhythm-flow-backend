@@ -1,4 +1,5 @@
 using RhythmFlow.Application.DTOs.Workspaces;
+using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Application.src.DTOs.UserWorkspaces;
 using RhythmFlow.Domain.src.Entities;
 

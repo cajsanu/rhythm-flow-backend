@@ -7,6 +7,7 @@ namespace RhythmFlow.Domain.src.RepoInterfaces
         Task<UserWorkspace> GetUserWorkspaceByUserIdAndWorkspaceIdAsync(Guid userId, Guid workspaceId);
         Task<IEnumerable<Workspace>> GetAllUserWorkspacesByUserIdAsync(Guid userId);
         Task<IEnumerable<Workspace>> GetWorkspacesOwnedByUserAsync(Guid workspaceId);
+        Task<UserWorkspace?> AssignRoleToUserInWorkspace(Guid userId, Guid workspaceId);
         
     }
 }
