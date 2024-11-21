@@ -14,7 +14,7 @@ namespace RhythmFlow.Application.src.DTOs.Projects
         public Guid WorkspaceId { get; set; }
         public ICollection<Guid> UsersId { get; set; } = [];
 
-        public static IBaseUpdateDto<Project> ToDto(Project entity)
+        public IBaseUpdateDto<Project> ToDto(Project entity)
         {
             return new ProjectUpdateDto()
             {

@@ -1,23 +1,17 @@
 using RhythmFlow.Application.src.DTOs.Projects;
-using RhythmFlow.Application.src.Factories;
+using RhythmFlow.Application.src.FactoryInterfaces;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
 
 namespace RhythmFlow.Application.src.Services
 {
-    public class ProjectService : BaseService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>, IProjectService
+    public class ProjectService(
+        IProjectRepo projectRepo,
+        AssignmentService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto> assignmentService,
+        IDtoFactory<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto> projectDtoFactory) : BaseService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>(projectRepo, projectDtoFactory), IProjectService
     {
-        private readonly AssignmentService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto> _assignmentService;
-
-        public ProjectService(
-            IProjectRepo projectRepo,
-            AssignmentService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto> assignmentService,
-            ProjectDtoFactory projectDtoFactory)
-            : base(projectRepo, projectDtoFactory)
-        {
-            _assignmentService = assignmentService;
-        }
+        private readonly AssignmentService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto> _assignmentService = assignmentService;
 
         public Task<ProjectReadDto> AssignUserToEntityAsync(Guid userId, Guid ticketId)
         {

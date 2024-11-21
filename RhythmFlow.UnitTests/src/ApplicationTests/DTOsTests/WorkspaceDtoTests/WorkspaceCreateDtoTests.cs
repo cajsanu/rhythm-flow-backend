@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using RhythmFlow.Application.DTOs.Workspaces;
+using RhythmFlow.Application.src.DTOs.Workspaces;
 
 namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.WorkspaceDtoTests
 {

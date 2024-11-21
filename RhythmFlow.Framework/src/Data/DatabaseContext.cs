@@ -99,7 +99,24 @@ namespace RhythmFlow.Framework.src.Data
             }
         }
 
-#pragma warning disable CS8603 // Possible null reference return.
+        #pragma warning disable CS8603 // Possible null reference return.
+        public User? GetUserByEmail(Email email)
+        {
+            // var user = Users.Find(u => u.Email.Value == email.Value);
+            // return user;
+            return null;
+        }
+
+        public UserWorkspace? GetUserWorkspaceByUserIdAndWorkspaceId(Guid userId, Guid workspaceId)
+        {
+            Console.WriteLine($"userId: {userId}, workspaceId: {workspaceId}");
+            Console.WriteLine(UserWorkspaces.Last().UserId);
+            Console.WriteLine(UserWorkspaces.Last().WorkspaceId);
+            Console.WriteLine(UserWorkspaces.Last().Role);
+            // return UserWorkspaces.Find(uw => uw.UserId == userId && uw.WorkspaceId == workspaceId);
+            return null;
+        }
+
         private List<T> GetDbSet<T>()
             where T : BaseEntity
         {

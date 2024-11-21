@@ -1,14 +1,14 @@
 using RhythmFlow.Application.src.DTOs.Shared;
 using RhythmFlow.Domain.src.Entities;
 
-namespace RhythmFlow.Application.DTOs.Workspaces
+namespace RhythmFlow.Application.src.DTOs.Workspaces
 {
     public class WorkspaceUpdateDto : IBaseUpdateDto<Workspace>
     {
         required public string Name { get; set; }
         public Guid OwnerId { get; set; }
 
-        public static IBaseUpdateDto<Workspace> ToDto(Workspace entity)
+        public IBaseUpdateDto<Workspace> ToDto(Workspace entity)
         {
             return new WorkspaceUpdateDto()
             {

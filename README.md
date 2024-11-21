@@ -157,3 +157,35 @@ Here is the recommended order:
 - Set Up Authentication & Authorization.
 - Build the Controllers.
 - Implement Error Handling Middleware.
+
+
+## Authentication Configuration
+
+To set up authentication for the application, follow these steps:
+
+### 1. Create a Configuration File
+Add an `appsettings.Development.json` file to the `RhythmFlow.Framework` project.
+
+### 2. Populate the File
+Copy and paste the following JSON content into the `appsettings.Development.json` file:
+
+```json
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "Jwt": {
+    "Secret": "OurSuperSecretKeyHere1234567890andSoOn",
+    "Issuer": "Rhythmflow",
+    "Audience": "Rhythmflow",
+    "TokenLifetime": 60
+  }
+}
+````
+### 3. Run the app in development mode
+In the `RhythmFlow.Framework` project run `export ASPNETCORE_ENVIRONMENT=Development && dotnet run`
+

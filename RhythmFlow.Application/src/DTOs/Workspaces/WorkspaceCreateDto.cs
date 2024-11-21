@@ -3,7 +3,7 @@ using RhythmFlow.Application.src.DTOs.Shared;
 using RhythmFlow.Application.src.DTOs.ValidationAttributes;
 using RhythmFlow.Domain.src.Entities;
 
-namespace RhythmFlow.Application.DTOs.Workspaces
+namespace RhythmFlow.Application.src.DTOs.Workspaces
 {
     public class WorkspaceCreateDto : IBaseCreateDto<Workspace>
     {
@@ -12,14 +12,6 @@ namespace RhythmFlow.Application.DTOs.Workspaces
         [Required]
         [NoEmptyGuid]
         public Guid OwnerId { get; set; }
-
-        public IBaseCreateDto<Workspace> ToDto(Workspace entity)
-        {
-            return new WorkspaceCreateDto()
-            {
-                Name = entity.Name,
-            };
-        }
 
         public Workspace ToEntity()
         {

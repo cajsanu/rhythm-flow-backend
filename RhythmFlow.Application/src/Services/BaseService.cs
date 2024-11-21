@@ -1,3 +1,4 @@
+using RhythmFlow.Application.src.DTOs.Shared;
 using RhythmFlow.Application.src.FactoryInterfaces;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.Entities;
@@ -5,13 +6,17 @@ using RhythmFlow.Domain.src.RepoInterfaces;
 
 namespace RhythmFlow.Application.src.Services
 {
-    public class BaseService<T, TReadDto, TCreateReadDto, TUpdateDto>(IBaseRepo<T> repository, IDtoFactory<T, TReadDto, TCreateReadDto, TUpdateDto> dtoFactory) : IBaseService<T, TReadDto, TCreateReadDto, TUpdateDto>
+
+    public class BaseService<T, TReadDto, TCreateDto, TUpdateDto>(IBaseRepo<T> repository, IDtoFactory<T, TReadDto, TCreateDto, TUpdateDto> dtoFactory) : IBaseService<T, TReadDto, TCreateDto, TUpdateDto>
         where T : BaseEntity
 
         // where TReadDto : IBaseReadDto<T>
+        where TReadDto : IBaseReadDto<T>
+        where TCreateDto : IBaseCreateDto<T>
+        where TUpdateDto : IBaseUpdateDto<T>
     {
         private readonly IBaseRepo<T> _repository = repository;
-        private readonly IDtoFactory<T, TReadDto, TCreateReadDto, TUpdateDto> _dtoFactory = dtoFactory;
+        private readonly IDtoFactory<T, TReadDto, TCreateDto, TUpdateDto> _dtoFactory = dtoFactory;
 
         // Add DTOs to all methods when possible
         public async Task<IEnumerable<TReadDto>> GetAllAsync()
@@ -32,10 +37,10 @@ namespace RhythmFlow.Application.src.Services
             return _dtoFactory.CreateReadDto(entity);
         }
 
-        public async Task<TReadDto> AddAsync(T entity)
+        public virtual async Task<TReadDto> AddAsync(TCreateDto entity)
         {
             // Do we want to check for duplicates before adding?
-            var newEntity = await _repository.AddAsync(entity);
+            var newEntity = await _repository.AddAsync(entity.ToEntity()) ?? throw new InvalidOperationException($"Failed to add {typeof(T).Name}.");
             return _dtoFactory.CreateReadDto(newEntity);
         }
 
