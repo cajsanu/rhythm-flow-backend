@@ -89,18 +89,11 @@ builder.Services.AddAuthentication(options =>
 });
 
 // add authorization
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("WorkspaceDeveloperPolicy", policy =>
-        policy.Requirements.Add(new RoleInWorkspaceRequirement([Role.Developer, Role.ProjectManager, Role.WorkspaceOwner])));
-    options.AddPolicy("WorkspaceProjectManagerPolicy", policy =>
-        policy.Requirements.Add(new RoleInWorkspaceRequirement([Role.ProjectManager, Role.WorkspaceOwner])));
-    options.AddPolicy("WorkspaceOwnerPolicy", policy =>
-        policy.Requirements.Add(new RoleInWorkspaceRequirement([Role.WorkspaceOwner])));
-
-    options.AddPolicy("UserInProjectPolicy", policy =>
-        policy.Requirements.Add(new UserInProjectRequirement()));
-});
+builder.Services.AddAuthorizationBuilder()
+        .AddPolicy("WorkspaceDeveloperPolicy", policy => policy.Requirements.Add(new RoleInWorkspaceRequirement([Role.Developer, Role.ProjectManager, Role.WorkspaceOwner])))
+        .AddPolicy("WorkspaceProjectManagerPolicy", policy => policy.Requirements.Add(new RoleInWorkspaceRequirement([Role.ProjectManager, Role.WorkspaceOwner])))
+        .AddPolicy("WorkspaceOwnerPolicy", policy => policy.Requirements.Add(new RoleInWorkspaceRequirement([Role.WorkspaceOwner])))
+        .AddPolicy("UserInProjectPolicy", policy => policy.Requirements.Add(new UserInProjectRequirement()));
 
 // add exception handling middleware
 builder.Services.AddTransient<ExceptionHandlerMiddleware>();
