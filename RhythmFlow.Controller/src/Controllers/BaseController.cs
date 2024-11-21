@@ -20,14 +20,14 @@ namespace RhythmFlow.Controller.src.Controllers
         private readonly IBaseService<T, TReadDto, TCreateDto, TUpdateDto> _service = service;
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TReadDto>>> GetAll(Guid workspaceId)
+        public async Task<ActionResult<IEnumerable<TReadDto>>> GetAll()
         {
             var entities = await _service.GetAllAsync();
             return Ok(entities);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TReadDto>> GetById(Guid id, Guid workspaceId)
+        public async Task<ActionResult<TReadDto>> GetById(Guid id)
         {
             var entity = await _service.GetByIdAsync(id);
             return Ok(entity);
@@ -44,14 +44,14 @@ namespace RhythmFlow.Controller.src.Controllers
         }
 
         [HttpPut("{id}")]
-        public virtual async Task<ActionResult> Update(Guid id, [FromBody] TUpdateDto updateDto, Guid workspaceId)
+        public virtual async Task<ActionResult> Update(Guid id, [FromBody] TUpdateDto updateDto)
         {
             await _service.UpdateAsync(id, updateDto.ToEntity(id));
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public virtual async Task<ActionResult> Delete(Guid id, Guid workspaceId)
+        public virtual async Task<ActionResult> Delete(Guid id)
         {
             await _service.DeleteAsync(id);
             return NoContent();

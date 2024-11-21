@@ -8,8 +8,7 @@ using RhythmFlow.Domain.src.Entities;
 namespace RhythmFlow.Controller.src.Controllers
 {
     [Authorize]
-    [Authorize(Policy = "WorkspaceOwnerPolicy")]
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/[controller]s")]
     [ApiController]
     public class WorkspaceController(IWorkspaceService service) : BaseController<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>(service)
     {
@@ -18,24 +17,28 @@ namespace RhythmFlow.Controller.src.Controllers
             return await base.Add(createDto, workspaceId);
         }
 
-        public override async Task<ActionResult> Delete(Guid id, Guid workspaceId)
+        [Authorize(Policy = "WorkspaceOwnerPolicy")]
+        public override async Task<ActionResult> Delete(Guid id)
         {
-            return await base.Delete(id, workspaceId);
+            return await base.Delete(id);
         }
 
-        public override async Task<ActionResult> Update(Guid id, [FromBody] WorkspaceUpdateDto updateDto, [FromQuery] Guid workspaceId)
+        [Authorize(Policy = "WorkspaceOwnerPolicy")]
+        public override async Task<ActionResult> Update(Guid id, [FromBody] WorkspaceUpdateDto updateDto)
         {
-            return await base.Update(id, updateDto, workspaceId);
+            return await base.Update(id, updateDto);
         }
 
+        [Authorize(Policy = "WorkspaceOwnerPolicy")]
         [HttpPost("addUser/{userId}")]
-        public async Task<ActionResult> AddUserToWorkspace(Guid userId, [FromQuery] Guid workspaceId)
+        public async Task<ActionResult> AddUserToWorkspace(Guid userId)
         {
             throw new NotImplementedException();
         }
 
+        [Authorize(Policy = "WorkspaceOwnerPolicy")]
         [HttpDelete("removeUser/{userId}")]
-        public async Task<ActionResult> RemoveUserFromWorkspace(Guid userId, [FromQuery] Guid workspaceId)
+        public async Task<ActionResult> RemoveUserFromWorkspace(Guid userId)
         {
             throw new NotImplementedException();
         }

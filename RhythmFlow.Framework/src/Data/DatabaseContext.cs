@@ -46,7 +46,10 @@ namespace RhythmFlow.Framework.src.Data
             var user7 = new User("Daniel", "Martinez", "daniel.martinez@example.com", "hashedPass987");
             var user8 = new User("Olivia", "Garcia", "olivia.garcia@example.com", "passwordHash159");
             var user9 = new User("Matthew", "Anderson", "matthew.anderson@example.com", "hashPass753");
-            Users.AddRange([user1, user2, user3, user4, user5, user6, user7, user8, user9]);
+
+            // unhashed password for the test user10 is "secretpassword"
+            var user10 = new User("Emma", "Taylor", "user@email.com", "$2a$11$fakeQIXtM.1cvBZ5oFy6n.70UqvVCoz5bdSFIqWiUdNEvtr1wzmtW", Guid.Parse("85e00eb3-0c38-4b8e-94f8-dea41f297bec"));
+            Users.AddRange([user1, user2, user3, user4, user5, user6, user7, user8, user9, user10]);
 
             // Generate Workspace
             var workspace1 = new Workspace("Marketing", user1.Id);
@@ -56,7 +59,7 @@ namespace RhythmFlow.Framework.src.Data
             var workspace5 = new Workspace("HR", user5.Id);
 
             // Workspace with explicit id for testing
-            var workspace6 = new Workspace("Testing", Guid.Parse("00045000-5400-0080-4000-000000006906"));
+            var workspace6 = new Workspace("Testing", user6.Id, Guid.Parse("00045000-5400-0080-4000-000000006906"));
             Workspaces.AddRange([workspace1, workspace2, workspace3, workspace4, workspace5, workspace6]);
 
             // Generate Project
@@ -65,7 +68,7 @@ namespace RhythmFlow.Framework.src.Data
             var project3 = new Project("Gamma", "Revamp Website Design", DateTime.Now.AddDays(3), DateTime.Now.AddDays(45), Status.InProgress, workspace3.Id);
             var project4 = new Project("Delta", "Launch Mobile App", DateTime.Now.AddDays(7), DateTime.Now.AddDays(90), Status.InProgress, workspace4.Id);
             var project5 = new Project("Epsilon", "Implement Cloud Migration", DateTime.Now.AddDays(1), DateTime.Now.AddDays(120), Status.Cancelled, workspace5.Id);
-            var project6 = new Project("Zeta", "Optimize Data Pipeline", DateTime.Now.AddDays(10), DateTime.Now.AddDays(80), Status.InProgress, workspace5.Id);
+            var project6 = new Project("Zeta", "Optimize Data Pipeline", DateTime.Now.AddDays(10), DateTime.Now.AddDays(80), Status.InProgress, workspace6.Id);
             Projects.AddRange([project1, project2, project3, project4, project5, project6]);
 
             // Generate tickets
@@ -73,9 +76,9 @@ namespace RhythmFlow.Framework.src.Data
             var ticket2 = new Ticket("Fix Login Issue", "Resolve authentication error", Priority.High, DateTime.Now.AddDays(3), Status.InProgress, project1.Id, TicketType.Bug);
             var ticket3 = new Ticket("Design Landing Page", "Create wireframe for new landing page", Priority.Medium, DateTime.Now.AddDays(14), Status.Cancelled, project1.Id, TicketType.Feature);
             var ticket4 = new Ticket("Update Privacy Policy", "Review and update policy document", Priority.Low, DateTime.Now.AddDays(30), Status.NotStarted, project2.Id, TicketType.TechnicalDebt);
-            var ticket5 = new Ticket("Optimize API", "Enhance performance of existing API calls", Priority.High, DateTime.Now.AddDays(10), Status.InProgress, project2.Id, TicketType.Feature);
-            var ticket6 = new Ticket("Schedule Training", "Plan onboarding session for new hires", Priority.Medium, DateTime.Now.AddDays(7), Status.NotStarted, project2.Id, TicketType.TechnicalDebt);
-            var ticket7 = new Ticket("Add Dark Mode", "Implement dark mode toggle for users", Priority.High, DateTime.Now.AddDays(21), Status.Cancelled, project5.Id, TicketType.Bug);
+            var ticket5 = new Ticket("Optimize API", "Enhance performance of existing API calls", Priority.High, DateTime.Now.AddDays(10), Status.InProgress, project5.Id, TicketType.Feature);
+            var ticket6 = new Ticket("Schedule Training", "Plan onboarding session for new hires", Priority.Medium, DateTime.Now.AddDays(7), Status.NotStarted, project6.Id, TicketType.TechnicalDebt);
+            var ticket7 = new Ticket("Add Dark Mode", "Implement dark mode toggle for users", Priority.High, DateTime.Now.AddDays(21), Status.Cancelled, project6.Id, TicketType.Bug);
             var ticket8 = new Ticket("Bug in Report Generation", "Fix issue with incorrect data rendering", Priority.High, DateTime.Now.AddDays(5), Status.InProgress, project6.Id, TicketType.Feature);
             Tickets.AddRange([ticket1, ticket2, ticket3, ticket4, ticket5, ticket6, ticket7, ticket8]);
 
@@ -86,7 +89,7 @@ namespace RhythmFlow.Framework.src.Data
             var userWorkspace3 = new UserWorkspace(user3.Id, workspace3.Id, Role.ProjectManager);
 
             // One for authorisation testing
-            var userWorkspace8 = new UserWorkspace(user1.Id, Guid.Empty, Role.ProjectManager);
+            var userWorkspace8 = new UserWorkspace(user10.Id, workspace6.Id, Role.ProjectManager); // change the role as needed for manual testing
 
             // developer
             var userWorkspace4 = new UserWorkspace(user4.Id, workspace1.Id, Role.ProjectManager);
@@ -146,6 +149,10 @@ namespace RhythmFlow.Framework.src.Data
 
         public UserWorkspace? GetUserWorkspaceByUserIdAndWorkspaceId(Guid userId, Guid workspaceId)
         {
+            Console.WriteLine($"userId: {userId}, workspaceId: {workspaceId}");
+            Console.WriteLine(UserWorkspaces.Last().UserId);
+            Console.WriteLine(UserWorkspaces.Last().WorkspaceId);
+            Console.WriteLine(UserWorkspaces.Last().Role);
             return UserWorkspaces.Find(uw => uw.UserId == userId && uw.WorkspaceId == workspaceId);
         }
 

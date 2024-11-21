@@ -16,24 +16,24 @@ namespace RhythmFlow.Controller.src.Controllers
             return await base.Add(createDto, workspaceId);
         }
 
-        public override async Task<ActionResult> Delete(Guid id, Guid workspaceId)
+        public override async Task<ActionResult> Delete(Guid id)
         {
-            return await base.Delete(id, workspaceId);
+            return await base.Delete(id);
         }
 
-        public override async Task<ActionResult> Update(Guid id, [FromBody] TicketUpdateDto updateDto, Guid workspaceId)
+        public override async Task<ActionResult> Update(Guid id, [FromBody] TicketUpdateDto updateDto)
         {
-            return await base.Update(id, updateDto, workspaceId);
+            return await base.Update(id, updateDto);
         }
 
         [HttpPost("assignUser/{userId}")]
-        public async Task<ActionResult> AssignUserToTicket(Guid userId, Guid workspaceId)
+        public async Task<ActionResult> AssignUserToTicket(Guid userId)
         {
             throw new NotImplementedException();
         }
 
         [HttpDelete("removeUser/{userId}")]
-        public async Task<ActionResult> RemoveUserFromTicket(Guid userId, Guid workspaceId)
+        public async Task<ActionResult> RemoveUserFromTicket(Guid userId)
         {
             throw new NotImplementedException();
         }

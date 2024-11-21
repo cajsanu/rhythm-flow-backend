@@ -16,19 +16,14 @@ namespace RhythmFlow.Application.src.Authorization.Handlers
             AuthorizationHandlerContext context,
             RoleInWorkspaceRequirement requirement)
         {
-
-            Console.WriteLine("Workspace Role Handler");
             // Extract workspace ID from route data
             var routeData = _httpContextAccessor.HttpContext?.GetRouteData();
-            Console.WriteLine("Route Data: " + routeData);
             if (routeData == null || !routeData.Values.TryGetValue("workspaceId", out var workspaceIdValue)
                 || !Guid.TryParse(workspaceIdValue?.ToString(), out var workspaceId))
             {
                 context.Fail();
                 return;
             }
-
-            Console.WriteLine("Workspace ID: " + workspaceId);
 
             // Get user ID from the claims
             if (!Guid.TryParse(context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var userId))

@@ -10,7 +10,6 @@ namespace RhythmFlow.Framework.src.Repo
         public Task<UserWorkspace?> GetUserWorkspaceByUserIdAndWorkspaceIdAsync(Guid userId, Guid workspaceId)
         {
             var userWorkspace = _context.GetUserWorkspaceByUserIdAndWorkspaceId(userId, workspaceId);
-            Console.WriteLine("USER WORKSPACE " + userWorkspace);
             return Task.FromResult(userWorkspace);
         }
     }
