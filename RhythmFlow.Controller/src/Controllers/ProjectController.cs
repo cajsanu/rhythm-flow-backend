@@ -9,14 +9,14 @@ namespace RhythmFlow.Controller.src.Controllers
     // [Authorize(Policy = "UserInProjectPolicy")]
     public class ProjectController(IProjectService service) : BaseController<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>(service)
     {
-        [Authorize]
-        [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
+        // [Authorize]
+        // [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
         public override async Task<ActionResult<ProjectReadDto>> Add([FromBody] ProjectCreateDto createDto)
         {
             return await base.Add(createDto);
         }
 
-        [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
+        // [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
         public override async Task<ActionResult> Delete(Guid id)
         {
             return await base.Delete(id);

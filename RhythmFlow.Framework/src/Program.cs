@@ -32,7 +32,9 @@ builder.Services.AddSwaggerGen();
 
 // Configure lowercase URLs
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
-builder.Services.AddScoped<AppDbContext>();
+
+// this should probably be scoped but right now it does not work as anything else than singleton
+builder.Services.AddSingleton<AppDbContext>();
 
 // Add Repo to scope
 builder.Services.AddScoped<IBaseRepo<Project>, ProjectRepo>();

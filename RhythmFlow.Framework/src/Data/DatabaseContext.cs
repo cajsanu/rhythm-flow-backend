@@ -82,12 +82,15 @@ namespace RhythmFlow.Framework.src.Data
             var userWorkspace2 = new UserWorkspace(user2.Id, workspace2.Id, Role.ProjectManager);
             var userWorkspace3 = new UserWorkspace(user3.Id, workspace3.Id, Role.ProjectManager);
 
+            // One for authorisation testing
+            var userWorkspace8 = new UserWorkspace(user1.Id, Guid.Empty, Role.ProjectManager);
+
             // developer
             var userWorkspace4 = new UserWorkspace(user4.Id, workspace1.Id, Role.ProjectManager);
             var userWorkspace5 = new UserWorkspace(user5.Id, workspace1.Id, Role.ProjectManager);
             var userWorkspace6 = new UserWorkspace(user6.Id, workspace2.Id, Role.Developer);
             var userWorkspace7 = new UserWorkspace(user7.Id, workspace2.Id, Role.Developer);
-            UserWorkspaces.AddRange([userWorkspace1, userWorkspace2, userWorkspace3, userWorkspace4, userWorkspace5, userWorkspace6, userWorkspace7]);
+            UserWorkspaces.AddRange([userWorkspace1, userWorkspace2, userWorkspace3, userWorkspace4, userWorkspace5, userWorkspace6, userWorkspace7, userWorkspace8]);
         }
 
         // CRUD Simulation Methods
@@ -134,7 +137,13 @@ namespace RhythmFlow.Framework.src.Data
 
         public User? GetUserByEmail(Email email)
         {
-            return Users.Find(u => u.Email.Value == email.Value);
+            var user = Users.Find(u => u.Email.Value == email.Value);
+            return user;
+        }
+
+        public UserWorkspace? GetUserWorkspaceByUserIdAndWorkspaceId(Guid userId, Guid workspaceId)
+        {
+            return UserWorkspaces.Find(uw => uw.UserId == userId && uw.WorkspaceId == workspaceId);
         }
 
         private List<T> GetDbSet<T>()
