@@ -1,6 +1,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RhythmFlow.Application.DTOs.Workspaces;
 using RhythmFlow.Application.src.Authorization;
@@ -31,7 +32,17 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 // builder.Services.AddSingleton<AppDbContext>();
-builder.Services.AddDbContext<AppDbContext>();
+builder.Services.AddDbContext<AppDbContext>(
+        options => options
+
+            // .UseLazyLoadingProxies() // Lazy loading for virtual navigation properties
+            .UseNpgsql(
+                builder.Configuration.GetConnectionString("DefaultConnection"),
+                npgsqlOptions => npgsqlOptions.CommandTimeout(30)
+            )
+            .EnableSensitiveDataLogging() // Disable in production
+            .UseSnakeCaseNamingConvention()
+);
 
 // Add Repo to scope
 builder.Services.AddScoped<IBaseRepo<Project>, ProjectRepo>();

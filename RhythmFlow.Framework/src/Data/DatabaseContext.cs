@@ -15,14 +15,14 @@ namespace RhythmFlow.Framework.src.Data
 
         private readonly IConfiguration _configuration = configuration;
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder
-            .UseNpgsql(_configuration.GetConnectionString("DefaultConnection"))
-            .EnableDetailedErrors() // not in production
-            .EnableSensitiveDataLogging() // not in production
-            .UseSnakeCaseNamingConvention();
-        }
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // {
+        //     optionsBuilder
+        //     .UseNpgsql(_configuration.GetConnectionString("DefaultConnection"))
+        //     .EnableDetailedErrors() // not in production
+        //     .EnableSensitiveDataLogging() // not in production
+        //     .UseSnakeCaseNamingConvention();
+        // }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,10 +30,11 @@ namespace RhythmFlow.Framework.src.Data
             {
                 entity.OwnsOne(user => user.Email, email =>
                 {
-                    email.Property(s => s.Value).HasColumnName("email").IsRequired();
+                    email.Property(s => s.Value).HasColumnName("user_email").IsRequired();
                 });
             });
-            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+
+            // modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
             modelBuilder.Entity<UserWorkspace>().HasKey(uw => new { uw.UserId, uw.WorkspaceId });
 
             // convert Project enum type to string
