@@ -18,9 +18,9 @@ namespace RhythmFlow.Application.src.Services
         private readonly IDtoFactory<T, TReadDto, TCreateDto, TUpdateDto> _dtoFactory = dtoFactory;
 
         // Add DTOs to all methods when possible
-        public async Task<IEnumerable<TReadDto>> GetAllAsync()
+        public async Task<IEnumerable<TReadDto>> GetAllAsync(Guid workspaceId)
         {
-            var entities = await _repository.GetAllAsync();
+            var entities = await _repository.GetAllAsync(workspaceId);
             if (entities == null || !entities.Any())
             {
                 throw new InvalidOperationException($"No {typeof(T).Name}s found.");
@@ -38,7 +38,6 @@ namespace RhythmFlow.Application.src.Services
 
         public virtual async Task<TReadDto> AddAsync(TCreateDto entity)
         {
-            // Do we want to check for duplicates before adding?
             var newEntity = await _repository.AddAsync(entity.ToEntity()) ?? throw new InvalidOperationException($"Failed to add {typeof(T).Name}.");
             return _dtoFactory.CreateReadDto(newEntity);
         }
