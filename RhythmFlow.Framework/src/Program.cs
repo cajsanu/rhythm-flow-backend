@@ -51,6 +51,7 @@ builder.Services.AddScoped<IWorkspaceRepo, WorkspaceRepo>();
 builder.Services.AddScoped<IUserWorkspaceRepo, UserWorkspaceRepo>();
 
 // Add Factory
+builder.Services.AddScoped<IUserWorkspaceDtoFactory, UserWorkspaceDtoFactory>();
 builder.Services.AddScoped<IDtoFactory<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>, TicketDtoFactory>();
 builder.Services.AddScoped<IDtoFactory<User, UserReadDto, UserCreateDto, UserUpdateDto>, UserDtoFactory>();
 builder.Services.AddScoped<IDtoFactory<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>, ProjectDtoFactory>();
@@ -69,6 +70,7 @@ builder.Services.AddScoped<IWorkspaceService, WorkspaceService>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IUserWorkspaceService, UserWorkspaceService>();
+
 
 // Add controller
 builder.Services.AddControllers(options =>

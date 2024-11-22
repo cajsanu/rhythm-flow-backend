@@ -5,7 +5,7 @@ using RhythmFlow.Domain.src.Entities;
 
 namespace RhythmFlow.Application.src.Factories
 {
-    public class UserWorkspaceDtoFactory
+    public class UserWorkspaceDtoFactory : IUserWorkspaceDtoFactory
     {
         public UserWorkspaceReadDto CreateReadDto(UserWorkspace entity)
         {

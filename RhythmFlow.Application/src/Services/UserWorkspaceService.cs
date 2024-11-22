@@ -1,5 +1,6 @@
 using RhythmFlow.Application.src.DTOs.UserWorkspaces;
 using RhythmFlow.Application.src.Factories;
+using RhythmFlow.Application.src.FactoryInterfaces;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
@@ -7,7 +8,7 @@ using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.Application.src.Services
 {
-    public class UserWorkspaceService(IUserWorkspaceRepo repository, IWorkspaceRepo workspaceRepo, UserWorkspaceDtoFactory userWorkspaceDtoFactory) : IUserWorkspaceService
+    public class UserWorkspaceService(IUserWorkspaceRepo repository, IWorkspaceRepo workspaceRepo, IUserWorkspaceDtoFactory userWorkspaceDtoFactory) : IUserWorkspaceService
     {
         public Task<UserWorkspaceReadDto> AssignUserRoleInWorkspaceAsync(UserWorkspaceCreateDto userWorkspaceCreateDto)
         {
