@@ -14,10 +14,11 @@ namespace RhythmFlow.Controller.src.Controllers
     [Route("api/v1/workspaces/{workspaceId}/projects/{projectId}/[controller]s")]
     public class TicketController(ITicketService service) : BaseController<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>(service)
     {
+        private readonly ITicketService _service = service;
         public async override Task<ActionResult<IEnumerable<TicketReadDto>>> GetAll()
         {
             var projectId = Guid.Parse(HttpContext.GetRouteValue("projectId")?.ToString());
-            var tickets = await service.GetAllTicketsInProjectAsync(projectId);
+            var tickets = await _service.GetAllTicketsInProjectAsync(projectId);
             return Ok(tickets);
         }
 
