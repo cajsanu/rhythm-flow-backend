@@ -1,5 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using Moq;
 using RhythmFlow.Application.src.Authorization;
 using RhythmFlow.Application.src.Authorization.Handlers;
@@ -17,6 +19,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
         private readonly IDtoFactory<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto> _projectDtoFactoryForArranging;
 
         private readonly Mock<IProjectService> _mockProjectService;
+        private readonly Mock<IHttpContextAccessor> _mockHttpContextAccessor;
         private readonly UserInProjectHandler _handler;
 
         public UserInProjectHandlerTests()
@@ -24,7 +27,8 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
             _projectDtoFactoryForArranging = new ProjectDtoFactory();
 
             _mockProjectService = new Mock<IProjectService>();
-            _handler = new UserInProjectHandler(_mockProjectService.Object);
+            _mockHttpContextAccessor = new Mock<IHttpContextAccessor>();
+            _handler = new UserInProjectHandler(_mockProjectService.Object, _mockHttpContextAccessor.Object);
         }
 
         [Fact]
@@ -48,6 +52,12 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
 
             var projectDto = _projectDtoFactoryForArranging.CreateReadDto(project);
             _mockProjectService.Setup(service => service.GetByIdAsync(projectId)).Returns(Task.FromResult(projectDto));
+
+            var routeData = new RouteData();
+            routeData.Values["projectId"] = projectId.ToString();
+            var httpContext = new DefaultHttpContext();
+            httpContext.Features.Set<IRoutingFeature>(new RoutingFeature { RouteData = routeData });
+            _mockHttpContextAccessor.Setup(accessor => accessor.HttpContext).Returns(httpContext);
 
             // Act
             await _handler.HandleAsync(context);
@@ -78,6 +88,12 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
             var projectDto = _projectDtoFactoryForArranging.CreateReadDto(project);
             _mockProjectService.Setup(service => service.GetByIdAsync(projectId)).Returns(Task.FromResult(projectDto));
 
+            var routeData = new RouteData();
+            routeData.Values["projectId"] = projectId.ToString();
+            var httpContext = new DefaultHttpContext();
+            httpContext.Features.Set<IRoutingFeature>(new RoutingFeature { RouteData = routeData });
+            _mockHttpContextAccessor.Setup(accessor => accessor.HttpContext).Returns(httpContext);
+
             // Act
             await _handler.HandleAsync(context);
 
@@ -99,6 +115,12 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
             var requirement = new UserInProjectRequirement();
             var context = new AuthorizationHandlerContext([requirement], user, null);
 
+            var routeData = new RouteData();
+            routeData.Values["projectId"] = null;
+            var httpContext = new DefaultHttpContext();
+            httpContext.Features.Set<IRoutingFeature>(new RoutingFeature { RouteData = routeData });
+            _mockHttpContextAccessor.Setup(accessor => accessor.HttpContext).Returns(httpContext);
+
             // Act
             await _handler.HandleAsync(context);
 
@@ -116,6 +138,12 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
 
             var requirement = new UserInProjectRequirement();
             var context = new AuthorizationHandlerContext([requirement], user, projectId);
+
+            var routeData = new RouteData();
+            routeData.Values["projectId"] = projectId.ToString();
+            var httpContext = new DefaultHttpContext();
+            httpContext.Features.Set<IRoutingFeature>(new RoutingFeature { RouteData = routeData });
+            _mockHttpContextAccessor.Setup(accessor => accessor.HttpContext).Returns(httpContext);
 
             // Act
             await _handler.HandleAsync(context);
