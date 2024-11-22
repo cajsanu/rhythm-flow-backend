@@ -26,6 +26,7 @@ namespace RhythmFlow.Framework.src.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // EF Core does not support owned entity to be checked for uniqueness yet, so we have to do it ourselves
             modelBuilder.Entity<User>(entity =>
             {
                 entity.OwnsOne(user => user.Email, email =>
@@ -33,8 +34,6 @@ namespace RhythmFlow.Framework.src.Data
                     email.Property(s => s.Value).HasColumnName("user_email").IsRequired();
                 });
             });
-
-            // modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
             modelBuilder.Entity<UserWorkspace>().HasKey(uw => new { uw.UserId, uw.WorkspaceId });
 
             // convert Project enum type to string
@@ -59,56 +58,10 @@ namespace RhythmFlow.Framework.src.Data
             // DataSeeder.Seed(modelBuilder);
         }
 
-        // CRUD Simulation Methods
-        /*
-        public void Add<T>(T entity)
-            where T : BaseEntity
-        {
-            GetDbSet<T>().Add(entity);
-        }
-
-        public IEnumerable<T> GetAll<T>()
-                    where T : BaseEntity
-        {
-            return GetDbSet<T>().AsEnumerable();
-        }
-
-        public T? GetById<T>(Guid id)
-                    where T : BaseEntity
-        {
-            return GetDbSet<T>()?.Find(e => e.Id == id);
-        }
-
-        public void Update<T>(T entity)
-            where T : BaseEntity
-        {
-            var dbSet = GetDbSet<T>();
-            var existingEntity = dbSet.Find(e => e.Id == entity.Id);
-            if (existingEntity != null)
-            {
-                dbSet.Remove(existingEntity);
-                dbSet.Add(entity);
-            }
-        }
-
-        public void Delete<T>(Guid id)
-            where T : BaseEntity
-        {
-            var dbSet = GetDbSet<T>();
-            var entity = dbSet.Find(e => e.Id == id);
-            if (entity != null)
-            {
-                dbSet.Remove(entity);
-            }
-        }
-        */
-
-#pragma warning disable CS8603 // Possible null reference return.
         public User? GetUserByEmail(Email email)
         {
-            // var user = Users.Find(u => u.Email.Value == email.Value);
-            // return user;
-            return null;
+            var user = Users.FirstOrDefault(u => u.Email.Value == email.Value);
+            return user;
         }
 
         public UserWorkspace? GetUserWorkspaceByUserIdAndWorkspaceId(Guid userId, Guid workspaceId)
@@ -118,29 +71,7 @@ namespace RhythmFlow.Framework.src.Data
             Console.WriteLine(UserWorkspaces.Last().WorkspaceId);
             Console.WriteLine(UserWorkspaces.Last().Role);
 
-            // return UserWorkspaces.Find(uw => uw.UserId == userId && uw.WorkspaceId == workspaceId);
-            return null;
+            return UserWorkspaces.FirstOrDefault(uw => uw.UserId == userId && uw.WorkspaceId == workspaceId);
         }
-
-        /*
-        private List<T> GetDbSet<T>()
-            where T : BaseEntity
-        {
-            // cannot use switch here
-            if (typeof(T) == typeof(User))
-                return Users as List<T>;
-
-            if (typeof(T) == typeof(Project))
-                return Projects as List<T>;
-            if (typeof(T) == typeof(Ticket))
-                return Tickets as List<T>;
-            if (typeof(T) == typeof(Workspace))
-                return Workspaces as List<T>;
-            if (typeof(T) == typeof(UserWorkspace))
-                return UserWorkspaces as List<T>;
-
-            throw new InvalidOperationException("Invalid entity type");
-        }
-        */
     }
 }
