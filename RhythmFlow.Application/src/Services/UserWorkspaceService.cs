@@ -11,7 +11,10 @@ namespace RhythmFlow.Application.src.Services
     {
         public Task<UserWorkspaceReadDto> AssignUserRoleInWorkspaceAsync(UserWorkspaceUpdateDto userWorkspaceUpdateDto)
         {
-            var userRoleUpdate = repository.AssignRoleToUserInWorkspace(userWorkspaceUpdateDto.UserId, userWorkspaceUpdateDto.WorkspaceId).Result;
+            // We need to make sure that you cannot assign owner role. 
+            // validation needs to be done here 
+            
+            var userRoleUpdate = repository.AssignRoleToUserInWorkspace(userWorkspaceUpdateDto.UserId, userWorkspaceUpdateDto.WorkspaceId, userWorkspaceUpdateDto.Role).Result;
             if (userRoleUpdate == null)
             {
                 throw new InvalidOperationException($"User with ID {userWorkspaceUpdateDto.UserId} is not a member of workspace with ID {userWorkspaceUpdateDto.WorkspaceId}.");
