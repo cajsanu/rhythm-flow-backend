@@ -19,6 +19,7 @@ namespace RhythmFlow.Controller.src.Controllers
         // ASP automatically removes the Async from action name by default so we should avoid naming functions in controller with suffix Async to avoid 3am confusions
         private readonly IBaseService<T, TReadDto, TCreateDto, TUpdateDto> _service = service;
 
+        // [Authorize(Policy = "WorkspaceDeveloperPolicy")] // Is this necessary? For projects and tickets, it is
         [HttpGet]
         public virtual async Task<ActionResult<IEnumerable<TReadDto>>> GetAll()
         {
