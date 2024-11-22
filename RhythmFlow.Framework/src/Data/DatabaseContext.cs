@@ -55,9 +55,12 @@ namespace RhythmFlow.Framework.src.Data
                 .HasConversion(
                     v => v.ToString(),
                     v => (Priority)Enum.Parse(typeof(Priority), v)); // convert enum type to string
+
+            // DataSeeder.Seed(modelBuilder);
         }
 
         // CRUD Simulation Methods
+        /*
         public void Add<T>(T entity)
             where T : BaseEntity
         {
@@ -98,6 +101,7 @@ namespace RhythmFlow.Framework.src.Data
                 dbSet.Remove(entity);
             }
         }
+        */
 
 #pragma warning disable CS8603 // Possible null reference return.
         public User? GetUserByEmail(Email email)
@@ -118,6 +122,7 @@ namespace RhythmFlow.Framework.src.Data
             return null;
         }
 
+        /*
         private List<T> GetDbSet<T>()
             where T : BaseEntity
         {
@@ -136,6 +141,6 @@ namespace RhythmFlow.Framework.src.Data
 
             throw new InvalidOperationException("Invalid entity type");
         }
-#pragma warning restore CS8603 // Possible null reference return.
+        */
     }
 }
