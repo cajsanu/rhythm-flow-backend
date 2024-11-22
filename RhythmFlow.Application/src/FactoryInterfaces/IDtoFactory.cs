@@ -6,8 +6,8 @@ namespace RhythmFlow.Application.src.FactoryInterfaces
         where T : BaseEntity
     {
         TReadDto CreateReadDto(T entity);
+
         // TCreateReadDto CreateCreateReadDto(T entity);
         TUpdateDto CreateUpdateDto(T entity);
-
     }
 }

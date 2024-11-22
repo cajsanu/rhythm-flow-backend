@@ -39,7 +39,7 @@ To take the project to the next level, consider these additional requirements:
 
 ### Business Requirements
 
-- Brainstorm the backend design in terms of entity structure and how they will interact. 
+- Brainstorm the backend design in terms of entity structure and how they will interact.
 - Discuss the implementation of architecture: CLEAN, DDD, TDD, and any possible pattern your team want to apply (repository pattern, CQRS, etc.).
 - **Deadline Management**: Use any project management tool of your choice to ensure timely delivery.
 
@@ -77,47 +77,54 @@ _For team assignment, only 1 member should fork the repo, then the admin can inv
 ## Mandatory Features
 
 - **User Management**
-   - User registration and login functionality
-   - User authentication using email/password or other methods (e.g., Google, GitHub)
-   - Custom roles and permissions (e.g., HR, Dev, PM, Guest)
+
+  - User registration and login functionality
+  - User authentication using email/password or other methods (e.g., Google, GitHub)
+  - Custom roles and permissions (e.g., HR, Dev, PM, Guest)
 
 - **Projects and Workspaces**
-   - Ability to create and manage multiple projects/workspaces
-   - Project details: name, description, start/end dates, status
+
+  - Ability to create and manage multiple projects/workspaces
+  - Project details: name, description, start/end dates, status
 
 - **Tasks and Issues**
-   - Task/issue creation with title, description, priority, and deadline
-   - Task/issue tracking: status updates (e.g., To-Do, In Progress, Done)
-   - Assign tasks/issues to team members or specific users
+
+  - Task/issue creation with title, description, priority, and deadline
+  - Task/issue tracking: status updates (e.g., To-Do, In Progress, Done)
+  - Assign tasks/issues to team members or specific users
 
 - **Boards and Kanban (UI-related)**
-   - Customizable boards for different projects/workspaces
-   - Card-based representation of tasks/issues on the board
-   - Drag-and-drop reordering of cards
-   - Board filters and custom views (e.g., due dates, priority)
+  - Customizable boards for different projects/workspaces
+  - Card-based representation of tasks/issues on the board
+  - Drag-and-drop reordering of cards
+  - Board filters and custom views (e.g., due dates, priority)
 
 ---
 
 ## Optional Features
 
 - **Collaboration and Communication**
-   - Notification system: email/text updates on task/issue changes
-   - Tagging team members in comments
-   - File attachments and commenting on tasks/issues
+
+  - Notification system: email/text updates on task/issue changes
+  - Tagging team members in comments
+  - File attachments and commenting on tasks/issues
 
 - **Real-Time Collaboration**
-   - Real-time commenting with instant updates for team members
-   - Auto-updates for task statuses
+
+  - Real-time commenting with instant updates for team members
+  - Auto-updates for task statuses
 
 - **Integrations and APIs**
-   - Integration with Google Drive, Trello, Slack, GitHub issues, calendar, and email clients
+
+  - Integration with Google Drive, Trello, Slack, GitHub issues, calendar, and email clients
 
 - **Gantt Charts and Timelines**
-   - Gantt chart visualization for project timelines
+
+  - Gantt chart visualization for project timelines
 
 - **Reporting and Analytics**
-   - Customizable dashboards for project leaders and stakeholders
-   - Task/issue analytics: time spent, effort required, conversion rates, etc.
+  - Customizable dashboards for project leaders and stakeholders
+  - Task/issue analytics: time spent, effort required, conversion rates, etc.
 
 ---
 
@@ -126,22 +133,25 @@ _For team assignment, only 1 member should fork the repo, then the admin can inv
 For the following features, you might take advantage of **transactions**, **complex functions**, and **stored procedures**:
 
 1. **Project and Task Management with Dependencies**
+
    - Prevent a project from being marked as complete until all tasks and issues are resolved using a transaction.
 
 2. **Bulk Task Assignment or Status Updates**
+
    - Bulk assign tasks or update statuses within a transaction to ensure either all updates succeed or none do.
 
-5. **Complex Query for Reporting and Analytics**
+3. **Complex Query for Reporting and Analytics**
+
    - Implement advanced queries for metrics like average completion time, burn-down charts, and task completion rates using user-defined functions or views.
 
-6. **Activity Log Generation**
+4. **Activity Log Generation**
+
    - A stored procedure logs user activity whenever a task or comment is modified, capturing timestamps, user IDs, and action descriptions.
 
-7. **Notification System**
+5. **Notification System**
    - Use a trigger or stored procedure to automatically generate notifications on task or issue updates.
-     
-8. **Data Clean-Up and Maintenance Scripts**
-    - Use stored procedures for regular cleanup of old data, such as notifications or completed tasks in archived projects.
+6. **Data Clean-Up and Maintenance Scripts**
+   - Use stored procedures for regular cleanup of old data, such as notifications or completed tasks in archived projects.
 
 ---
 
@@ -158,15 +168,39 @@ Here is the recommended order:
 - Build the Controllers.
 - Implement Error Handling Middleware.
 
+## Set up the database
+
+There are few things you need to do before getting the database up and running:
+
+### 1. Create the database
+
+Use pgAdmin and create a database (rfDatabase is the name being used atm)
+
+### 2. Change connection strings
+
+In app.settings.json in the Framework folder update the connectionstring with your name, password, databasename, host, and port there to match the one in your database (currently it is user postgres with password 1234)
+
+```json
+   "ConnectionStrings": {
+      "DefaultConnection": "Server=localhost;Port=5432;Database=rfDatabase;User ID=postgres;Password=1234"
+   }
+```
+
+### 3. Run the migrations
+
+Then cd into Framework, and run dotnet ef database update
+Hopefully everything works from there
 
 ## Authentication Configuration
 
 To set up authentication for the application, follow these steps:
 
 ### 1. Create a Configuration File
+
 Add an `appsettings.Development.json` file to the `RhythmFlow.Framework` project.
 
 ### 2. Populate the File
+
 Copy and paste the following JSON content into the `appsettings.Development.json` file:
 
 ```json
@@ -185,7 +219,8 @@ Copy and paste the following JSON content into the `appsettings.Development.json
     "TokenLifetime": 60
   }
 }
-````
-### 3. Run the app in development mode
-In the `RhythmFlow.Framework` project run `export ASPNETCORE_ENVIRONMENT=Development && dotnet run`
+```
 
+### 3. Run the app in development mode
+
+In the `RhythmFlow.Framework` project run `export ASPNETCORE_ENVIRONMENT=Development && dotnet run`

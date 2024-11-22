@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using RhythmFlow.Domain.src.Helpers;
 using RhythmFlow.Domain.src.ValueObjects;
 
@@ -10,15 +11,27 @@ namespace RhythmFlow.Domain.src.Entities
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public Status Status { get; set; }
+
+        [ForeignKey("Workspace")]
         public Guid WorkspaceId { get; set; }
 
         // Make a collection of users that are assigned to the project
         public ICollection<User> Users { get; set; } = [];
 
-        public Project(string name, string description, DateTime startDate, DateTime endDate, Status status, Guid workspaceId, Guid? guid = null) : base(guid)
+        public Project(string name, string description, DateTime startDate, DateTime endDate, Status status, Guid workspaceId) : base()
         {
             if (DomainHelpers.IsNotValidStringValue(name) || DomainHelpers.IsNotValidStringValue(description)) throw new InvalidDataException("Name and description must not be null or empty");
+            Name = name;
+            Description = description;
+            StartDate = startDate;
+            EndDate = endDate;
+            Status = status;
+            WorkspaceId = workspaceId;
+        }
 
+        public Project(string name, string description, DateTime startDate, DateTime endDate, Status status, Guid workspaceId, Guid Id) : base(Id)
+        {
+            if (DomainHelpers.IsNotValidStringValue(name) || DomainHelpers.IsNotValidStringValue(description)) throw new InvalidDataException("Name and description must not be null or empty");
             Name = name;
             Description = description;
             StartDate = startDate;
