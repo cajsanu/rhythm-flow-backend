@@ -27,7 +27,7 @@ namespace RhythmFlow.Controller.src.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TReadDto>> GetById(Guid id)
+        public virtual async Task<ActionResult<TReadDto>> GetById(Guid id)
         {
             var entity = await _service.GetByIdAsync(id);
             return Ok(entity);

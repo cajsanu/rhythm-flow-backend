@@ -18,6 +18,11 @@ namespace RhythmFlow.Controller.src.Controllers
             return await base.GetAll();
         }
 
+        public override async Task<ActionResult<TicketReadDto>> GetById(Guid id)
+        {
+            return await base.GetById(id);
+        }
+
         public override async Task<ActionResult<TicketReadDto>> Add([FromBody] TicketCreateDto createDto, Guid workspaceId)
         {
             return await base.Add(createDto, workspaceId);
