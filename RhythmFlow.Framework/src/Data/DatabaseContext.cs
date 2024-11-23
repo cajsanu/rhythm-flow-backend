@@ -81,8 +81,8 @@ namespace RhythmFlow.Framework.src.Data
         }
         public IEnumerable<Workspace> GetWorkspacesOwnedByUser(Guid userId)
         {
-            var workSapces = Workspaces.Where(w => w.OwnerId == userId).ToList();
-            return workSapces;
+            var workSpaces = Workspaces.Where(w => w.OwnerId == userId).ToList();
+            return workSpaces;
         }
     }
 }
