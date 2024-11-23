@@ -5,5 +5,6 @@ namespace RhythmFlow.Application.src.ServiceInterfaces
 {
     public interface IUserService : IBaseService<User, UserReadDto, UserCreateDto, UserUpdateDto>
     {
+        
     }
 }
