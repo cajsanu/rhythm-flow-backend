@@ -38,11 +38,12 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             var userId = Guid.NewGuid();
             var ticketId = Guid.NewGuid();
             var user = new TestUser("testname", "test2", "test@gmail.com", "testpassword21342@!!") { Id = userId };
-            var ticket = new TestTicket("Design the table", "Bla bla bla", Priority.High, new DateTime(2026, 12, 12), Status.InProgress, Guid.NewGuid(), TicketType.Bug) { Id = ticketId };
+            var ticket = new TestTicket("Design the table", "Bla bla bla", Priority.High, DateOnly.FromDateTime(new DateTime(2026, 12, 12)), Status.InProgress, Guid.NewGuid(), TicketType.Bug) { Id = ticketId };
             var dto = new TestTicketReadDto { Id = ticket.Id };
             _mockUserRepo.Setup(repo => repo.GetByIdAsync(userId)).ReturnsAsync(user);
             _mockTicketRepo.Setup(repo => repo.GetByIdAsync(ticketId)).ReturnsAsync(ticket);
             _mockDtoFactory.Setup(factory => factory.CreateReadDto(ticket)).Returns(dto);
+
             // Act
             var result = await _service.AssignUserToEntityAsync(userId, ticketId);
 
@@ -58,7 +59,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
              var userId = Guid.NewGuid();
              var ticketId = Guid.NewGuid();
              var user = new TestUser("testname", "test2", "test@gmail.com", "testpassword21342@!!") { Id = userId };
-             var ticket = new TestTicket("Design the table", "Bla bla bla", Priority.High, new DateTime(2026, 12, 12), Status.InProgress, Guid.NewGuid(), TicketType.Bug) { Id = ticketId, Users = new List<User> { user } };
+             var ticket = new TestTicket("Design the table", "Bla bla bla", Priority.High, DateOnly.FromDateTime(new DateTime(2026, 12, 12)), Status.InProgress, Guid.NewGuid(), TicketType.Bug) { Id = ticketId, Users = new List<User> { user } };
              var dto = new TestTicketReadDto { Id = ticket.Id };
              _mockUserRepo.Setup(repo => repo.GetByIdAsync(userId)).ReturnsAsync(user);
              _mockTicketRepo.Setup(repo => repo.GetByIdAsync(ticketId)).ReturnsAsync(ticket);
