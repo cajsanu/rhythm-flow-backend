@@ -1,182 +1,72 @@
-# Teamwork
+# RhythmFlow
 
-- Designing REST API endpoints
-- Database schema
-- Workable backend server with ASP.NET Core & Entity Framework
+## Project Overview
 
----
+**RhythmFlow** is a backend application designed for managing IT-related projects efficiently. It manages workflows through workspaces, projects, and tickets requiring users to be authenticated. The system is built following the **CLEAN architecture** principles and utilizes **RESTful APIs** to ensure a scalable, maintainable, and robust backend.
 
-## Menu
+## Key Features
 
-- [Vision](#vision)
-- [Business Requirements](#business-requirements)
-- [Requirements](#requirements)
-- [Mandatory Features](#mandatory-features)
-- [Optional Features](#optional-features)
-- [Optional Database Advanced Operations](#optional-database-advanced-operations)
-- [Getting Started](#getting-started)
+### Authentication
+- Users can **register** *(POST /api/v1/users)* and **log in** *(POST /api/v1/authentication/login)* using their credentials.
+- Passwords are securely **hashed using BCrypt**.
+- Upon successful authentication, a **JWT token** is generated and returned to the user for subsequent requests.
 
----
+### Workspace Management
+- Authenticated users can create **workspaces** *(POST /api/v1/workspaces)*.
+- The creator of the workspace automatically becomes the owner and the owner can assign users to the wokspace
+- Users can be assigned *(POST /api/v1/workspaces/adduser{userId})*/ unassigned *(DELETE /api/v1/workspaces/removeuser{userId})* to workspaces with specific roles:
+  - **Developer**
+  - **Project Manager**
+- If a user is assigned the role of **Project Managers** they can manage (CRUD) projects within the workspace.
 
-## Vision
+### Project Management
+- Projects are linked to a specific workspace.
+  - Users in a workspace can view the projects *(GET /api/v1/workspaces/{workspaceId}/projects)*
+- Project Managers can:
+  - Create, update and delete projects.
+  - Assign/ unassign users to projects.
 
-You are required to build a fullstack project management system similar to Trello, Jira, or Monday.
+### Ticket Management
+- Inside each project:
+  - Users who are part of the project can create, update, delete, and view **tickets**.
+  - Users in the project can assign/ unassign tickets to users within the project.
 
-The project can be single- or multi-tenant.
+### Authorization
+- Two custom **Authorization Handlers** ensure security:
+  1. **Workspace Role Authorization**: Ensures the user has the correct role (Owner, Developer or Project Manager) to perform actions in a workspace/project/ticket.
+  2. **Project Membership Authorization**: Confirms the user is a member of a specific project to perform relevant actions.
 
-The main requirements are as follows:
+## Technology Stack
 
-- **User Management**
-- **Projects and Workspaces**
-- **Tasks and Issues**
+- **Programming Language**: C#
+- **Framework**: ASP.NET Core
+- **Database**: PostgreSQL
+- **ORM**: Entity Framework Core
+- **Authentication**: BCrypt for password hashing and JWT for token-based authentication
+- **Architecture**: CLEAN Architecture
+- **Testing**: Unit tests with XUnit
+- **API Design**: RESTful APIs
+- **GitHub Actions**: For CI
 
-To take the project to the next level, consider these additional requirements:
+## Folder structure
 
-- **Collaboration**
-- **Real-time Collaboration**
-- **Integration with Other Platforms**
-- **Reporting and Analytics**
+- The project adheres to the CLEAN Architecture pattern, organized as follows:
+  - **Domain**: Core business logic, entities, value objects and interfaces.
+  - **Application**: Authorization handlers, service implementations, and DTOs.
+  - **Controller**: Controllers for handling API requests and responses and middleware.
+  - **Framework**: DI container, repositories and database configurations
 
-### Business Requirements
+## Local Development Setup
 
-- Brainstorm the backend design in terms of entity structure and how they will interact.
-- Discuss the implementation of architecture: CLEAN, DDD, TDD, and any possible pattern your team want to apply (repository pattern, CQRS, etc.).
-- **Deadline Management**: Use any project management tool of your choice to ensure timely delivery.
-
----
-
-## Requirements
-
-_For team assignment, only 1 member should fork the repo, then the admin can invite other members to contribute in the same repo. All members, including the admin, should fork from the common repo, making PRs when changes are needed. Remember to have a develop branch before merging to main. Each feature/schema/bug/issue should have its own branch, and only one member should work on one branch/file at a time. Before making any new branch, make sure to sync the fork and run `git pull` to avoid conflicts with the common team repo._
-
-1. **Create ERD Diagram** with entities, attributes, and relationships. Include the ERD as an image in the project.
-
-2. **Design the API Endpoints** to follow REST API architecture. Document the endpoints in `.md` files, providing detailed explanations of queries, parameters, request bodies, authentication requirements (if applicable), sample responses, and status codes.
-
-3. **Basic Entities** (Additional entities may be included as needed):
-
-   - User
-   - Project
-   - Workspace
-   - Task
-   - Issue
-   - Comment (optional)
-   - Notification (optional)
-
-4. **Develop Backend Server** using CLEAN Architecture:
-
-   - Each collection should contain at least 5 records by the delivery date, except for tasks and issues, which should have at least 20 records each.
-   - Implement user authentication and authorization appropriately.
-   - Use exception handler to provide meaningful responses to users.
-   - Unit testing is required primarily for the Domain and Service layers. It would be ideal to test also the controllers and data access.
-   - Deployment: Database [neon.tech](https://neon.tech/) , Server [Azure App Service](https://azure.microsoft.com/en-us/products/app-service) (will be demonstrated in the lecture)
-   - The README file should clearly describe the project with sufficient detail and a readable structure.
-
----
-
-## Mandatory Features
-
-- **User Management**
-
-  - User registration and login functionality
-  - User authentication using email/password or other methods (e.g., Google, GitHub)
-  - Custom roles and permissions (e.g., HR, Dev, PM, Guest)
-
-- **Projects and Workspaces**
-
-  - Ability to create and manage multiple projects/workspaces
-  - Project details: name, description, start/end dates, status
-
-- **Tasks and Issues**
-
-  - Task/issue creation with title, description, priority, and deadline
-  - Task/issue tracking: status updates (e.g., To-Do, In Progress, Done)
-  - Assign tasks/issues to team members or specific users
-
-- **Boards and Kanban (UI-related)**
-  - Customizable boards for different projects/workspaces
-  - Card-based representation of tasks/issues on the board
-  - Drag-and-drop reordering of cards
-  - Board filters and custom views (e.g., due dates, priority)
-
----
-
-## Optional Features
-
-- **Collaboration and Communication**
-
-  - Notification system: email/text updates on task/issue changes
-  - Tagging team members in comments
-  - File attachments and commenting on tasks/issues
-
-- **Real-Time Collaboration**
-
-  - Real-time commenting with instant updates for team members
-  - Auto-updates for task statuses
-
-- **Integrations and APIs**
-
-  - Integration with Google Drive, Trello, Slack, GitHub issues, calendar, and email clients
-
-- **Gantt Charts and Timelines**
-
-  - Gantt chart visualization for project timelines
-
-- **Reporting and Analytics**
-  - Customizable dashboards for project leaders and stakeholders
-  - Task/issue analytics: time spent, effort required, conversion rates, etc.
-
----
-
-## Optional Database Advanced Operations
-
-For the following features, you might take advantage of **transactions**, **complex functions**, and **stored procedures**:
-
-1. **Project and Task Management with Dependencies**
-
-   - Prevent a project from being marked as complete until all tasks and issues are resolved using a transaction.
-
-2. **Bulk Task Assignment or Status Updates**
-
-   - Bulk assign tasks or update statuses within a transaction to ensure either all updates succeed or none do.
-
-3. **Complex Query for Reporting and Analytics**
-
-   - Implement advanced queries for metrics like average completion time, burn-down charts, and task completion rates using user-defined functions or views.
-
-4. **Activity Log Generation**
-
-   - A stored procedure logs user activity whenever a task or comment is modified, capturing timestamps, user IDs, and action descriptions.
-
-5. **Notification System**
-   - Use a trigger or stored procedure to automatically generate notifications on task or issue updates.
-6. **Data Clean-Up and Maintenance Scripts**
-   - Use stored procedures for regular cleanup of old data, such as notifications or completed tasks in archived projects.
-
----
-
-## Getting Started
-
-Here is the recommended order:
-
-- Plan the Database Schema before starting any code.
-- Set Up the Project Structure.
-- Build the Models.
-- Create the Repositories.
-- Build the Services.
-- Set Up Authentication & Authorization.
-- Build the Controllers.
-- Implement Error Handling Middleware.
-
-## Set up the database
+### Set up the database
 
 There are few things you need to do before getting the database up and running:
 
-### 1. Create the database
+#### 1. Create the database
 
 Use pgAdmin and create a database (rfDatabase is the name being used atm)
 
-### 2. Change connection strings
+#### 2. Change connection strings
 
 In app.settings.json in the Framework folder update the connectionstring with your name, password, databasename, host, and port there to match the one in your database (currently it is user postgres with password 1234)
 
@@ -186,22 +76,22 @@ In app.settings.json in the Framework folder update the connectionstring with yo
    }
 ```
 
-### 3. Run the migrations
+#### 3. Run the migrations
 
-Then cd into Framework, and run dotnet ef database update
-Hopefully everything works from there
+Then cd into Framework, and run `dotnet ef database update`
 
-## Authentication Configuration
+
+### Authentication Configuration
 
 To set up authentication for the application, follow these steps:
 
-### 1. Create a Configuration File
+#### 1. Create a Configuration File
 
-Add an `appsettings.Development.json` file to the `RhythmFlow.Framework` project.
+Add an **appsettings.Development.json** file to the **RhythmFlow.Framework** project.
 
-### 2. Populate the File
+#### 2. Populate the File
 
-Copy and paste the following JSON content into the `appsettings.Development.json` file:
+Copy and paste the following JSON content into the **appsettings.Development.json** file:
 
 ```json
 {
@@ -221,6 +111,13 @@ Copy and paste the following JSON content into the `appsettings.Development.json
 }
 ```
 
-### 3. Run the app in development mode
+#### 3. Run the app in development mode
 
-In the `RhythmFlow.Framework` project run `export ASPNETCORE_ENVIRONMENT=Development && dotnet run`
+In the **RhythmFlow.Framework** project run `export ASPNETCORE_ENVIRONMENT=Development && dotnet run`
+
+
+## More information about the API endpoints
+
+- *(http://localhost:5110/swagger/index.html)*
+
+

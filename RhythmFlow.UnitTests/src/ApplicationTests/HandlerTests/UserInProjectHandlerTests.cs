@@ -37,7 +37,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
             // Arrange
             var userId = Guid.NewGuid();
             var projectId = Guid.NewGuid();
-            var project = new Project("Test Project", "Description", DateTime.Now, DateTime.Now.AddDays(30), Status.InProgress, Guid.NewGuid())
+            var project = new Project("Test Project", "Description", DateOnly.FromDateTime(DateTime.Now), DateOnly.FromDateTime(DateTime.Now).AddDays(30), Status.InProgress, Guid.NewGuid())
             {
                 Users = [new User("Test", "User", "test@example.com", "hashedPassword") { Id = userId }]
             };
@@ -72,7 +72,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
             // Arrange
             var userId = Guid.NewGuid();
             var projectId = Guid.NewGuid();
-            var project = new Project("Test Project", "Description", DateTime.Now, DateTime.Now.AddDays(30), Status.InProgress, Guid.NewGuid())
+            var project = new Project("Test Project", "Description", DateOnly.FromDateTime(DateTime.Now), DateOnly.FromDateTime(DateTime.Now).AddDays(30), Status.InProgress, Guid.NewGuid())
             {
                 Users = [new User("Test", "User", "test@example.com", "hashedPassword") { Id = Guid.NewGuid() }]
             };

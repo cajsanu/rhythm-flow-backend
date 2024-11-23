@@ -12,7 +12,7 @@ namespace RhythmFlow.UnitTests.src.DomainTests
             var title = "Ticket Title";
             var description = "Ticket Description";
             var priority = Priority.High;
-            var deadline = DateTime.Now.AddDays(7);
+            var deadline = DateOnly.FromDateTime(DateTime.Now.AddDays(7));
             var status = Status.InProgress;
             var projectId = Guid.NewGuid();
             var type = TicketType.Bug;
@@ -37,7 +37,7 @@ namespace RhythmFlow.UnitTests.src.DomainTests
             var title = "";
             var description = "Ticket Description";
             var priority = Priority.High;
-            var deadline = DateTime.Now.AddDays(7);
+            var deadline = DateOnly.FromDateTime(DateTime.Now.AddDays(7));
             var status = Status.InProgress;
             var projectId = Guid.NewGuid();
             var type = TicketType.Bug;
@@ -53,7 +53,7 @@ namespace RhythmFlow.UnitTests.src.DomainTests
             var title = "Ticket Title";
             var description = "";
             var priority = Priority.High;
-            var deadline = DateTime.Now.AddDays(7);
+            var deadline = DateOnly.FromDateTime(DateTime.Now.AddDays(7));
             var status = Status.InProgress;
             var projectId = Guid.NewGuid();
             var type = TicketType.Bug;
