@@ -14,10 +14,23 @@ namespace RhythmFlow.Framework.src.Repo
 
         public async Task<UserWorkspace?> AssignRoleToUserInWorkspace(Guid userId, Guid workspaceId, Role role)
         {
-            UserWorkspace userWorkspace = new UserWorkspace(userId, workspaceId, role);
-            var added = await _userWorkspaces.AddAsync(userWorkspace);
+            var existingUserWorkspace = await _userWorkspaces
+                .FirstOrDefaultAsync(uw => uw.UserId == userId && uw.WorkspaceId == workspaceId);
+
+            if (existingUserWorkspace != null)
+            {
+                // Update the role if the record exists
+                existingUserWorkspace.Role = role;
+            }
+            else
+            {
+                // Add a new record if it doesn't exist
+                var userWorkspace = new UserWorkspace(userId, workspaceId, role);
+                await _userWorkspaces.AddAsync(userWorkspace);
+            }
+
             await _context.SaveChangesAsync();
-            return added.Entity;
+            return existingUserWorkspace;
         }
 
         public Task<IEnumerable<Workspace>> GetAllUserWorkspacesByUserIdAsync(Guid userId)
