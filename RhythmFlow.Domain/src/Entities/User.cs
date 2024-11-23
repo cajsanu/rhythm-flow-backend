@@ -18,7 +18,12 @@ namespace RhythmFlow.Domain.src.Entities
 
         public ICollection<Ticket> Tickets { get; set; } = [];
 
-        public User(string firstName, string lastName, string email, string passwordHash, Guid? guid = null) : base(guid) // Call the base constructor to generate a unique ID
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+
+        // empty constructor for Entity Framework. More here: https://stackoverflow.com/questions/54400115/no-suitable-constructor-found-for-entity-type-string
+        public User() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+        public User(string firstName, string lastName, string email, string passwordHash, Guid? Id = null) : base(Id) // Call the base constructor to generate a unique ID
         {
             // firstName and lastName validation in the constructor and email validation in the setter.
             // This is mainly because the users name will probably not change wile the email might.

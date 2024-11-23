@@ -15,7 +15,6 @@ namespace RhythmFlow.Application.src.Factories
         //         Email = entity.Email.Value
         //     };
         // }
-
         public UserReadDto CreateReadDto(User entity)
         {
             return new UserReadDto

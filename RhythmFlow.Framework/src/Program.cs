@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RhythmFlow.Application.DTOs.Workspaces;
 using RhythmFlow.Application.src.Authorization;
@@ -33,8 +34,11 @@ builder.Services.AddSwaggerGen();
 // Configure lowercase URLs
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
-// this should probably be scoped but right now it does not work as anything else than singleton
-builder.Services.AddSingleton<AppDbContext>();
+// builder.Services.AddSingleton<AppDbContext>();
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 // add http context accessor
 builder.Services.AddHttpContextAccessor();
@@ -103,6 +107,7 @@ builder.Services.AddAuthentication(options =>
 // add services for authorization requirements
 builder.Services.AddScoped<IAuthorizationHandler, WorkspaceRoleHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, UserInProjectHandler>();
+
 // builder.Services.AddScoped<IAuthorizationRequirement, RoleInWorkspaceRequirement>();
 // builder.Services.AddScoped<IAuthorizationRequirement, UserInProjectRequirement>();
 

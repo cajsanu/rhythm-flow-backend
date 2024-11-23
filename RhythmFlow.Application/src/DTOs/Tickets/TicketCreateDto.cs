@@ -19,7 +19,7 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
         public Guid ProjectId { get; set; }
         public TicketType Type { get; set; }
 
-        public  Ticket ToEntity()
+        public Ticket ToEntity()
         {
             return new Ticket(Title, Description, Priority, Deadline, Status, ProjectId, Type);
         }
