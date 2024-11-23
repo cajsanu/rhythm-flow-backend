@@ -56,21 +56,21 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
         public async Task RemoveUserFromEntityAsync_ShouldRemoveUser_WhenValidInput()
         {
             // Arrange
-             var userId = Guid.NewGuid();
-             var ticketId = Guid.NewGuid();
-             var user = new TestUser("testname", "test2", "test@gmail.com", "testpassword21342@!!") { Id = userId };
-             var ticket = new TestTicket("Design the table", "Bla bla bla", Priority.High, DateOnly.FromDateTime(new DateTime(2026, 12, 12)), Status.InProgress, Guid.NewGuid(), TicketType.Bug) { Id = ticketId, Users = new List<User> { user } };
-             var dto = new TestTicketReadDto { Id = ticket.Id };
-             _mockUserRepo.Setup(repo => repo.GetByIdAsync(userId)).ReturnsAsync(user);
-             _mockTicketRepo.Setup(repo => repo.GetByIdAsync(ticketId)).ReturnsAsync(ticket);
-             _mockDtoFactory.Setup(factory => factory.CreateReadDto(ticket)).Returns(dto);
+            var userId = Guid.NewGuid();
+            var ticketId = Guid.NewGuid();
+            var user = new TestUser("testname", "test2", "test@gmail.com", "testpassword21342@!!") { Id = userId };
+            var ticket = new TestTicket("Design the table", "Bla bla bla", Priority.High, DateOnly.FromDateTime(new DateTime(2026, 12, 12)), Status.InProgress, Guid.NewGuid(), TicketType.Bug) { Id = ticketId, Users = new List<User> { user } };
+            var dto = new TestTicketReadDto { Id = ticket.Id };
+            _mockUserRepo.Setup(repo => repo.GetByIdAsync(userId)).ReturnsAsync(user);
+            _mockTicketRepo.Setup(repo => repo.GetByIdAsync(ticketId)).ReturnsAsync(ticket);
+            _mockDtoFactory.Setup(factory => factory.CreateReadDto(ticket)).Returns(dto);
 
-             // Act
-             var result = await _service.RemoveUserFromEntityAsync(userId, ticketId);
+            // Act
+            var result = await _service.RemoveUserFromEntityAsync(userId, ticketId);
 
             // Assert
-             Assert.Equal(ticket.Id, result.Id);
-             Assert.DoesNotContain(user, ticket.Users);
+            Assert.Equal(ticket.Id, result.Id);
+            Assert.DoesNotContain(user, ticket.Users);
         }
     }
 }

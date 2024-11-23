@@ -12,9 +12,11 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.TestClasses
     public class TestProjectReadDto : ProjectReadDto
     {
     }
+
     public class TestProjectCreateDto : ProjectCreateDto
     {
     }
+
     public class TestProjectUpdateDto : ProjectUpdateDto
     {
     }

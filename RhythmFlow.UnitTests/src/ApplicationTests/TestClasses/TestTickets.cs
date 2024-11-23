@@ -11,9 +11,11 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.TestClasses
     public class TestTicketReadDto : TicketReadDto
     {
     }
+
     public class TestTicketCreateDto : TicketCreateDto
     {
     }
+
     public class TestTicketUpdateDto : TicketUpdateDto
     {
     }

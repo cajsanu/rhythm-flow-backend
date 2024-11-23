@@ -45,6 +45,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             _mockUserRepo.Setup(repo => repo.GetByIdAsync(userId)).ReturnsAsync(user);
             _mockProjectRepo.Setup(repo => repo.GetByIdAsync(projectId)).ReturnsAsync(project);
             _mockDtoFactory.Setup(factory => factory.CreateReadDto(project)).Returns(dto);
+
             // Act
             var result = await _service.AssignUserToEntityAsync(userId, projectId);
 
@@ -72,8 +73,6 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             // Assert
             Assert.Equal(project.Id, result.Id);
             Assert.DoesNotContain(user, project.Users);
-
-
         }
     }
 }
