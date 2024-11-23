@@ -11,9 +11,9 @@ namespace RhythmFlow.Application.src.DTOs.Projects
         [Required]
         required public string Name { get; set; }
         required public string Description { get; set; }
-        public DateTime StartDate { get; set; }
+        public DateOnly StartDate { get; set; }
         [FutureDate]
-        public DateTime EndDate { get; set; }
+        public DateOnly EndDate { get; set; }
         public Status Status { get; set; }
         [NoEmptyGuid]
         public Guid WorkspaceId { get; set; }

@@ -68,7 +68,7 @@ namespace RhythmFlow.UnitTests.src.DomainTests
         {
             // Arrange
             var user = new User("John", "Doe", "john.doe@example.com", "passwordHash");
-            var project = new Project("Project Name", "Project Description", DateTime.Now, DateTime.Now.AddDays(30), Status.InProgress, Guid.NewGuid());
+            var project = new Project("Project Name", "Project Description", DateOnly.FromDateTime(DateTime.Now), DateOnly.FromDateTime(DateTime.Now.AddDays(30)), Status.InProgress, Guid.NewGuid());
 
             // Act
             user.Projects.Add(project);
@@ -83,7 +83,7 @@ namespace RhythmFlow.UnitTests.src.DomainTests
         {
             // Arrange
             var user = new User("John", "Doe", "john.doe@example.com", "passwordHash");
-            var ticket = new Ticket("Ticket Title", "Ticket Description", Priority.High, DateTime.Now.AddDays(7), Status.InProgress, Guid.NewGuid(), TicketType.Bug);
+            var ticket = new Ticket("Ticket Title", "Ticket Description", Priority.High, DateOnly.FromDateTime(DateTime.Now.AddDays(7)), Status.InProgress, Guid.NewGuid(), TicketType.Bug);
 
             // Act
             user.Tickets.Add(ticket);

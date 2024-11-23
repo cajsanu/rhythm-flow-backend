@@ -36,7 +36,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.TicketDtoTests
                 Title = title,
                 Description = description,
                 Priority = priority,
-                Deadline = DateTime.Parse(deadline),
+                Deadline = DateOnly.Parse(deadline),
                 Status = status,
                 ProjectId = Guid.Parse(projectId),
                 Type = type

@@ -8,8 +8,8 @@ namespace RhythmFlow.Application.src.DTOs.Projects
     {
         required public string Name { get; set; }
         required public string Description { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateOnly StartDate { get; set; }
+        public DateOnly EndDate { get; set; }
         public Status Status { get; set; }
         public Guid WorkspaceId { get; set; }
         public ICollection<Guid> UsersId { get; set; } = [];

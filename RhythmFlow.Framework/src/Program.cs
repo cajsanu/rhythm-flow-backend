@@ -72,7 +72,6 @@ builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IUserWorkspaceService, UserWorkspaceService>();
 
-
 // Add controller
 builder.Services.AddControllers(options =>
 {
