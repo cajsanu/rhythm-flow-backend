@@ -42,18 +42,6 @@ namespace RhythmFlow.Framework.src.Data
         private static readonly Ticket Ticket7 = new ("Add Dark Mode", "Implement dark mode toggle for Users", Priority.High, DateOnly.FromDateTime(DateTime.Now.AddDays(21)), Status.Cancelled, Project5.Id, TicketType.Bug);
         private static readonly Ticket Ticket8 = new ("Bug in Report Generation", "Fix issue with incorrect data rendering", Priority.High, DateOnly.FromDateTime(DateTime.Now.AddDays(5)), Status.InProgress, Project6.Id, TicketType.Feature);
 
-        // Generate User workspace
-        // Project manager
-        private static readonly UserWorkspace UserWorkspace1 = new (User1.Id, Workspace1.Id, Role.ProjectManager);
-        private static readonly UserWorkspace UserWorkspace2 = new (User2.Id, Workspace2.Id, Role.ProjectManager);
-        private static readonly UserWorkspace UserWorkspace3 = new (User3.Id, Workspace3.Id, Role.ProjectManager);
-
-        // developer
-        private static readonly UserWorkspace UserWorkspace4 = new (User4.Id, Workspace1.Id, Role.ProjectManager);
-        private static readonly UserWorkspace UserWorkspace5 = new (User1.Id, Workspace1.Id, Role.ProjectManager);
-        private static readonly UserWorkspace UserWorkspace6 = new (User6.Id, Workspace2.Id, Role.Developer);
-        private static readonly UserWorkspace UserWorkspace7 = new (User7.Id, Workspace2.Id, Role.Developer);
-
         public static void Seed(ModelBuilder modelBuilder)
         {
             // we have to do it like this due to https://github.com/dotnet/efcore/issues/9914
@@ -113,6 +101,7 @@ namespace RhythmFlow.Framework.src.Data
             modelBuilder.Entity<Workspace>().HasData(Workspace1, Workspace2, Workspace3, Workspace4, Workspace5);
             modelBuilder.Entity<Project>().HasData(Project1, Project2, Project3, Project4, Project5, Project6);
             modelBuilder.Entity<Ticket>().HasData(Ticket1, Ticket2, Ticket3, Ticket4, Ticket5, Ticket6, Ticket7, Ticket8);
+
             // modelBuilder.Entity<UserWorkspace>().HasData(UserWorkspace1, UserWorkspace2, UserWorkspace3, UserWorkspace4, UserWorkspace5, UserWorkspace6, UserWorkspace7);
         }
     }
