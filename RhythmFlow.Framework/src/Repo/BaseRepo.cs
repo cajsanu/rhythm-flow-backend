@@ -40,7 +40,8 @@ namespace RhythmFlow.Framework.src.Repo
 
         public async Task<T?> UpdateAsync(T entity)
         {
-            _ = await _dbSet.FindAsync(entity.Id) ?? throw new ArgumentException($"{typeof(T)} with ID {entity.Id} not found. ");
+            var foundEntity = await _dbSet.FindAsync(entity.Id) ?? throw new ArgumentException($"{typeof(T)} with ID {entity.Id} not found. ");
+            _dbSet.Remove(foundEntity);
             _dbSet.Update(entity);
             await _context.SaveChangesAsync();
             return await _dbSet.FindAsync(entity.Id);
