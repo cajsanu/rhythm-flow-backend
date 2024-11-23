@@ -35,10 +35,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 // builder.Services.AddSingleton<AppDbContext>();
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+builder.Services.AddDbContext<AppDbContext>();
 
 // add http context accessor
 builder.Services.AddHttpContextAccessor();
