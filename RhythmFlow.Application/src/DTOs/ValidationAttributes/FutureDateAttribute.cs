@@ -7,7 +7,7 @@ namespace RhythmFlow.Application.src.DTOs.ValidationAttributes
     {
         protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
         {
-            if (value is DateTime dateValue && dateValue < DateTime.Now)
+            if (value is DateOnly dateValue && dateValue < DateOnly.FromDateTime(DateTime.Now))
             {
                 return new ValidationResult("The date must be in the future.");
             }

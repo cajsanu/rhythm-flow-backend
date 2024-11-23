@@ -11,8 +11,8 @@ namespace RhythmFlow.UnitTests.src.DomainTests
             // Arrange
             var name = "Project Name";
             var description = "Project Description";
-            var startDate = DateTime.Now;
-            var endDate = DateTime.Now.AddMonths(1);
+            var startDate = DateOnly.FromDateTime(DateTime.Now);
+            var endDate = DateOnly.FromDateTime(DateTime.Now.AddMonths(1));
             var status = Status.InProgress;
             var workspaceId = Guid.NewGuid();
 
@@ -34,8 +34,8 @@ namespace RhythmFlow.UnitTests.src.DomainTests
             // Arrange
             var name = "";
             var description = "Project Description";
-            var startDate = DateTime.Now;
-            var endDate = DateTime.Now.AddMonths(1);
+            var startDate = DateOnly.FromDateTime(DateTime.Now);
+            var endDate = DateOnly.FromDateTime(DateTime.Now.AddMonths(1));
             var status = Status.InProgress;
             var workspaceId = Guid.NewGuid();
 
@@ -49,8 +49,8 @@ namespace RhythmFlow.UnitTests.src.DomainTests
             // Arrange
             var name = "Project Name";
             var description = "";
-            var startDate = DateTime.Now;
-            var endDate = DateTime.Now.AddMonths(1);
+            var startDate = DateOnly.FromDateTime(DateTime.Now);
+            var endDate = DateOnly.FromDateTime(DateTime.Now.AddMonths(1));
             var status = Status.InProgress;
             var workspaceId = Guid.NewGuid();
 

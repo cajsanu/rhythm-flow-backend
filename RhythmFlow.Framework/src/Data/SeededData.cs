@@ -25,22 +25,22 @@ namespace RhythmFlow.Framework.src.Data
         private static readonly Workspace Workspace5 = new ("HR", User5.Id);
 
         // Generate Project
-        private static readonly Project Project1 = new ("Alpha", "Conquer the Galaxy", DateTime.Now.AddDays(2), DateTime.Now.AddDays(50), Status.InProgress, Workspace1.Id);
-        private static readonly Project Project2 = new ("Beta", "Develop AI Assistant", DateTime.Now.AddDays(5), DateTime.Now.AddDays(60), Status.NotStarted, Workspace2.Id);
-        private static readonly Project Project3 = new ("Gamma", "Revamp Website Design", DateTime.Now.AddDays(3), DateTime.Now.AddDays(45), Status.InProgress, Workspace3.Id);
-        private static readonly Project Project4 = new ("Delta", "Launch Mobile App", DateTime.Now.AddDays(7), DateTime.Now.AddDays(90), Status.InProgress, Workspace4.Id);
-        private static readonly Project Project5 = new ("Epsilon", "Implement Cloud Migration", DateTime.Now.AddDays(1), DateTime.Now.AddDays(120), Status.Cancelled, Workspace5.Id);
-        private static readonly Project Project6 = new ("Zeta", "Optimize Data Pipeline", DateTime.Now.AddDays(10), DateTime.Now.AddDays(80), Status.InProgress, Workspace5.Id);
+        private static readonly Project Project1 = new ("Alpha", "Conquer the Galaxy", DateOnly.FromDateTime(DateTime.Now.AddDays(2)), DateOnly.FromDateTime(DateTime.Now.AddDays(50)), Status.InProgress, Workspace1.Id);
+        private static readonly Project Project2 = new ("Beta", "Develop AI Assistant", DateOnly.FromDateTime(DateTime.Now.AddDays(5)), DateOnly.FromDateTime(DateTime.Now.AddDays(60)), Status.NotStarted, Workspace2.Id);
+        private static readonly Project Project3 = new ("Gamma", "Revamp Website Design", DateOnly.FromDateTime(DateTime.Now.AddDays(3)), DateOnly.FromDateTime(DateTime.Now.AddDays(45)), Status.InProgress, Workspace3.Id);
+        private static readonly Project Project4 = new ("Delta", "Launch Mobile App", DateOnly.FromDateTime(DateTime.Now.AddDays(7)), DateOnly.FromDateTime(DateTime.Now.AddDays(90)), Status.InProgress, Workspace4.Id);
+        private static readonly Project Project5 = new ("Epsilon", "Implement Cloud Migration", DateOnly.FromDateTime(DateTime.Now.AddDays(1)), DateOnly.FromDateTime(DateTime.Now.AddDays(120)), Status.Cancelled, Workspace5.Id);
+        private static readonly Project Project6 = new ("Zeta", "Optimize Data Pipeline", DateOnly.FromDateTime(DateTime.Now.AddDays(10)), DateOnly.FromDateTime(DateTime.Now.AddDays(80)), Status.InProgress, Workspace5.Id);
 
         // Generate tickets
-        private static readonly Ticket Ticket1 = new ("Create Database", "using Postgres", Priority.High, DateTime.Now.AddDays(7), Status.InProgress, Project1.Id, TicketType.Bug);
-        private static readonly Ticket Ticket2 = new ("Fix Login Issue", "Resolve authentication error", Priority.High, DateTime.Now.AddDays(3), Status.InProgress, Project1.Id, TicketType.Bug);
-        private static readonly Ticket Ticket3 = new ("Design Landing Page", "Create wireframe for new landing page", Priority.Medium, DateTime.Now.AddDays(14), Status.Cancelled, Project1.Id, TicketType.Feature);
-        private static readonly Ticket Ticket4 = new ("Update Privacy Policy", "Review and update policy document", Priority.Low, DateTime.Now.AddDays(30), Status.NotStarted, Project2.Id, TicketType.TechnicalDebt);
-        private static readonly Ticket Ticket5 = new ("Optimize API", "Enhance performance of existing API calls", Priority.High, DateTime.Now.AddDays(10), Status.InProgress, Project2.Id, TicketType.Feature);
-        private static readonly Ticket Ticket6 = new ("Schedule Training", "Plan onboarding session for new hires", Priority.Medium, DateTime.Now.AddDays(7), Status.NotStarted, Project2.Id, TicketType.TechnicalDebt);
-        private static readonly Ticket Ticket7 = new ("Add Dark Mode", "Implement dark mode toggle for Users", Priority.High, DateTime.Now.AddDays(21), Status.Cancelled, Project5.Id, TicketType.Bug);
-        private static readonly Ticket Ticket8 = new ("Bug in Report Generation", "Fix issue with incorrect data rendering", Priority.High, DateTime.Now.AddDays(5), Status.InProgress, Project6.Id, TicketType.Feature);
+        private static readonly Ticket Ticket1 = new ("Create Database", "using Postgres", Priority.High, DateOnly.FromDateTime(DateTime.Now.AddDays(7)), Status.InProgress, Project1.Id, TicketType.Bug);
+        private static readonly Ticket Ticket2 = new ("Fix Login Issue", "Resolve authentication error", Priority.High, DateOnly.FromDateTime(DateTime.Now.AddDays(3)), Status.InProgress, Project1.Id, TicketType.Bug);
+        private static readonly Ticket Ticket3 = new ("Design Landing Page", "Create wireframe for new landing page", Priority.Medium, DateOnly.FromDateTime(DateTime.Now.AddDays(14)), Status.Cancelled, Project1.Id, TicketType.Feature);
+        private static readonly Ticket Ticket4 = new ("Update Privacy Policy", "Review and update policy document", Priority.Low, DateOnly.FromDateTime(DateTime.Now.AddDays(30)), Status.NotStarted, Project2.Id, TicketType.TechnicalDebt);
+        private static readonly Ticket Ticket5 = new ("Optimize API", "Enhance performance of existing API calls", Priority.High, DateOnly.FromDateTime(DateTime.Now.AddDays(10)), Status.InProgress, Project2.Id, TicketType.Feature);
+        private static readonly Ticket Ticket6 = new ("Schedule Training", "Plan onboarding session for new hires", Priority.Medium, DateOnly.FromDateTime(DateTime.Now.AddDays(7)), Status.NotStarted, Project2.Id, TicketType.TechnicalDebt);
+        private static readonly Ticket Ticket7 = new ("Add Dark Mode", "Implement dark mode toggle for Users", Priority.High, DateOnly.FromDateTime(DateTime.Now.AddDays(21)), Status.Cancelled, Project5.Id, TicketType.Bug);
+        private static readonly Ticket Ticket8 = new ("Bug in Report Generation", "Fix issue with incorrect data rendering", Priority.High, DateOnly.FromDateTime(DateTime.Now.AddDays(5)), Status.InProgress, Project6.Id, TicketType.Feature);
 
         // Generate User workspace
         // Project manager
@@ -56,12 +56,64 @@ namespace RhythmFlow.Framework.src.Data
 
         public static void Seed(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasData(User1, User2, User3, User4, User5, User6, User7, User8, User9);
+            // we have to do it like this due to https://github.com/dotnet/efcore/issues/9914
+            modelBuilder.Entity<User>(x =>
+            {
+                x.HasData(new { User1.Id, User1.FirstName, User1.LastName, User1.PasswordHash });
+                x.OwnsOne(e => e.Email).HasData(new { UserId = User1.Id, User1.Email.Value });
+            });
+            modelBuilder.Entity<User>(x =>
+            {
+                x.HasData(new { User2.Id, User2.FirstName, User2.LastName, User2.PasswordHash });
+                x.OwnsOne(e => e.Email).HasData(new { UserId = User2.Id, User2.Email.Value });
+            });
+
+            modelBuilder.Entity<User>(x =>
+            {
+                x.HasData(new { User3.Id, User3.FirstName, User3.LastName, User3.PasswordHash });
+                x.OwnsOne(e => e.Email).HasData(new { UserId = User3.Id, User3.Email.Value });
+            });
+
+            modelBuilder.Entity<User>(x =>
+            {
+                x.HasData(new { User4.Id, User4.FirstName, User4.LastName, User4.PasswordHash });
+                x.OwnsOne(e => e.Email).HasData(new { UserId = User4.Id, User4.Email.Value });
+            });
+
+            modelBuilder.Entity<User>(x =>
+            {
+                x.HasData(new { User5.Id, User5.FirstName, User5.LastName, User5.PasswordHash });
+                x.OwnsOne(e => e.Email).HasData(new { UserId = User5.Id, User5.Email.Value });
+            });
+
+            modelBuilder.Entity<User>(x =>
+            {
+                x.HasData(new { User6.Id, User6.FirstName, User6.LastName, User6.PasswordHash });
+                x.OwnsOne(e => e.Email).HasData(new { UserId = User6.Id, User6.Email.Value });
+            });
+
+            modelBuilder.Entity<User>(x =>
+            {
+                x.HasData(new { User7.Id, User7.FirstName, User7.LastName, User7.PasswordHash });
+                x.OwnsOne(e => e.Email).HasData(new { UserId = User7.Id, User7.Email.Value });
+            });
+
+            modelBuilder.Entity<User>(x =>
+            {
+                x.HasData(new { User8.Id, User8.FirstName, User8.LastName, User8.PasswordHash });
+                x.OwnsOne(e => e.Email).HasData(new { UserId = User8.Id, User8.Email.Value });
+            });
+
+            modelBuilder.Entity<User>(x =>
+            {
+                x.HasData(new { User9.Id, User9.FirstName, User9.LastName, User9.PasswordHash });
+                x.OwnsOne(e => e.Email).HasData(new { UserId = User9.Id, User9.Email.Value });
+            });
+
             modelBuilder.Entity<Workspace>().HasData(Workspace1, Workspace2, Workspace3, Workspace4, Workspace5);
             modelBuilder.Entity<Project>().HasData(Project1, Project2, Project3, Project4, Project5, Project6);
             modelBuilder.Entity<Ticket>().HasData(Ticket1, Ticket2, Ticket3, Ticket4, Ticket5, Ticket6, Ticket7, Ticket8);
-
-            modelBuilder.Entity<UserWorkspace>().HasData(UserWorkspace1, UserWorkspace2, UserWorkspace3, UserWorkspace4, UserWorkspace5, UserWorkspace6, UserWorkspace7);
+            // modelBuilder.Entity<UserWorkspace>().HasData(UserWorkspace1, UserWorkspace2, UserWorkspace3, UserWorkspace4, UserWorkspace5, UserWorkspace6, UserWorkspace7);
         }
     }
 }

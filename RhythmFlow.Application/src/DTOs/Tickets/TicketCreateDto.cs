@@ -13,7 +13,7 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
         required public string Description { get; set; }
         public Priority Priority { get; set; }
         [FutureDate]
-        public DateTime Deadline { get; set; }
+        public DateOnly Deadline { get; set; }
         public Status Status { get; set; }
         [NoEmptyGuid]
         public Guid ProjectId { get; set; }
