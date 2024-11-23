@@ -1,5 +1,13 @@
 # Teamwork
 
+
+
+
+
+
+
+
+
 - Designing REST API endpoints
 - Database schema
 - Workable backend server with ASP.NET Core & Entity Framework
