@@ -9,11 +9,10 @@ using RhythmFlow.Domain.src.RepoInterfaces;
 
 namespace RhythmFlow.Application.src.Services
 {
-    public class WorkspaceService(AssignmentService<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto> assignmentService, IDtoFactory<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto> workspaceDtoFactory, IUserWorkspaceRepo userWorkspaceRepo, IWorkspaceRepo workspaceRepo) 
+    public class WorkspaceService(AssignmentService<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto> assignmentService, IDtoFactory<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto> workspaceDtoFactory, IUserWorkspaceRepo userWorkspaceRepo, IWorkspaceRepo workspaceRepo)
     : BaseService<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>(workspaceRepo, workspaceDtoFactory), IWorkspaceService
     {
         // T
-
         public Task<WorkspaceReadDto> AssignUserToEntityAsync(Guid userId, Guid entityId)
         {
             return assignmentService.AssignUserToEntityAsync(userId, entityId);

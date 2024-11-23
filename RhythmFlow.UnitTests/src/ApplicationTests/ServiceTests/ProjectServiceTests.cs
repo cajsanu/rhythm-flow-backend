@@ -40,11 +40,12 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             var userId = Guid.NewGuid();
             var projectId = Guid.NewGuid();
             var user = new TestUser("testname", "test2", "test@gmail.com", "testpassword21342@!!") { Id = userId };
-            var project = new TestProject("Skyio", "Bla Bla", new DateTime(2026, 12, 12), new DateTime(2026, 12, 12), Status.InProgress, Guid.NewGuid()) { Id = projectId };
+            var project = new TestProject("Skyio", "Bla Bla", DateOnly.FromDateTime(new DateTime(2026, 12, 12)), DateOnly.FromDateTime(new DateTime(2026, 12, 12)), Status.InProgress, Guid.NewGuid()) { Id = projectId };
             var dto = new TestProjectReadDto { Id = project.Id };
             _mockUserRepo.Setup(repo => repo.GetByIdAsync(userId)).ReturnsAsync(user);
             _mockProjectRepo.Setup(repo => repo.GetByIdAsync(projectId)).ReturnsAsync(project);
             _mockDtoFactory.Setup(factory => factory.CreateReadDto(project)).Returns(dto);
+
             // Act
             var result = await _service.AssignUserToEntityAsync(userId, projectId);
 
@@ -60,7 +61,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             var userId = Guid.NewGuid();
             var projectId = Guid.NewGuid();
             var user = new TestUser("testname", "test2", "test@gmail.com", "testpassword21342@!!") { Id = userId };
-            var project = new TestProject("Skyio", "Bla Bla", new DateTime(2026, 12, 12), new DateTime(2026, 12, 12), Status.InProgress, Guid.NewGuid()) { Id = projectId, Users = new List<User>() { user } };
+            var project = new TestProject("Skyio", "Bla Bla", DateOnly.FromDateTime(new DateTime(2026, 12, 12)), DateOnly.FromDateTime(new DateTime(2026, 12, 12)), Status.InProgress, Guid.NewGuid()) { Id = projectId, Users = new List<User>() { user } };
             var dto = new TestProjectReadDto { Id = project.Id };
             _mockUserRepo.Setup(repo => repo.GetByIdAsync(userId)).ReturnsAsync(user);
             _mockProjectRepo.Setup(repo => repo.GetByIdAsync(projectId)).ReturnsAsync(project);
@@ -72,8 +73,6 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             // Assert
             Assert.Equal(project.Id, result.Id);
             Assert.DoesNotContain(user, project.Users);
-
-
         }
     }
 }

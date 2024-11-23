@@ -35,9 +35,11 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             var TestUserReadDto = new TestUserReadDto { Id = userTry.Id };
             _mockUserRepo.Setup(repo => repo.GetUserByEmailAsync(email)).ReturnsAsync(userTry);
             _mockDtoFactory.Setup(factory => factory.CreateReadDto(userTry)).Returns(TestUserReadDto);
+
             // Act
             var result = await _service.GetUserByEmailAsync(email);
-            //Assert
+
+            // Assert
             Assert.Equal(userTry.Id, result.Id);
         }
     }

@@ -8,6 +8,5 @@ namespace RhythmFlow.Application.src.FactoryInterfaces
         UserWorkspaceReadDto CreateReadDto(UserWorkspace entity);
         UserWorkspaceCreateDto CreateCreateDto(UserWorkspace entity);
         UserWorkspaceUpdateDto CreateUpdateDto(UserWorkspace entity);
-      
     }
 }

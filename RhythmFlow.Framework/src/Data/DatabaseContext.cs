@@ -55,7 +55,7 @@ namespace RhythmFlow.Framework.src.Data
                     v => v.ToString(),
                     v => (Priority)Enum.Parse(typeof(Priority), v)); // convert enum type to string
 
-            // DataSeeder.Seed(modelBuilder);
+            DataSeeder.Seed(modelBuilder);
         }
 
         public User? GetUserByEmail(Email email)

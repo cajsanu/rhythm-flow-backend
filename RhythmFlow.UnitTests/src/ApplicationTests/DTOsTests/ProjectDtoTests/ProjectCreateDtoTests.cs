@@ -20,7 +20,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.ProjectDtoTests
         [InlineData("Project Beta", "", "2024-01-01", "2027-01-01", Status.NotStarted, "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[0], true)] // Valid with empty Description and UsersId
         [InlineData("Project Gamma", "Another project", "2025-01-01", "2026-12-31", Status.Completed, "6fa85f64-5717-4562-b3fc-2c963f66afa6", new string[] { "00000000-0000-0000-0000-000000000000" }, false)] // Invalid UsersId GUID
         [InlineData("Project Delta", "Description", "2024-01-01", "2026-12-31", Status.Cancelled, "00000000-0000-0000-0000-000000000000", new string[] { "6fa85f64-5717-4562-b3fc-2c963f66afa6" }, false)] // Invalid WorkspaceId
-        public void ProjectCreateReadDto_ValidationTests(
+        public void ProjectCreateReadDtoValidationTests(
             string name,
             string description,
             string startDate,
@@ -35,8 +35,8 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.ProjectDtoTests
             {
                 Name = name,
                 Description = description,
-                StartDate = DateTime.Parse(startDate),
-                EndDate = DateTime.Parse(endDate),
+                StartDate = DateOnly.Parse(startDate),
+                EndDate = DateOnly.Parse(endDate),
                 Status = status,
                 WorkspaceId = Guid.Parse(workspaceId),
                 UsersId = ParseGuids(usersId)
@@ -56,7 +56,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.ProjectDtoTests
             }
         }
 
-        private ICollection<Guid> ParseGuids(string[] guids)
+        private static List<Guid> ParseGuids(string[] guids)
         {
             var result = new List<Guid>();
             foreach (var guid in guids)

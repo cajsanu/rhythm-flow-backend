@@ -35,10 +35,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 // builder.Services.AddSingleton<AppDbContext>();
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+builder.Services.AddDbContext<AppDbContext>();
 
 // add http context accessor
 builder.Services.AddHttpContextAccessor();
@@ -74,7 +71,6 @@ builder.Services.AddScoped<IWorkspaceService, WorkspaceService>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IUserWorkspaceService, UserWorkspaceService>();
-
 
 // Add controller
 builder.Services.AddControllers(options =>
