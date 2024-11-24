@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+using System.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RhythmFlow.Application.src.DTOs.Shared;
@@ -19,6 +21,7 @@ namespace RhythmFlow.Controller.src.Controllers
         // ASP automatically removes the Async from action name by default so we should avoid naming functions in controller with suffix Async to avoid 3am confusions
         private readonly IBaseService<T, TReadDto, TCreateDto, TUpdateDto> _service = service;
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TReadDto>>> GetAll()
         {
@@ -26,6 +29,7 @@ namespace RhythmFlow.Controller.src.Controllers
             return Ok(entities);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<TReadDto>> GetById(Guid id)
         {
