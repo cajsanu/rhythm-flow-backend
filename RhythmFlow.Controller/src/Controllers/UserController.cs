@@ -23,5 +23,11 @@ namespace RhythmFlow.Controller.src.Controllers
         {
             return await base.Update(id, updateDto);
         }
+
+        [AllowAnonymous]
+        public override async Task<ActionResult<UserReadDto>> Add([FromBody] UserCreateDto entity, Guid workspaceId)
+        {
+            return await base.Add(entity, workspaceId);
+        }
     }
 }

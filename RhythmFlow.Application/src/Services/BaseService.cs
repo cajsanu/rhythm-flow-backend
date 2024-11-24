@@ -29,7 +29,7 @@ namespace RhythmFlow.Application.src.Services
             return entities.Select(_dtoFactory.CreateReadDto).ToList();
         }
 
-        public async Task<TReadDto> GetByIdAsync(Guid id)
+        public async Task<TReadDto?> GetByIdAsync(Guid id)
         {
             // Check if entity exists
             var entity = await _repository.GetByIdAsync(id) ?? throw new KeyNotFoundException($"{typeof(T).Name} with ID {id} not found.");
@@ -38,12 +38,11 @@ namespace RhythmFlow.Application.src.Services
 
         public virtual async Task<TReadDto> AddAsync(TCreateDto entity)
         {
-            // Do we want to check for duplicates before adding?
             var newEntity = await _repository.AddAsync(entity.ToEntity()) ?? throw new InvalidOperationException($"Failed to add {typeof(T).Name}.");
             return _dtoFactory.CreateReadDto(newEntity);
         }
 
-        public virtual async Task<TReadDto> UpdateAsync(Guid id, T entity)
+        public virtual async Task<TReadDto?> UpdateAsync(Guid id, T entity)
         {
             // This will throw an exception if the entity does not exist
             _ = await _repository.GetByIdAsync(id) ?? throw new KeyNotFoundException($"{typeof(T).Name} with ID {id} not found.");

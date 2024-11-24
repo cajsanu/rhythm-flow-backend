@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using RhythmFlow.Application.src.DTOs.Tickets;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.Entities;
@@ -13,6 +14,14 @@ namespace RhythmFlow.Controller.src.Controllers
     [Route("api/v1/workspaces/{workspaceId}/projects/{projectId}/[controller]s")]
     public class TicketController(ITicketService service) : BaseController<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>(service)
     {
+        private readonly ITicketService _service = service;
+        public async override Task<ActionResult<IEnumerable<TicketReadDto>>> GetAll()
+        {
+            var projectId = Guid.Parse(HttpContext.GetRouteValue("projectId")?.ToString());
+            var tickets = await _service.GetAllTicketsInProjectAsync(projectId);
+            return Ok(tickets);
+        }
+
         public override async Task<ActionResult<TicketReadDto>> GetById(Guid id)
         {
             return await base.GetById(id);

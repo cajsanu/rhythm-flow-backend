@@ -35,7 +35,6 @@ namespace RhythmFlow.Controller.src.Controllers
             return Ok(entity);
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public virtual async Task<ActionResult<TReadDto>> Add([FromBody] TCreateDto entity, Guid workspaceId)
         {
