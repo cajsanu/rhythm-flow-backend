@@ -1,3 +1,4 @@
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
@@ -6,16 +7,19 @@ namespace RhythmFlow.Framework.src.Data
 {
     public static class DataSeeder
     {
+        // password is "somepassword"
+        private static readonly string Passhash = "$2a$11$2Nr99X5WZI2jTj1S4KLt9.INl4LRZwejVFdv/XegFA0cA6VhLbVFi";
+
         // Generate Users
-        private static readonly User User1 = new ("John", "Doe", "john.doe@example.com", "passwordHash");
-        private static readonly User User2 = new ("Jane", "Smith", "jane.smith@example.com", "passwordHash123");
-        private static readonly User User3 = new ("Michael", "Johnson", "michael.johnson@example.com", "securePass456");
-        private static readonly User User4 = new ("Emily", "Davis", "emily.davis@example.com", "hashedPassword789");
-        private static readonly User User5 = new ("Chris", "Brown", "chris.brown@example.com", "passHash321");
-        private static readonly User User6 = new ("Sophia", "Wilson", "sophia.wilson@example.com", "encryptedPass654");
-        private static readonly User User7 = new ("Daniel", "Martinez", "daniel.martinez@example.com", "hashedPass987");
-        private static readonly User User8 = new ("Olivia", "Garcia", "olivia.garcia@example.com", "passwordHash159");
-        private static readonly User User9 = new ("Matthew", "Anderson", "matthew.anderson@example.com", "hashPass753");
+        private static readonly User User1 = new ("John", "Doe", "john.doe@example.com", Passhash);
+        private static readonly User User2 = new ("Jane", "Smith", "jane.smith@example.com", Passhash);
+        private static readonly User User3 = new ("Michael", "Johnson", "michael.johnson@example.com", Passhash);
+        private static readonly User User4 = new ("Emily", "Davis", "emily.davis@example.com", Passhash);
+        private static readonly User User5 = new ("Chris", "Brown", "chris.brown@example.com", Passhash);
+        private static readonly User User6 = new ("Sophia", "Wilson", "sophia.wilson@example.com", Passhash);
+        private static readonly User User7 = new ("Daniel", "Martinez", "daniel.martinez@example.com", Passhash);
+        private static readonly User User8 = new ("Olivia", "Garcia", "olivia.garcia@example.com", Passhash);
+        private static readonly User User9 = new ("Matthew", "Anderson", "matthew.anderson@example.com", Passhash);
 
         // Generate Workspace
         private static readonly Workspace Workspace1 = new ("Marketing", User1.Id);

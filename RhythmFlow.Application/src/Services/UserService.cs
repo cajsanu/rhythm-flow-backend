@@ -27,6 +27,13 @@ namespace RhythmFlow.Application.src.Services
             return await base.AddAsync(createDto);
         }
 
+        public override async Task<UserReadDto> UpdateAsync(Guid id, User entity)
+        {
+            // This will throw an exception if the entity does not exist
+            entity.PasswordHash = _passwordService.HashPassword(entity.PasswordHash);
+            return await base.UpdateAsync(id, entity);
+        }
+
         public async Task<UserReadDto?> GetUserByEmailAsync(Email email)
         {
             var user = await _userRepo.GetUserByEmailAsync(email) ?? throw new KeyNotFoundException($"User with email {email} not found.");

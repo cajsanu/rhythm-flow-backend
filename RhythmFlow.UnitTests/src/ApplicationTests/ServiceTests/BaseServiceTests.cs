@@ -29,7 +29,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.ServiceTests
         public async Task GetAllAsync_ShouldReturnEntities()
         {
             // Arrange
-            var entities = new List<TestEntity> { new(), new() };
+            var entities = new List<TestEntity> { new (), new () };
             _mockRepo.Setup(repo => repo.GetAllAsync()).ReturnsAsync(entities);
 
             // Act

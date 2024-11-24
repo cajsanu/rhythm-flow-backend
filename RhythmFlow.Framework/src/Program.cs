@@ -103,6 +103,7 @@ builder.Services.AddAuthentication(options =>
 // add services for authorization requirements
 builder.Services.AddScoped<IAuthorizationHandler, WorkspaceRoleHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, UserInProjectHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, UserIsUserHandler>();
 
 // builder.Services.AddScoped<IAuthorizationRequirement, RoleInWorkspaceRequirement>();
 // builder.Services.AddScoped<IAuthorizationRequirement, UserInProjectRequirement>();
@@ -119,6 +120,7 @@ builder.Services.AddAuthorization(options =>
 
     options.AddPolicy("UserInProjectPolicy", policy =>
         policy.Requirements.Add(new UserInProjectRequirement()));
+    options.AddPolicy("UserIsUserPolicy", policy => policy.Requirements.Add(new UserIsUserRequirement()));
 });
 
 // add exception handling middleware
