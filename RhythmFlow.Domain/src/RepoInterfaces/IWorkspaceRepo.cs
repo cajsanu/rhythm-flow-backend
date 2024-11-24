@@ -4,10 +4,6 @@ namespace RhythmFlow.Domain.src.RepoInterfaces
 {
     public interface IWorkspaceRepo : IBaseRepo<Workspace>
     {
-        // Add methods for assigning a user to a workspace and removing a user from a workspace
-        // AssignUserToWorkspace()
-        // RemoveUserFromWorkspace()
-
         // Add methods for getting all workspaces owned by a user and all workspaces joined by a user
         // GetAllWorkspaceOwnedByUser()
         // GetAllWorkspaceJoinedByUser()

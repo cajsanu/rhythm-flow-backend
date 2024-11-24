@@ -22,18 +22,17 @@ namespace RhythmFlow.Application.src.Services
             {
                 throw new InvalidOperationException("No tickets found in project.");
             }
+
             return ticketsInProject.Select(_ticketDtoFactory.CreateReadDto).ToList();
         }
 
         public Task<TicketReadDto> AssignUserToEntityAsync(Guid userId, Guid ticketId)
         {
-            // CheckUserInTheProject(userId, ticketId);
             return _assignmentService.AssignUserToEntityAsync(userId, ticketId);
         }
 
         public Task<TicketReadDto> RemoveUserFromEntityAsync(Guid userId, Guid ticketId)
         {
-            // CheckUserInTheProject(userId, ticketId);
             return _assignmentService.RemoveUserFromEntityAsync(userId, ticketId);
         }
     }

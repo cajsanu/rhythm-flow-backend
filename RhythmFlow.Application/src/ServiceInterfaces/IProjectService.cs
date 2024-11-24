@@ -5,5 +5,6 @@ namespace RhythmFlow.Application.src.ServiceInterfaces
 {
     public interface IProjectService : IBaseService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>
     {
+        Task<IEnumerable<ProjectReadDto>> GetAllProjectsInWorkspaceAsync(Guid workspaceId);
     }
 }

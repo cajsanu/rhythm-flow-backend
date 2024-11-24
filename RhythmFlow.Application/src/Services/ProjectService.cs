@@ -11,7 +11,20 @@ namespace RhythmFlow.Application.src.Services
         AssignmentService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto> assignmentService,
         IDtoFactory<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto> projectDtoFactory) : BaseService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>(projectRepo, projectDtoFactory), IProjectService
     {
+        private readonly IProjectRepo _projectRepo = projectRepo;
+        private readonly IDtoFactory<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto> _projectDtoFactory = projectDtoFactory;
         private readonly AssignmentService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto> _assignmentService = assignmentService;
+
+        public async Task<IEnumerable<ProjectReadDto>> GetAllProjectsInWorkspaceAsync(Guid workspaceId)
+        {
+            var projectsInWorkspace = await _projectRepo.GetAllProjectsInWorkspaceAsync(workspaceId);
+            if (projectsInWorkspace == null || !projectsInWorkspace.Any())
+            {
+                throw new InvalidOperationException("No projects found in workspace.");
+            }
+
+            return projectsInWorkspace.Select(_projectDtoFactory.CreateReadDto).ToList();
+        }
 
         public Task<ProjectReadDto> AssignUserToEntityAsync(Guid userId, Guid ticketId)
         {

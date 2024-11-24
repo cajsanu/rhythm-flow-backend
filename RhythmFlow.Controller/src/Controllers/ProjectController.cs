@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using RhythmFlow.Application.src.DTOs.Projects;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.Entities;
@@ -10,6 +11,15 @@ namespace RhythmFlow.Controller.src.Controllers
     [Authorize(Policy = "WorkspaceDeveloperPolicy")]
     public class ProjectController(IProjectService service) : BaseController<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>(service)
     {
+        private readonly IProjectService _service = service;
+
+        public override async Task<ActionResult<IEnumerable<ProjectReadDto>>> GetAll()
+        {
+            var workspaceId = Guid.Parse(HttpContext.GetRouteValue("workspaceId")?.ToString());
+            var projects = await _service.GetAllProjectsInWorkspaceAsync(workspaceId);
+            return Ok(projects);
+        }
+
         [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
         public override async Task<ActionResult<ProjectReadDto>> Add([FromBody] ProjectCreateDto createDto, Guid workspaceId)
         {
