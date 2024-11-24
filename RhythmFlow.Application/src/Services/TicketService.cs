@@ -11,17 +11,28 @@ namespace RhythmFlow.Application.src.Services
         AssignmentService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> assignmentService,
         IDtoFactory<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> ticketDtoFactory) : BaseService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>(ticketRepository, ticketDtoFactory), ITicketService
     {
+        private readonly ITicketRepo _ticketRepo = ticketRepository;
+        private readonly IDtoFactory<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> _ticketDtoFactory = ticketDtoFactory;
         private readonly AssignmentService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> _assignmentService = assignmentService;
+
+        public async Task<IEnumerable<TicketReadDto>> GetAllTicketsInProjectAsync(Guid projectId)
+        {
+            var ticketsInProject = await _ticketRepo.GetAllTicketsInProjectAsync(projectId);
+            if (ticketsInProject == null || !ticketsInProject.Any())
+            {
+                throw new InvalidOperationException("No tickets found in project.");
+            }
+
+            return ticketsInProject.Select(_ticketDtoFactory.CreateReadDto).ToList();
+        }
 
         public Task<TicketReadDto> AssignUserToEntityAsync(Guid userId, Guid ticketId)
         {
-            // CheckUserInTheProject(userId, ticketId);
             return _assignmentService.AssignUserToEntityAsync(userId, ticketId);
         }
 
         public Task<TicketReadDto> RemoveUserFromEntityAsync(Guid userId, Guid ticketId)
         {
-            // CheckUserInTheProject(userId, ticketId);
             return _assignmentService.RemoveUserFromEntityAsync(userId, ticketId);
         }
     }
