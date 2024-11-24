@@ -52,6 +52,7 @@ namespace RhythmFlow.Controller.src.Controllers
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult> Delete(Guid id)
         {
+            Console.WriteLine("Delete called with id: " + id);
             await _service.DeleteAsync(id);
             return NoContent();
         }
