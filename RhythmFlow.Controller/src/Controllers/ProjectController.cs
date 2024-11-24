@@ -39,17 +39,19 @@ namespace RhythmFlow.Controller.src.Controllers
         }
 
         [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
-        [HttpPost("assignUser/{userId}")]
-        public async Task<ActionResult> AssignUserToProject(Guid userId)
+        [HttpPost("{projectId}/users/{userId}")]
+        public async Task<ActionResult<ProjectReadDto>> AssignUserToProject(Guid userId, Guid projectId)
         {
-            throw new NotImplementedException();
+            var projectReadDto = await _service.AssignUserToProjectAsync(userId, projectId);
+            return Ok(projectReadDto);
         }
 
         [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
-        [HttpDelete("removeUser/{userId}")]
-        public async Task<ActionResult> RemoveUserFromProject(Guid userId)
+        [HttpDelete("{projectId}/users/{userId}")]
+        public async Task<ActionResult<ProjectReadDto>> RemoveUserFromProject(Guid userId, Guid projectId)
         {
-            throw new NotImplementedException();
+            var projectReadDto = await _service.RemoveUserFromProjectAsync(userId, projectId);
+            return Ok(projectReadDto);
         }
     }
 }

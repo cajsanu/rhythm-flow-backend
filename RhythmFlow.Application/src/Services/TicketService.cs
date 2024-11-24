@@ -26,14 +26,14 @@ namespace RhythmFlow.Application.src.Services
             return ticketsInProject.Select(_ticketDtoFactory.CreateReadDto).ToList();
         }
 
-        public Task<TicketReadDto> AssignUserToTicketAsync(Guid userId, Guid ticketId)
+        public async Task<TicketReadDto> AssignUserToTicketAsync(Guid userId, Guid ticketId)
         {
-            return _assignmentService.AssignUserToEntityAsync(userId, ticketId);
+            return await _assignmentService.AssignUserToEntityAsync(userId, ticketId);
         }
 
-        public Task<TicketReadDto> RemoveUserFromTicketAsync(Guid userId, Guid ticketId)
+        public async Task<TicketReadDto> RemoveUserFromTicketAsync(Guid userId, Guid ticketId)
         {
-            return _assignmentService.RemoveUserFromEntityAsync(userId, ticketId);
+            return await _assignmentService.RemoveUserFromEntityAsync(userId, ticketId);
         }
     }
 }
