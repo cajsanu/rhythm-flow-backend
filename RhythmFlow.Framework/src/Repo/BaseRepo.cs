@@ -11,7 +11,7 @@ namespace RhythmFlow.Framework.src.Repo
         private readonly AppDbContext _context = context;
         private readonly DbSet<T> _dbSet = context.Set<T>();
 
-        public async Task<T> AddAsync(T entity)
+        public virtual async Task<T> AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
             await _context.SaveChangesAsync();
