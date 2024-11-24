@@ -45,7 +45,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             _mockDtoFactory.Setup(factory => factory.CreateReadDto(ticket)).Returns(dto);
 
             // Act
-            var result = await _service.AssignUserToEntityAsync(userId, ticketId);
+            var result = await _service.AssignUserToTicketAsync(userId, ticketId);
 
             // Assert
             Assert.Equal(ticketId, result.Id);
@@ -66,7 +66,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             _mockDtoFactory.Setup(factory => factory.CreateReadDto(ticket)).Returns(dto);
 
             // Act
-            var result = await _service.RemoveUserFromEntityAsync(userId, ticketId);
+            var result = await _service.RemoveUserFromTicketAsync(userId, ticketId);
 
             // Assert
             Assert.Equal(ticket.Id, result.Id);
