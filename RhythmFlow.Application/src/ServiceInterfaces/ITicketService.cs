@@ -5,6 +5,6 @@ namespace RhythmFlow.Application.src.ServiceInterfaces
 {
     public interface ITicketService : IBaseService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>
     {
-        public Task<IEnumerable<TicketReadDto>> GetAllTicketsInProjectAsync(Guid projectId);
+        Task<IEnumerable<TicketReadDto>> GetAllTicketsInProjectAsync(Guid projectId);
     }
 }
