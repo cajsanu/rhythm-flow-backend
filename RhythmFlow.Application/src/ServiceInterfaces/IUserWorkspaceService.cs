@@ -7,6 +7,6 @@ namespace RhythmFlow.Application.src.ServiceInterfaces
     {
         // Method to get the user's role in a workspace
         Task<Role> GetUserRoleInWorkspaceAsync(Guid userId, Guid workspaceId);
-        Task<UserWorkspaceReadDto> AssignUserRoleInWorkspaceAsync(UserWorkspaceCreateDto userWorkspaceUpdateDto);
+        Task<UserWorkspaceReadDto> AssignUserRoleInWorkspaceAsync(UserWorkspaceCreateDto userWorkspaceCreateDto);
     }
 }
