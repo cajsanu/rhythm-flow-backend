@@ -44,7 +44,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
             _mockUserService.Setup(service => service.GetByIdAsync(userId)).Returns(Task.FromResult(userDto));
 
             var routeData = new RouteData();
-            routeData.Values["userId"] = userId.ToString();
+            routeData.Values["id"] = userId.ToString();
             var httpContext = new DefaultHttpContext();
             httpContext.Features.Set<IRoutingFeature>(new RoutingFeature { RouteData = routeData });
             _mockHttpContextAccessor.Setup(accessor => accessor.HttpContext).Returns(httpContext);
@@ -54,6 +54,36 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
 
             // Assert
             Assert.True(context.HasSucceeded);
+        }
+
+        [Fact]
+        public async Task HandleRequirementAsync_UserIsIUser_ShouldFaill()
+        {
+            // Arrange
+            var userId = Guid.NewGuid();
+            var user = new User("Test", "User", "test@example.com", "hashedPassword") { Id = userId };
+            Assert.Equal(userId, user.Id);
+            var targetUser = new ClaimsPrincipal(new ClaimsIdentity(
+            [
+                new (ClaimTypes.NameIdentifier, Guid.NewGuid().ToString())
+            ]));
+            var requirement = new UserIsUserRequirement();
+            var context = new AuthorizationHandlerContext([requirement], targetUser, userId);
+
+            var userDto = _userDtoFactoryForArranging.CreateReadDto(user);
+            _mockUserService.Setup(service => service.GetByIdAsync(userId)).Returns(Task.FromResult(userDto));
+
+            var routeData = new RouteData();
+            routeData.Values["id"] = userId.ToString();
+            var httpContext = new DefaultHttpContext();
+            httpContext.Features.Set<IRoutingFeature>(new RoutingFeature { RouteData = routeData });
+            _mockHttpContextAccessor.Setup(accessor => accessor.HttpContext).Returns(httpContext);
+
+            // Act
+            await _handler.HandleAsync(context);
+
+            // Assert
+            Assert.False(context.HasSucceeded);
         }
     }
 }

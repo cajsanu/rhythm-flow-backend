@@ -11,14 +11,14 @@ namespace RhythmFlow.Controller.src.Controllers
     public class UserController(IUserService service) : BaseController<User, UserReadDto, UserCreateDto, UserUpdateDto>(service)
     {
         [Authorize(Policy = "UserIsUserPolicy")]
-        [HttpDelete("{userId}")]
+        [HttpDelete("{id}")] // this part here has to match the one in base for it to work correctly (i.e HttpPut("{userId}") will not work)
         public override async Task<ActionResult> Delete(Guid id)
         {
             return await base.Delete(id);
         }
 
         [Authorize(Policy = "UserIsUserPolicy")]
-        [HttpPut("{userId}")]
+        [HttpPut("{id}")]
         public override async Task<ActionResult> Update(Guid id, [FromBody] UserUpdateDto updateDto)
         {
             return await base.Update(id, updateDto);
