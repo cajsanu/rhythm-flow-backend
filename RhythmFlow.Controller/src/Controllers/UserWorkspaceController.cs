@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RhythmFlow.Application.src.DTOs.UserWorkspaces;
 using RhythmFlow.Application.src.ServiceInterfaces;
 
 namespace RhythmFlow.Controller.src.Controllers
@@ -10,10 +11,10 @@ namespace RhythmFlow.Controller.src.Controllers
     [ApiController]
     public class UserWorkspaceController(IUserWorkspaceService service)
     {
-        [HttpGet("{userId}")]
-        public async Task<ActionResult> AddUserToWorkspace(Guid userId)
+        [HttpPost]
+        public async Task<ActionResult<UserWorkspaceReadDto>> AddUserToWorkspace([FromBody] UserWorkspaceCreateDto addUserToWorkspaceDto)
         {
-            throw new NotImplementedException();
+            return await service.AssignUserRoleInWorkspaceAsync(addUserToWorkspaceDto);
         }
     }
 }
