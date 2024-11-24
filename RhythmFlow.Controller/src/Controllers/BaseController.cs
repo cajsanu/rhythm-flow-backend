@@ -21,7 +21,6 @@ namespace RhythmFlow.Controller.src.Controllers
         // ASP automatically removes the Async from action name by default so we should avoid naming functions in controller with suffix Async to avoid 3am confusions
         private readonly IBaseService<T, TReadDto, TCreateDto, TUpdateDto> _service = service;
 
-        [AllowAnonymous]
         [HttpGet]
         public virtual async Task<ActionResult<IEnumerable<TReadDto>>> GetAll()
         {
@@ -29,7 +28,6 @@ namespace RhythmFlow.Controller.src.Controllers
             return Ok(entities);
         }
 
-        [AllowAnonymous]
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<TReadDto>> GetById(Guid id)
         {

@@ -17,12 +17,13 @@ namespace RhythmFlow.Application.src.Authorization.Handlers
         {
             // Extract target user ID from route data
             var routeData = _httpContextAccessor.HttpContext?.GetRouteData();
-            if (routeData == null || !routeData.Values.TryGetValue("id", out var targetUserIdValue)
+            if (routeData == null || !routeData.Values.TryGetValue("userId", out var targetUserIdValue)
                 || !Guid.TryParse(targetUserIdValue?.ToString(), out var targetUserId))
             {
                 context.Fail();
                 return;
             }
+            Console.WriteLine(targetUserId);
 
             // Get user ID from the claims
             if (!Guid.TryParse(context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var userId))
@@ -30,6 +31,7 @@ namespace RhythmFlow.Application.src.Authorization.Handlers
                 context.Fail();
                 return;
             }
+            Console.WriteLine(userId);
 
             // validate for user Existence
             var user = await _userService.GetByIdAsync(userId);
@@ -40,13 +42,13 @@ namespace RhythmFlow.Application.src.Authorization.Handlers
             }
 
             // Validate if the user is the same as target user
-            if (targetUserId != userId)
+            if (targetUserId == userId)
             {
-                context.Fail();
+                context.Succeed(requirement);
             }
             else
             {
-                context.Succeed(requirement);
+                context.Fail();
             }
         }
     }

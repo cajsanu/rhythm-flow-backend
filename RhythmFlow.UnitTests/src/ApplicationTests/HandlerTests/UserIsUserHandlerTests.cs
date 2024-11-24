@@ -44,7 +44,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
             _mockUserService.Setup(service => service.GetByIdAsync(userId)).Returns(Task.FromResult(userDto));
 
             var routeData = new RouteData();
-            routeData.Values["id"] = userId.ToString();
+            routeData.Values["userId"] = userId.ToString();
             var httpContext = new DefaultHttpContext();
             httpContext.Features.Set<IRoutingFeature>(new RoutingFeature { RouteData = routeData });
             _mockHttpContextAccessor.Setup(accessor => accessor.HttpContext).Returns(httpContext);
