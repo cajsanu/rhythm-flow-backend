@@ -20,14 +20,14 @@ namespace RhythmFlow.Controller.src.Controllers
         private readonly IBaseService<T, TReadDto, TCreateDto, TUpdateDto> _service = service;
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TReadDto>>> GetAll()
+        public virtual async Task<ActionResult<IEnumerable<TReadDto>>> GetAll()
         {
             var entities = await _service.GetAllAsync();
             return Ok(entities);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TReadDto>> GetById(Guid id)
+        public virtual async Task<ActionResult<TReadDto>> GetById(Guid id)
         {
             var entity = await _service.GetByIdAsync(id);
             return Ok(entity);

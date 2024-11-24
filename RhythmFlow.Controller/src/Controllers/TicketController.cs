@@ -13,6 +13,11 @@ namespace RhythmFlow.Controller.src.Controllers
     [Route("api/v1/workspaces/{workspaceId}/projects/{projectId}/[controller]s")]
     public class TicketController(ITicketService service) : BaseController<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>(service)
     {
+        public override async Task<ActionResult<TicketReadDto>> GetById(Guid id)
+        {
+            return await base.GetById(id);
+        }
+
         public override async Task<ActionResult<TicketReadDto>> Add([FromBody] TicketCreateDto createDto, Guid workspaceId)
         {
             return await base.Add(createDto, workspaceId);
