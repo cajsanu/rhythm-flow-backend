@@ -8,10 +8,10 @@ namespace RhythmFlow.Framework.src.Repo
     {
         private readonly AppDbContext _context = context;
 
-        public Task<IEnumerable<Ticket>> GetAllTicketsInProjectAsync(Guid projectId)
+        public async Task<IEnumerable<Ticket>> GetAllTicketsInProjectAsync(Guid projectId)
         {
             var ticketsInProject = _context.Tickets.Where(t => t.ProjectId == projectId);
-            return Task.FromResult(ticketsInProject);
+            return await Task.FromResult(ticketsInProject);
         }
     }
 }

@@ -8,10 +8,10 @@ namespace RhythmFlow.Framework.src.Repo
     {
         private readonly AppDbContext _context = context;
 
-        public override Task<IEnumerable<Project>> GetAllAsync(Guid workspaceId)
-        {
-            var projectsInWorkspace = _context.Projects.Where(p => p.WorkspaceId == workspaceId);
-            return Task.FromResult(projectsInWorkspace);
-        }
+        // public override Task<IEnumerable<Project>> GetAllAsync()
+        // {
+        //     var projectsInWorkspace = _context.Projects.Where(p => p.WorkspaceId == workspaceId);
+        //     return Task.FromResult(projectsInWorkspace);
+        // }
     }
 }
