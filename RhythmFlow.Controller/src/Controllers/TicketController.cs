@@ -27,9 +27,9 @@ namespace RhythmFlow.Controller.src.Controllers
             return await base.GetById(id);
         }
 
-        public override async Task<ActionResult<TicketReadDto>> Add([FromBody] TicketCreateDto createDto, Guid workspaceId)
+        public override async Task<ActionResult<TicketReadDto>> Add([FromBody] TicketCreateDto createDto)
         {
-            return await base.Add(createDto, workspaceId);
+            return await base.Add(createDto);
         }
 
         public override async Task<ActionResult> Delete(Guid id)
@@ -42,16 +42,18 @@ namespace RhythmFlow.Controller.src.Controllers
             return await base.Update(id, updateDto);
         }
 
-        [HttpPost("assignUser/{userId}")]
-        public async Task<ActionResult> AssignUserToTicket(Guid userId)
+        [HttpPost("{ticketId}/users/{userId}")]
+        public async Task<ActionResult<TicketReadDto>> AssignUserToTicket(Guid userId, Guid ticketId)
         {
-            throw new NotImplementedException();
+            var ticketReadDto = await _service.AssignUserToTicketAsync(userId, Guid.Parse(HttpContext.GetRouteValue("id")?.ToString()));
+            return Ok(ticketReadDto);
         }
 
-        [HttpDelete("removeUser/{userId}")]
-        public async Task<ActionResult> RemoveUserFromTicket(Guid userId)
+        [HttpDelete("{ticketId}/users/{userId}")]
+        public async Task<ActionResult<TicketReadDto>> RemoveUserFromTicket(Guid userId, Guid ticketId)
         {
-            throw new NotImplementedException();
+            var ticketReadDto = await _service.RemoveUserFromTicketAsync(userId, ticketId);
+            return Ok(ticketReadDto);
         }
     }
 }

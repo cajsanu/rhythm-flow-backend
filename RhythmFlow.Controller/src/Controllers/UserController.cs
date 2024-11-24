@@ -11,9 +11,9 @@ namespace RhythmFlow.Controller.src.Controllers
     public class UserController(IUserService service) : BaseController<User, UserReadDto, UserCreateDto, UserUpdateDto>(service)
     {
         [AllowAnonymous]
-        public override async Task<ActionResult<UserReadDto>> Add([FromBody] UserCreateDto entity, Guid workspaceId)
+        public override async Task<ActionResult<UserReadDto>> Add([FromBody] UserCreateDto entity)
         {
-            return await base.Add(entity, workspaceId);
+            return await base.Add(entity);
         }
     }
 }

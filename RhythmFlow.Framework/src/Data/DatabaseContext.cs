@@ -66,10 +66,9 @@ namespace RhythmFlow.Framework.src.Data
 
         public UserWorkspace? GetUserWorkspaceByUserIdAndWorkspaceId(Guid userId, Guid workspaceId)
         {
-            Console.WriteLine($"userId: {userId}, workspaceId: {workspaceId}");
-
             return UserWorkspaces.FirstOrDefault(uw => uw.UserId == userId && uw.WorkspaceId == workspaceId);
         }
+
         public IEnumerable<Workspace> GetWorkspacesJoinedByUserId(Guid userId)
         {
             var userWorkspaces = UserWorkspaces.Where(uw => uw.UserId == userId).ToList();

@@ -34,12 +34,12 @@ namespace RhythmFlow.Controller.src.Controllers
         }
 
         [HttpPost]
-        public virtual async Task<ActionResult<TReadDto>> Add([FromBody] TCreateDto entity, Guid workspaceId)
+        public virtual async Task<ActionResult<TReadDto>> Add([FromBody] TCreateDto entity)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var createdEntity = await _service.AddAsync(entity);
-            return CreatedAtAction(nameof(GetById), new { id = createdEntity.Id, workspaceId }, createdEntity);
+            return createdEntity;
         }
 
         [HttpPut("{id}")]
@@ -52,6 +52,7 @@ namespace RhythmFlow.Controller.src.Controllers
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult> Delete(Guid id)
         {
+            Console.WriteLine("Delete called with id: " + id);
             await _service.DeleteAsync(id);
             return NoContent();
         }

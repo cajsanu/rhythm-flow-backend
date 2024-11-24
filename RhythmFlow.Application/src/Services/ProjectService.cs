@@ -18,22 +18,22 @@ namespace RhythmFlow.Application.src.Services
         public async Task<IEnumerable<ProjectReadDto>> GetAllProjectsInWorkspaceAsync(Guid workspaceId)
         {
             var projectsInWorkspace = await _projectRepo.GetAllProjectsInWorkspaceAsync(workspaceId);
-            if (projectsInWorkspace == null || !projectsInWorkspace.Any())
+            if (projectsInWorkspace == null)
             {
-                throw new InvalidOperationException("No projects found in workspace.");
+                return [];
             }
 
             return projectsInWorkspace.Select(_projectDtoFactory.CreateReadDto).ToList();
         }
 
-        public Task<ProjectReadDto> AssignUserToEntityAsync(Guid userId, Guid ticketId)
+        public async Task<ProjectReadDto> AssignUserToProjectAsync(Guid userId, Guid projectId)
         {
-            return _assignmentService.AssignUserToEntityAsync(userId, ticketId);
+            return await _assignmentService.AssignUserToEntityAsync(userId, projectId);
         }
 
-        public Task<ProjectReadDto> RemoveUserFromEntityAsync(Guid userId, Guid ticketId)
+        public async Task<ProjectReadDto> RemoveUserFromProjectAsync(Guid userId, Guid projectId)
         {
-            return _assignmentService.RemoveUserFromEntityAsync(userId, ticketId);
+            return await _assignmentService.RemoveUserFromEntityAsync(userId, projectId);
         }
     }
 }
