@@ -28,6 +28,7 @@ namespace RhythmFlow.Framework.src.Repo
                 var userWorkspace = new UserWorkspace(userId, workspaceId, role);
                 await _userWorkspaces.AddAsync(userWorkspace);
             }
+
             await _context.SaveChangesAsync();
             return existingUserWorkspace;
         }

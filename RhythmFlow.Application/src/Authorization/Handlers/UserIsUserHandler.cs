@@ -17,7 +17,7 @@ namespace RhythmFlow.Application.src.Authorization.Handlers
         {
             // Extract target user ID from route data
             var routeData = _httpContextAccessor.HttpContext?.GetRouteData();
-            if (routeData == null || !routeData.Values.TryGetValue("userId", out var targetUserIdValue)
+            if (routeData == null || !routeData.Values.TryGetValue("id", out var targetUserIdValue)
                 || !Guid.TryParse(targetUserIdValue?.ToString(), out var targetUserId))
             {
                 context.Fail();
