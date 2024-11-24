@@ -21,9 +21,9 @@ namespace RhythmFlow.Controller.src.Controllers
         }
 
         [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
-        public override async Task<ActionResult<ProjectReadDto>> Add([FromBody] ProjectCreateDto createDto, Guid workspaceId)
+        public override async Task<ActionResult<ProjectReadDto>> Add([FromBody] ProjectCreateDto createDto)
         {
-            return await base.Add(createDto, workspaceId);
+            return await base.Add(createDto);
         }
 
         [Authorize(Policy = "WorkspaceProjectManagerPolicy")]

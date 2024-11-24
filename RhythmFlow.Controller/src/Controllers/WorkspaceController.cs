@@ -25,18 +25,20 @@ namespace RhythmFlow.Controller.src.Controllers
 
             var result = await base.Add(createDto);
 
-            if (result.Result is not CreatedAtActionResult)
+            if (result.Value == null)
                 return result;
-            
+
+            var createdWorkspace = result.Value;
+
             // If creation succeeded, assign the user who created the workspace as the owner of the workspace
             _ = _userWorkspaceService.AssignUserRoleInWorkspaceAsync(new UserWorkspaceCreateDto
             {
                 UserId = Guid.Parse(userId),
-                WorkspaceId = result.Value.Id,
+                WorkspaceId = createdWorkspace.Id,
                 Role = Role.WorkspaceOwner
             });
 
-            return result;
+            return CreatedAtAction(nameof(GetById), new { id = createdWorkspace.Id }, createdWorkspace);
         }
 
         [Authorize(Policy = "WorkspaceOwnerPolicy")]

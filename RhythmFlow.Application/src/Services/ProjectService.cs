@@ -18,9 +18,9 @@ namespace RhythmFlow.Application.src.Services
         public async Task<IEnumerable<ProjectReadDto>> GetAllProjectsInWorkspaceAsync(Guid workspaceId)
         {
             var projectsInWorkspace = await _projectRepo.GetAllProjectsInWorkspaceAsync(workspaceId);
-            if (projectsInWorkspace == null || !projectsInWorkspace.Any())
+            if (projectsInWorkspace == null)
             {
-                throw new InvalidOperationException("No projects found in workspace.");
+                return [];
             }
 
             return projectsInWorkspace.Select(_projectDtoFactory.CreateReadDto).ToList();
