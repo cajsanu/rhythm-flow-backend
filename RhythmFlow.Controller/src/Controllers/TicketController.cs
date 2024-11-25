@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using RhythmFlow.Application.src.DTOs.Tickets;
+using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.Entities;
 
@@ -40,6 +41,13 @@ namespace RhythmFlow.Controller.src.Controllers
         public override async Task<ActionResult> Update(Guid id, [FromBody] TicketUpdateDto updateDto)
         {
             return await base.Update(id, updateDto);
+        }
+
+        [HttpGet("{ticketId}/users")]
+        public async Task<ActionResult<IEnumerable<UserReadDto>>> GetAllUsersInTicket(Guid ticketId)
+        {
+            var users = await _service.GetAllUsersInTicketAsync(ticketId);
+            return Ok(users);
         }
 
         [HttpPost("{ticketId}/users/{userId}")]

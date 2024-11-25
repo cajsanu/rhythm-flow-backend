@@ -31,13 +31,13 @@ namespace RhythmFlow.Application.src.Services
         public async Task<IEnumerable<UserReadDto>> GetAllUsersInProjectAsync(Guid projectId)
         {
             var project = await _projectRepo.GetByIdAsync(projectId) ?? throw new InvalidOperationException("Project not found");
-            var users = project.Users.Select(_userDtoFactory.CreateReadDto).ToList();
+            var users = project.Users;
             if (users.Count == 0)
             {
                 return [];
             }
 
-            return users;
+            return users.Select(_userDtoFactory.CreateReadDto).ToList();
         }
 
         public async Task<ProjectReadDto> AssignUserToProjectAsync(Guid userId, Guid projectId)

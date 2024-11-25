@@ -1,4 +1,5 @@
 using RhythmFlow.Application.src.DTOs.Tickets;
+using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Application.src.FactoryInterfaces;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.Entities;
@@ -9,10 +10,11 @@ namespace RhythmFlow.Application.src.Services
     public class TicketService(
         ITicketRepo ticketRepository,
         AssignmentService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> assignmentService,
-        IDtoFactory<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> ticketDtoFactory) : BaseService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>(ticketRepository, ticketDtoFactory), ITicketService
+        IDtoFactory<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> ticketDtoFactory, IDtoFactory<User, UserReadDto, UserCreateDto, UserUpdateDto> userDtoFactory) : BaseService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>(ticketRepository, ticketDtoFactory), ITicketService
     {
         private readonly ITicketRepo _ticketRepo = ticketRepository;
         private readonly IDtoFactory<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> _ticketDtoFactory = ticketDtoFactory;
+        private readonly IDtoFactory<User, UserReadDto, UserCreateDto, UserUpdateDto> _userDtoFactory = userDtoFactory;
         private readonly AssignmentService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> _assignmentService = assignmentService;
 
         public async Task<IEnumerable<TicketReadDto>> GetAllTicketsInProjectAsync(Guid projectId)
@@ -24,6 +26,18 @@ namespace RhythmFlow.Application.src.Services
             }
 
             return ticketsInProject.Select(_ticketDtoFactory.CreateReadDto).ToList();
+        }
+
+        public async Task<IEnumerable<UserReadDto>> GetAllUsersInTicketAsync(Guid ticketId)
+        {
+            var ticket = await _ticketRepo.GetByIdAsync(ticketId) ?? throw new InvalidOperationException("Ticket not found.");
+            var users = ticket.Users;
+            if (users.Count == 0)
+            {
+                return [];
+            }
+
+            return users.Select(_userDtoFactory.CreateReadDto).ToList();
         }
 
         public async Task<TicketReadDto> AssignUserToTicketAsync(Guid userId, Guid ticketId)
