@@ -33,7 +33,6 @@ namespace RhythmFlow.UnitTests.src.RepoTests
             await workspaceRepo.AddAsync(testWorkspace);
             var userWorkSpace = await userWorkspaceRepo.AssignRoleToUserInWorkspace(user2.Id, testWorkspace.Id, Role.Developer);
             await context.SaveChangesAsync();
-         //   Assert.Equal(Role.Developer.ToString(), userWorkSpace.Role.ToString());
         }
 
        [Fact]
@@ -53,11 +52,33 @@ namespace RhythmFlow.UnitTests.src.RepoTests
             await workspaceRepo.AddAsync(testWorkspace2);
             await userWorkspaceRepo.AssignRoleToUserInWorkspace(user2.Id, testWorkspace.Id, Role.WorkspaceOwner);
             await userWorkspaceRepo.AssignRoleToUserInWorkspace(user2.Id, testWorkspace2.Id, Role.WorkspaceOwner);
-
+            await userWorkspaceRepo.AssignRoleToUserInWorkspace(user1.Id, testWorkspace.Id, Role.Developer);
             await context.SaveChangesAsync();
             var result = await userWorkspaceRepo.GetWorkspacesOwnedByUserAsync(user2.Id);
 
             Assert.Equal(2, result.Count());
-        } 
+            Assert.Equal(testWorkspace.OwnerId, result.First().OwnerId);
+        }
+
+       [Fact]
+       public async Task GetUserWorkspaceByUserIdAndWorkspaceIdAsync_ShouldReturnUserWorkspaceByUserIdAndWorkspaceId()
+        {
+            using var context = CreateInMemoryDbContextOptions();
+            var user1 = new TestUser("Jones", "Pence", "joneus@pence.com", "fdgfsfds213!");
+            var user2 = new TestUser("Monsi", "Phonsi", "jones@pence.com", "fdgfsfds213!");
+            var testWorkspace = new TestWorkSpace("Health", user2.Id);
+            var workspaceRepo = new BaseRepo<Workspace>(context);
+            var userRepo = new BaseRepo<User>(context);
+            var userWorkspaceRepo = new UserWorkspaceRepo(context);
+            await userRepo.AddAsync(user1);
+            await userRepo.AddAsync(user2);
+            await workspaceRepo.AddAsync(testWorkspace);
+            await userWorkspaceRepo.AssignRoleToUserInWorkspace(user1.Id, testWorkspace.Id, Role.Developer);
+            await context.SaveChangesAsync();
+            var result = await userWorkspaceRepo.GetAllUserWorkspacesByUserIdAsync(user1.Id);
+
+            Assert.NotNull(result);
+            Assert.Single(result);
+        }
     }
 }
