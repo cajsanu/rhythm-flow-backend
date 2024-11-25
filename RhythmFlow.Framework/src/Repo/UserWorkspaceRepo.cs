@@ -47,6 +47,12 @@ namespace RhythmFlow.Framework.src.Repo
             return Task.FromResult(userWorkspace);
         }
 
+        public Task<IEnumerable<User>> GetAllUsersInWorkspaceAsync(Guid workspaceId)
+        {
+            var users = _context.GetUsersInWorkspace(workspaceId);
+            return Task.FromResult(users);
+        }
+
         public Task<IEnumerable<Workspace>> GetWorkspacesOwnedByUserAsync(Guid workspaceId)
         {
             var workspaces = _context.GetWorkspacesOwnedByUser(workspaceId);
