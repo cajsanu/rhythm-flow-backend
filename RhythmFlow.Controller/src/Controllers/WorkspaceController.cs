@@ -64,7 +64,7 @@ namespace RhythmFlow.Controller.src.Controllers
         }
 
         [Authorize(Policy = "WorkspaceOwnerPolicy")]
-        [HttpDelete("{id}")] // id here is workspace id
+        [HttpDelete("{workspaceId}")] // id here is workspace id
         public override async Task<ActionResult> Delete(Guid id)
         {
             Console.WriteLine("Delete called with id: " + id);
@@ -72,7 +72,7 @@ namespace RhythmFlow.Controller.src.Controllers
         }
 
         [Authorize(Policy = "WorkspaceOwnerPolicy")]
-        [HttpPut("{id}")]
+        [HttpPut("{workspaceId}")]
         public override async Task<ActionResult> Update(Guid id, [FromBody] WorkspaceUpdateDto updateDto)
         {
             return await base.Update(id, updateDto);
