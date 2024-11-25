@@ -20,16 +20,12 @@ namespace RhythmFlow.Framework.src.Data
             // more here: https://stackoverflow.com/questions/78836133/net-entity-framework-core-database-update-fails-with-host-cant-be-null
             if (!optionsBuilder.IsConfigured) // Only configure if no options are already provided
             {
-                var _configuration = new ConfigurationBuilder()
-                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                    .AddJsonFile("appsettings.json")
-                    .Build();
-
+                var _configuration = new ConfigurationBuilder().SetBasePath(AppDomain.CurrentDomain.BaseDirectory).AddJsonFile("appsettings.json").Build();
                 optionsBuilder
-                    .UseNpgsql(_configuration.GetConnectionString("DefaultConnection"))
-                    .EnableDetailedErrors() // not in production
-                    .EnableSensitiveDataLogging() // not in production
-                    .UseSnakeCaseNamingConvention();
+                .UseNpgsql(_configuration.GetConnectionString("DefaultConnection"))
+                .EnableDetailedErrors() // not in production
+                .EnableSensitiveDataLogging() // not in production
+                .UseSnakeCaseNamingConvention();
             }
         }
 
