@@ -40,7 +40,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests
             var context = new AuthorizationHandlerContext([requirement], user, workspaceId);
 
             var routeData = new RouteData();
-            routeData.Values["workspaceId"] = workspaceId.ToString();
+            routeData.Values["id"] = workspaceId.ToString();
             var httpContext = new DefaultHttpContext();
             httpContext.Features.Set<IRoutingFeature>(new RoutingFeature { RouteData = routeData });
             _mockHttpContextAccessor.Setup(accessor => accessor.HttpContext).Returns(httpContext);

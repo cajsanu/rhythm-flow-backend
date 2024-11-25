@@ -17,7 +17,7 @@ namespace RhythmFlow.Application.src.Authorization.Handlers
         {
             // Extract workspace ID from route data
             var routeData = _httpContextAccessor.HttpContext?.GetRouteData();
-            if (routeData == null || !routeData.Values.TryGetValue("workspaceId", out var workspaceIdValue)
+            if (routeData == null || !routeData.Values.TryGetValue("id", out var workspaceIdValue)
                 || !Guid.TryParse(workspaceIdValue?.ToString(), out var workspaceId))
             {
                 context.Fail();

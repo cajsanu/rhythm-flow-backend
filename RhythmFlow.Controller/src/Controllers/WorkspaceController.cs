@@ -51,13 +51,13 @@ namespace RhythmFlow.Controller.src.Controllers
         }
 
         // Since all workspaces and all users are public information this should be ok to be exposed to the public
-        [HttpGet("/ownedby/userId")]
+        [HttpGet("ownedby/userId")]
         public async Task<ActionResult<IEnumerable<WorkspaceCreateDto>>> GetWorkspacesOwnedByUser(Guid userId)
         {
             return Ok(await service.GetAllWorkspaceOwnedByUser(userId));
         }
 
-        [HttpGet("/joinedby/userId")]
+        [HttpGet("joinedby/userId")]
         public async Task<ActionResult<IEnumerable<WorkspaceCreateDto>>> GetWorkspacesJoinedByUser(Guid userId)
         {
             return Ok(await service.GetAllWorkspaceJoinedByUser(userId));
