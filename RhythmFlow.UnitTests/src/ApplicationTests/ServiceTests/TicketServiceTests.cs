@@ -1,6 +1,6 @@
 using Moq;
 using RhythmFlow.Application.src.DTOs.Tickets;
-using RhythmFlow.Application.src.Factories;
+using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Application.src.FactoryInterfaces;
 using RhythmFlow.Application.src.Services;
 using RhythmFlow.Domain.src.Entities;
@@ -13,7 +13,8 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
     public class TicketServiceTests
     {
         private readonly Mock<ITicketRepo> _mockTicketRepo;
-        private readonly Mock<IDtoFactory<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>> _mockDtoFactory;
+        private readonly Mock<IDtoFactory<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>> _mockTicketDtoFactory;
+        private readonly Mock<IDtoFactory<User, UserReadDto, UserCreateDto, UserUpdateDto>> _mockUserDtoFactory;
         private readonly Mock<IUserRepo> _mockUserRepo;
         private readonly AssignmentService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> _serviceAssignment;
         private readonly TicketService _service;
@@ -21,14 +22,15 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
         public TicketServiceTests()
         {
             _mockTicketRepo = new Mock<ITicketRepo>();
-            _mockDtoFactory = new Mock<IDtoFactory<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>>();
+            _mockTicketDtoFactory = new Mock<IDtoFactory<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>>();
+            _mockUserDtoFactory = new Mock<IDtoFactory<User, UserReadDto, UserCreateDto, UserUpdateDto>>();
             _mockUserRepo = new Mock<IUserRepo>();
             _serviceAssignment = new AssignmentService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>(
                 _mockUserRepo.Object,
                 _mockTicketRepo.Object,
-                _mockDtoFactory.Object
+                _mockTicketDtoFactory.Object
             );
-            _service = new TicketService(_mockTicketRepo.Object, _serviceAssignment, new TicketDtoFactory());
+            _service = new TicketService(_mockTicketRepo.Object, _serviceAssignment, _mockTicketDtoFactory.Object, _mockUserDtoFactory.Object);
         }
 
         [Fact]
@@ -42,7 +44,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             var dto = new TestTicketReadDto { Id = ticket.Id };
             _mockUserRepo.Setup(repo => repo.GetByIdAsync(userId)).ReturnsAsync(user);
             _mockTicketRepo.Setup(repo => repo.GetByIdAsync(ticketId)).ReturnsAsync(ticket);
-            _mockDtoFactory.Setup(factory => factory.CreateReadDto(ticket)).Returns(dto);
+            _mockTicketDtoFactory.Setup(factory => factory.CreateReadDto(ticket)).Returns(dto);
 
             // Act
             var result = await _service.AssignUserToTicketAsync(userId, ticketId);
@@ -63,7 +65,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             var dto = new TestTicketReadDto { Id = ticket.Id };
             _mockUserRepo.Setup(repo => repo.GetByIdAsync(userId)).ReturnsAsync(user);
             _mockTicketRepo.Setup(repo => repo.GetByIdAsync(ticketId)).ReturnsAsync(ticket);
-            _mockDtoFactory.Setup(factory => factory.CreateReadDto(ticket)).Returns(dto);
+            _mockTicketDtoFactory.Setup(factory => factory.CreateReadDto(ticket)).Returns(dto);
 
             // Act
             var result = await _service.RemoveUserFromTicketAsync(userId, ticketId);
