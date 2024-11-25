@@ -34,8 +34,14 @@ builder.Services.AddSwaggerGen();
 // Configure lowercase URLs
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
-// builder.Services.AddSingleton<AppDbContext>();
-builder.Services.AddDbContext<AppDbContext>();
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options
+        .UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+        .EnableDetailedErrors(builder.Configuration.GetValue<bool>("DetailedErrors", false)) // Optional default to false
+        .EnableSensitiveDataLogging(builder.Configuration.GetValue<bool>("SensitiveDataLogging", false)) // Optional default to false
+        .UseSnakeCaseNamingConvention();
+});
 
 // add http context accessor
 builder.Services.AddHttpContextAccessor();
