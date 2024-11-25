@@ -31,6 +31,7 @@ namespace RhythmFlow.Controller.src.Controllers
                 throw new UnauthorizedAccessException("Workspace must be created by same user");
             }
 
+            // maybe we should also have a check for duplicates since one user can create many projects with the same name atm
             var result = await base.Add(createDto);
 
             if (result.Value == null)
@@ -47,6 +48,19 @@ namespace RhythmFlow.Controller.src.Controllers
             });
 
             return CreatedAtAction(nameof(GetById), new { id = createdWorkspace.Id }, createdWorkspace);
+        }
+
+        // Since all workspaces and all users are public information this should be ok to be exposed to the public
+        [HttpGet("/ownedby/userId")]
+        public async Task<ActionResult<IEnumerable<WorkspaceCreateDto>>> GetWorkspacesOwnedByUser(Guid userId)
+        {
+            return Ok(await service.GetAllWorkspaceOwnedByUser(userId));
+        }
+
+        [HttpGet("/joinedby/userId")]
+        public async Task<ActionResult<IEnumerable<WorkspaceCreateDto>>> GetWorkspacesJoinedByUser(Guid userId)
+        {
+            return Ok(await service.GetAllWorkspaceJoinedByUser(userId));
         }
 
         [Authorize(Policy = "WorkspaceOwnerPolicy")]
