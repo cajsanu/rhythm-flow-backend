@@ -10,12 +10,15 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.TestClasses
     public class TestWorkSpace(string name, Guid ownerId) : Workspace(name, ownerId)
     {
     }
+
     public class TestWorkSpaceReadDto : WorkspaceReadDto
     {
     }
+
     public class TestWorkSpaceCreateDto : WorkspaceCreateDto
     {
     }
+
     public class TestWorkSpaceUpdateDto : WorkspaceUpdateDto
     {
     }

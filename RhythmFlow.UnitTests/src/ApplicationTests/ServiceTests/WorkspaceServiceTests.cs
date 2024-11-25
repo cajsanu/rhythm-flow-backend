@@ -35,10 +35,11 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
         {
             var userId = Guid.NewGuid();
             var userId2 = Guid.NewGuid();
-            TestWorkSpace workspace1 = new TestWorkSpace("Travel workspace", userId2);           
-             var workSapcesJoinedByUser = new List<Workspace> { workspace1 };
+            TestWorkSpace workspace1 = new TestWorkSpace("Travel workspace", userId2);
+            var workSapcesJoinedByUser = new List<Workspace> { workspace1 };
             _mockUserWorkspaceRepo.Setup(repo => repo.GetAllUserWorkspacesByUserIdAsync(userId)).ReturnsAsync(workSapcesJoinedByUser);
             var result = await _service.GetAllWorkspaceJoinedByUser(userId);
+
             // Assert
             Assert.Equal(1, result.Count());
         }
@@ -48,14 +49,13 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
         {
             var userId = Guid.NewGuid();
             var userId2 = Guid.NewGuid();
-            TestWorkSpace workspace1 = new TestWorkSpace("Travel workspace", userId2);           
-             var workSapcesOwnedByUser = new List<Workspace> { workspace1 };
+            TestWorkSpace workspace1 = new TestWorkSpace("Travel workspace", userId2);
+            var workSapcesOwnedByUser = new List<Workspace> { workspace1 };
             _mockUserWorkspaceRepo.Setup(repo => repo.GetWorkspacesOwnedByUserAsync(userId)).ReturnsAsync(workSapcesOwnedByUser);
             var result = await _service.GetAllWorkspaceOwnedByUser(userId);
+
             // Assert
             Assert.Equal(1, result.Count());
         }
-
-
     }
 }
