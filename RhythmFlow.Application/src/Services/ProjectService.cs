@@ -9,13 +9,27 @@ namespace RhythmFlow.Application.src.Services
 {
     public class ProjectService(
         IProjectRepo projectRepo,
+        IUserRepo userRepo,
         AssignmentService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto> assignmentService,
         IDtoFactory<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto> projectDtoFactory, IDtoFactory<User, UserReadDto, UserCreateDto, UserUpdateDto> userDtoFactory) : BaseService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>(projectRepo, projectDtoFactory), IProjectService
     {
         private readonly IProjectRepo _projectRepo = projectRepo;
+        private readonly IUserRepo _userRepo = userRepo;
         private readonly IDtoFactory<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto> _projectDtoFactory = projectDtoFactory;
         private readonly IDtoFactory<User, UserReadDto, UserCreateDto, UserUpdateDto> _userDtoFactory = userDtoFactory;
         private readonly AssignmentService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto> _assignmentService = assignmentService;
+
+        public override async Task<ProjectReadDto> AddAsync(ProjectCreateDto projectCreateDto)
+        {
+            var newProjectEntity = projectCreateDto.ToEntity();
+
+            var users = await _userRepo.GetByIdsAsync(projectCreateDto.UserIds) ?? throw new InvalidOperationException("User not found");
+
+            newProjectEntity.Users = users;
+
+            var newEntity = await _projectRepo.AddAsync(newProjectEntity) ?? throw new InvalidOperationException($"Failed to add {typeof(Project).Name}.");
+            return _projectDtoFactory.CreateReadDto(newEntity);
+        }
 
         public async Task<IEnumerable<ProjectReadDto>> GetAllProjectsInWorkspaceAsync(Guid workspaceId)
         {

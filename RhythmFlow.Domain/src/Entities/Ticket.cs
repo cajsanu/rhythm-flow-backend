@@ -16,19 +16,11 @@ namespace RhythmFlow.Domain.src.Entities
         // Make a collection of users that are assigned to the ticket
         public ICollection<User> Users { get; set; } = [];
 
-        public Ticket(string title, string description, Priority priority, DateOnly deadline, Status status, Guid projectId, TicketType type) : base()
+        public Ticket(string title, string description, Priority priority, DateOnly deadline, Status status, Guid projectId, TicketType type) : this(title, description, priority, deadline, status, projectId, type, null)
         {
-            if (DomainHelpers.IsNotValidStringValue(title) || DomainHelpers.IsNotValidStringValue(description)) throw new InvalidDataException("Title and description must not be null or empty");
-            Title = title;
-            Description = description;
-            Priority = priority;
-            Deadline = deadline;
-            Status = status;
-            ProjectId = projectId;
-            Type = type;
         }
 
-        public Ticket(string title, string description, Priority priority, DateOnly deadline, Status status, Guid projectId, TicketType type, Guid Id) : base(Id)
+        public Ticket(string title, string description, Priority priority, DateOnly deadline, Status status, Guid projectId, TicketType type, Guid? Id) : base(Id)
         {
             if (DomainHelpers.IsNotValidStringValue(title) || DomainHelpers.IsNotValidStringValue(description)) throw new InvalidDataException("Title and description must not be null or empty");
             Title = title;

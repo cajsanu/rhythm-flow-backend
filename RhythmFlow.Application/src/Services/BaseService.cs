@@ -36,9 +36,9 @@ namespace RhythmFlow.Application.src.Services
             return _dtoFactory.CreateReadDto(entity);
         }
 
-        public virtual async Task<TReadDto> AddAsync(TCreateDto entity)
+        public virtual async Task<TReadDto> AddAsync(TCreateDto createDto)
         {
-            var newEntity = await _repository.AddAsync(entity.ToEntity()) ?? throw new InvalidOperationException($"Failed to add {typeof(T).Name}.");
+            var newEntity = await _repository.AddAsync(createDto.ToEntity()) ?? throw new InvalidOperationException($"Failed to add {typeof(T).Name}.");
             return _dtoFactory.CreateReadDto(newEntity);
         }
 

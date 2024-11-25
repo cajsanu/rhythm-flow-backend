@@ -8,14 +8,28 @@ using RhythmFlow.Domain.src.RepoInterfaces;
 namespace RhythmFlow.Application.src.Services
 {
     public class TicketService(
-        ITicketRepo ticketRepository,
+        ITicketRepo ticketRepo,
+        IUserRepo userRepo,
         AssignmentService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> assignmentService,
-        IDtoFactory<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> ticketDtoFactory, IDtoFactory<User, UserReadDto, UserCreateDto, UserUpdateDto> userDtoFactory) : BaseService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>(ticketRepository, ticketDtoFactory), ITicketService
+        IDtoFactory<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> ticketDtoFactory, IDtoFactory<User, UserReadDto, UserCreateDto, UserUpdateDto> userDtoFactory) : BaseService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>(ticketRepo, ticketDtoFactory), ITicketService
     {
-        private readonly ITicketRepo _ticketRepo = ticketRepository;
+        private readonly ITicketRepo _ticketRepo = ticketRepo;
+        private readonly IUserRepo _userRepo = userRepo;
         private readonly IDtoFactory<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> _ticketDtoFactory = ticketDtoFactory;
         private readonly IDtoFactory<User, UserReadDto, UserCreateDto, UserUpdateDto> _userDtoFactory = userDtoFactory;
         private readonly AssignmentService<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto> _assignmentService = assignmentService;
+
+        public override async Task<TicketReadDto> AddAsync(TicketCreateDto ticketCreateDto)
+        {
+            var newTicketEntity = ticketCreateDto.ToEntity();
+
+            var users = await _userRepo.GetByIdsAsync(ticketCreateDto.UserIds) ?? throw new InvalidOperationException("User not found");
+
+            newTicketEntity.Users = users;
+
+            var newEntity = await _ticketRepo.AddAsync(newTicketEntity) ?? throw new InvalidOperationException($"Failed to add {typeof(Ticket).Name}.");
+            return _ticketDtoFactory.CreateReadDto(newEntity);
+        }
 
         public async Task<IEnumerable<TicketReadDto>> GetAllTicketsInProjectAsync(Guid projectId)
         {
