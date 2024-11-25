@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using RhythmFlow.Application.src.DTOs.Projects;
+using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.Entities;
 
@@ -36,6 +37,14 @@ namespace RhythmFlow.Controller.src.Controllers
         public override async Task<ActionResult> Update(Guid id, [FromBody] ProjectUpdateDto updateDto)
         {
             return await base.Update(id, updateDto);
+        }
+
+        [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
+        [HttpGet("{projectId}/users")]
+        public async Task<ActionResult<IEnumerable<UserReadDto>>> GetAllUsersInProject(Guid projectId)
+        {
+            var users = await _service.GetAllUsersInProjectAsync(projectId);
+            return Ok(users);
         }
 
         [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
