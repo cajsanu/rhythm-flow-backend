@@ -21,16 +21,17 @@ namespace RhythmFlow.Framework.src.Repo
             {
                 // Update the role if the record exists
                 existingUserWorkspace.Role = role;
+                await _context.SaveChangesAsync();
+                return existingUserWorkspace;
             }
             else
             {
                 // Add a new record if it doesn't exist
                 var userWorkspace = new UserWorkspace(userId, workspaceId, role);
                 await _userWorkspaces.AddAsync(userWorkspace);
+                await _context.SaveChangesAsync();
+                return userWorkspace;
             }
-
-            await _context.SaveChangesAsync();
-            return existingUserWorkspace;
         }
 
         public Task<IEnumerable<Workspace>> GetAllUserWorkspacesByUserIdAsync(Guid userId)

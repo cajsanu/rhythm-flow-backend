@@ -12,7 +12,8 @@ namespace RhythmFlow.Application.src.Factories
             return new UserWorkspaceReadDto
             {
                 UserId = entity.UserId,
-                WorkspaceId = entity.WorkspaceId
+                WorkspaceId = entity.WorkspaceId,
+                Role = entity.Role
             };
         }
 

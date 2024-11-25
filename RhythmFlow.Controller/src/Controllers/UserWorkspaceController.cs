@@ -12,8 +12,8 @@ namespace RhythmFlow.Controller.src.Controllers
     [ApiController]
     public class UserWorkspaceController(IUserWorkspaceService service) : ControllerBase
     {
-        [HttpPost]
-        public async Task<ActionResult<UserWorkspaceReadDto>> AddUserToWorkspace([FromBody] UserWorkspaceCreateDto addUserToWorkspaceDto)
+        [HttpPost("{workspaceId}")]
+        public async Task<ActionResult<UserWorkspaceReadDto>> AddUserToWorkspace(Guid workspaceId, [FromBody] UserWorkspaceCreateDto addUserToWorkspaceDto)
         {
             // We need to make sure that you cannot assign owner role to the user.
             // Only the worspace creator can be the owner.
@@ -21,6 +21,11 @@ namespace RhythmFlow.Controller.src.Controllers
             if (addUserToWorkspaceDto.Role == Role.WorkspaceOwner)
             {
                 return BadRequest("You cannot assign owner role to the user.");
+            }
+
+            if (workspaceId != addUserToWorkspaceDto.WorkspaceId)
+            {
+                return BadRequest("Workspace in URL must match workspace in request body. This is temporary solution");
             }
 
             return await service.AssignUserRoleInWorkspaceAsync(addUserToWorkspaceDto);
