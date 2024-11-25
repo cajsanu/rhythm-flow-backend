@@ -30,7 +30,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
                 _mockTicketRepo.Object,
                 _mockTicketDtoFactory.Object
             );
-            _service = new TicketService(_mockTicketRepo.Object, _serviceAssignment, _mockTicketDtoFactory.Object, _mockUserDtoFactory.Object);
+            _service = new TicketService(_mockTicketRepo.Object, _mockUserRepo.Object, _serviceAssignment, _mockTicketDtoFactory.Object, _mockUserDtoFactory.Object);
         }
 
         [Fact]

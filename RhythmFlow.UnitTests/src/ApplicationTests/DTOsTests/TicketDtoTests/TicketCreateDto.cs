@@ -29,6 +29,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.TicketDtoTests
             string projectId,
             TicketType type,
             bool isValid)
+            
         {
             // Arrange
             var dto = new TicketCreateDto
@@ -39,7 +40,8 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.TicketDtoTests
                 Deadline = DateOnly.Parse(deadline),
                 Status = status,
                 ProjectId = Guid.Parse(projectId),
-                Type = type
+                Type = type,
+                UserIds = []
             };
 
             // Act

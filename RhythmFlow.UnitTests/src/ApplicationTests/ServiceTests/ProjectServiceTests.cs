@@ -33,7 +33,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
                 _mockProjectDtoFactory.Object
 
             );
-            _service = new ProjectService(_mockProjectRepo.Object, _serviceAssignment, _mockProjectDtoFactory.Object, _mockUserDtoFactory.Object);
+            _service = new ProjectService(_mockProjectRepo.Object, _mockUserRepo.Object, _serviceAssignment, _mockProjectDtoFactory.Object, _mockUserDtoFactory.Object);
         }
 
         [Fact]
