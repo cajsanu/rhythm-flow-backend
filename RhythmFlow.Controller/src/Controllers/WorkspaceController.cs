@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RhythmFlow.Application.DTOs.Workspaces;
+using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Application.src.DTOs.UserWorkspaces;
 using RhythmFlow.Application.src.DTOs.Workspaces;
 using RhythmFlow.Application.src.ServiceInterfaces;
@@ -16,6 +17,7 @@ namespace RhythmFlow.Controller.src.Controllers
     public class WorkspaceController(IWorkspaceService service, IUserWorkspaceService userWorkspaceService) : BaseController<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>(service)
     {
         private readonly IUserWorkspaceService _userWorkspaceService = userWorkspaceService;
+        private readonly IWorkspaceService _workspaceService = service;
 
         public override async Task<ActionResult<WorkspaceReadDto>> Add([FromBody] WorkspaceCreateDto createDto)
         {
@@ -39,6 +41,14 @@ namespace RhythmFlow.Controller.src.Controllers
             });
 
             return CreatedAtAction(nameof(GetById), new { id = createdWorkspace.Id }, createdWorkspace);
+        }
+
+        [Authorize(Policy = "WorkspaceDeveloperPolicy")]
+        [HttpGet("{workspaceId}/users")]
+        public async Task<ActionResult<IEnumerable<UserReadDto>>> GetAllUsersInWorkspace(Guid workspaceId)
+        {
+            var users = await _workspaceService.GetAllUsersInWorkspaceAsync(workspaceId);
+            return Ok(users);
         }
 
         [Authorize(Policy = "WorkspaceOwnerPolicy")]
