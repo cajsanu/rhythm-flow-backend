@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using RhythmFlow.Domain.src.Helpers;
 using RhythmFlow.Domain.src.ValueObjects;
 
@@ -5,7 +6,9 @@ namespace RhythmFlow.Domain.src.Entities
 {
     public class User : BaseEntity
     {
+        [Required]
         public string FirstName { get; }
+        [Required]
         public string LastName { get; }
         public Email Email { get; set; }
         public string PasswordHash { get; set; }

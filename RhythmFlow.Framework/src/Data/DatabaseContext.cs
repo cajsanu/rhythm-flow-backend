@@ -38,6 +38,8 @@ namespace RhythmFlow.Framework.src.Data
             // EF Core does not support owned entity to be checked for uniqueness yet, so we have to do it ourselves
             modelBuilder.Entity<User>(entity =>
             {
+                entity.Property(user => user.FirstName).HasColumnName("first_name").IsRequired();
+                entity.Property(user => user.LastName).HasColumnName("last_name").IsRequired();
                 entity.OwnsOne(user => user.Email, email =>
                 {
                     email.Property(s => s.Value).HasColumnName("user_email").IsRequired();
@@ -75,16 +77,16 @@ namespace RhythmFlow.Framework.src.Data
 
         public UserWorkspace? GetUserWorkspaceByUserIdAndWorkspaceId(Guid userId, Guid workspaceId)
         {
-            Console.WriteLine($"userId: {userId}, workspaceId: {workspaceId}");
-
             return UserWorkspaces.FirstOrDefault(uw => uw.UserId == userId && uw.WorkspaceId == workspaceId);
         }
+
         public IEnumerable<Workspace> GetWorkspacesJoinedByUserId(Guid userId)
         {
             var userWorkspaces = UserWorkspaces.Where(uw => uw.UserId == userId).ToList();
             var workSpaces = Workspaces.Where(w => userWorkspaces.Select(uw => uw.WorkspaceId).Equals(w.Id)).ToList();
             return workSpaces;
         }
+
         public IEnumerable<Workspace> GetWorkspacesOwnedByUser(Guid userId)
         {
             var workSpaces = Workspaces.Where(w => w.OwnerId == userId).ToList();

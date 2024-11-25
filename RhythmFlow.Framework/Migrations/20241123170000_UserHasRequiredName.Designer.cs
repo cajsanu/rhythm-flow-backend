@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RhythmFlow.Framework.src.Data;
@@ -11,9 +12,11 @@ using RhythmFlow.Framework.src.Data;
 namespace RhythmFlow.Framework.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241123170000_UserHasRequiredName")]
+    partial class UserHasRequiredName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,63 +86,63 @@ namespace RhythmFlow.Framework.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("9415b953-610a-4f76-8a2a-08ae9f8bc814"),
+                            Id = new Guid("fa4f734b-6eea-4341-bb8c-bd0da8376433"),
                             Description = "Conquer the Galaxy",
-                            EndDate = new DateOnly(2025, 1, 13),
+                            EndDate = new DateOnly(2025, 1, 12),
                             Name = "Alpha",
+                            StartDate = new DateOnly(2024, 11, 25),
+                            Status = "InProgress",
+                            WorkspaceId = new Guid("fbb37d69-3ffa-4279-8f8e-e69c7ed0d7a2")
+                        },
+                        new
+                        {
+                            Id = new Guid("17392215-72a4-4388-bf73-8ecc56eb6ed2"),
+                            Description = "Develop AI Assistant",
+                            EndDate = new DateOnly(2025, 1, 22),
+                            Name = "Beta",
+                            StartDate = new DateOnly(2024, 11, 28),
+                            Status = "NotStarted",
+                            WorkspaceId = new Guid("ef9e7cc6-4e0a-4f72-9da2-1498c63b32a9")
+                        },
+                        new
+                        {
+                            Id = new Guid("2a4f7751-6e2f-4848-9939-1c37a3be3ea7"),
+                            Description = "Revamp Website Design",
+                            EndDate = new DateOnly(2025, 1, 7),
+                            Name = "Gamma",
                             StartDate = new DateOnly(2024, 11, 26),
                             Status = "InProgress",
-                            WorkspaceId = new Guid("3b2630f5-17f6-4f41-84aa-c6eced59bd2d")
+                            WorkspaceId = new Guid("2af8941b-ba86-4fff-9063-ad77493ba820")
                         },
                         new
                         {
-                            Id = new Guid("aa64b7a2-e9b9-4c25-b87a-62c6d764f5ac"),
-                            Description = "Develop AI Assistant",
-                            EndDate = new DateOnly(2025, 1, 23),
-                            Name = "Beta",
-                            StartDate = new DateOnly(2024, 11, 29),
-                            Status = "NotStarted",
-                            WorkspaceId = new Guid("0b8dac96-9f38-4328-a594-48aad8f6cff6")
-                        },
-                        new
-                        {
-                            Id = new Guid("b7cd139c-f87b-417f-8a39-24732f7146c9"),
-                            Description = "Revamp Website Design",
-                            EndDate = new DateOnly(2025, 1, 8),
-                            Name = "Gamma",
-                            StartDate = new DateOnly(2024, 11, 27),
-                            Status = "InProgress",
-                            WorkspaceId = new Guid("f4a7a744-e967-4997-8163-fb5e7915cb6d")
-                        },
-                        new
-                        {
-                            Id = new Guid("e860e23e-3616-4e8d-b517-8e62e92740b6"),
+                            Id = new Guid("92f670db-85d3-4b9a-bc71-596cc705cbd6"),
                             Description = "Launch Mobile App",
-                            EndDate = new DateOnly(2025, 2, 22),
+                            EndDate = new DateOnly(2025, 2, 21),
                             Name = "Delta",
-                            StartDate = new DateOnly(2024, 12, 1),
+                            StartDate = new DateOnly(2024, 11, 30),
                             Status = "InProgress",
-                            WorkspaceId = new Guid("1d2128f7-fc01-44c9-b221-1079a6b5594e")
+                            WorkspaceId = new Guid("8e283f09-2057-4a72-ba7a-bef88a4a125f")
                         },
                         new
                         {
-                            Id = new Guid("0dad8c65-ce0f-4429-8aff-977b02f7daed"),
+                            Id = new Guid("266649a6-03b6-46c0-b039-c324229ba5e7"),
                             Description = "Implement Cloud Migration",
-                            EndDate = new DateOnly(2025, 3, 24),
+                            EndDate = new DateOnly(2025, 3, 23),
                             Name = "Epsilon",
-                            StartDate = new DateOnly(2024, 11, 25),
+                            StartDate = new DateOnly(2024, 11, 24),
                             Status = "Cancelled",
-                            WorkspaceId = new Guid("53a2beea-6ece-4a0c-8852-3fdaf4608f2d")
+                            WorkspaceId = new Guid("2bf14e44-eab1-4dbe-b086-da90e27897fd")
                         },
                         new
                         {
-                            Id = new Guid("a0b80cae-e906-4c2b-813b-9b922e633b5d"),
+                            Id = new Guid("a67a2929-fc12-4dd4-8efc-8ccc59949091"),
                             Description = "Optimize Data Pipeline",
-                            EndDate = new DateOnly(2025, 2, 12),
+                            EndDate = new DateOnly(2025, 2, 11),
                             Name = "Zeta",
-                            StartDate = new DateOnly(2024, 12, 4),
+                            StartDate = new DateOnly(2024, 12, 3),
                             Status = "InProgress",
-                            WorkspaceId = new Guid("53a2beea-6ece-4a0c-8852-3fdaf4608f2d")
+                            WorkspaceId = new Guid("2bf14e44-eab1-4dbe-b086-da90e27897fd")
                         });
                 });
 
@@ -190,88 +193,88 @@ namespace RhythmFlow.Framework.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5c239a93-75f1-4dd8-a969-6d06cf78fe6a"),
-                            Deadline = new DateOnly(2024, 12, 1),
+                            Id = new Guid("96a78659-bdbd-4c68-9cf7-327a950a5bde"),
+                            Deadline = new DateOnly(2024, 11, 30),
                             Description = "using Postgres",
                             Priority = "High",
-                            ProjectId = new Guid("9415b953-610a-4f76-8a2a-08ae9f8bc814"),
+                            ProjectId = new Guid("fa4f734b-6eea-4341-bb8c-bd0da8376433"),
                             Status = "InProgress",
                             Title = "Create Database",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("d92858fd-f52a-466c-aab8-c672bff78f23"),
-                            Deadline = new DateOnly(2024, 11, 27),
+                            Id = new Guid("48909356-7bc0-481b-a9f5-4bc62dadfcac"),
+                            Deadline = new DateOnly(2024, 11, 26),
                             Description = "Resolve authentication error",
                             Priority = "High",
-                            ProjectId = new Guid("9415b953-610a-4f76-8a2a-08ae9f8bc814"),
+                            ProjectId = new Guid("fa4f734b-6eea-4341-bb8c-bd0da8376433"),
                             Status = "InProgress",
                             Title = "Fix Login Issue",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("0fbeb34e-0e33-4658-ab7e-e2e88c24ae63"),
-                            Deadline = new DateOnly(2024, 12, 8),
+                            Id = new Guid("424d7a17-b1b0-4997-8540-99feec60ccd8"),
+                            Deadline = new DateOnly(2024, 12, 7),
                             Description = "Create wireframe for new landing page",
                             Priority = "Medium",
-                            ProjectId = new Guid("9415b953-610a-4f76-8a2a-08ae9f8bc814"),
+                            ProjectId = new Guid("fa4f734b-6eea-4341-bb8c-bd0da8376433"),
                             Status = "Cancelled",
                             Title = "Design Landing Page",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("5a2e061c-4bc4-4350-9e21-83326ca4abe3"),
-                            Deadline = new DateOnly(2024, 12, 24),
+                            Id = new Guid("44c8d122-5216-4e8e-b723-0e52b8fcd5ad"),
+                            Deadline = new DateOnly(2024, 12, 23),
                             Description = "Review and update policy document",
                             Priority = "Low",
-                            ProjectId = new Guid("aa64b7a2-e9b9-4c25-b87a-62c6d764f5ac"),
+                            ProjectId = new Guid("17392215-72a4-4388-bf73-8ecc56eb6ed2"),
                             Status = "NotStarted",
                             Title = "Update Privacy Policy",
                             Type = 2
                         },
                         new
                         {
-                            Id = new Guid("5d11edda-9957-44c7-a32b-51b2f1a7de0a"),
-                            Deadline = new DateOnly(2024, 12, 4),
+                            Id = new Guid("fe8ca3b0-416b-4ebc-8905-e264df89d71e"),
+                            Deadline = new DateOnly(2024, 12, 3),
                             Description = "Enhance performance of existing API calls",
                             Priority = "High",
-                            ProjectId = new Guid("aa64b7a2-e9b9-4c25-b87a-62c6d764f5ac"),
+                            ProjectId = new Guid("17392215-72a4-4388-bf73-8ecc56eb6ed2"),
                             Status = "InProgress",
                             Title = "Optimize API",
                             Type = 1
                         },
                         new
                         {
-                            Id = new Guid("521f0ab4-8a2e-4fed-98e7-ef1a681dbaa5"),
-                            Deadline = new DateOnly(2024, 12, 1),
+                            Id = new Guid("b0daa214-79c7-4c85-8be8-b91df3ca3ee1"),
+                            Deadline = new DateOnly(2024, 11, 30),
                             Description = "Plan onboarding session for new hires",
                             Priority = "Medium",
-                            ProjectId = new Guid("aa64b7a2-e9b9-4c25-b87a-62c6d764f5ac"),
+                            ProjectId = new Guid("17392215-72a4-4388-bf73-8ecc56eb6ed2"),
                             Status = "NotStarted",
                             Title = "Schedule Training",
                             Type = 2
                         },
                         new
                         {
-                            Id = new Guid("fb69de22-22fa-4117-a74b-139fcf017106"),
-                            Deadline = new DateOnly(2024, 12, 15),
+                            Id = new Guid("5af13a4f-7c92-4f01-ad25-30130e97cdd9"),
+                            Deadline = new DateOnly(2024, 12, 14),
                             Description = "Implement dark mode toggle for Users",
                             Priority = "High",
-                            ProjectId = new Guid("0dad8c65-ce0f-4429-8aff-977b02f7daed"),
+                            ProjectId = new Guid("266649a6-03b6-46c0-b039-c324229ba5e7"),
                             Status = "Cancelled",
                             Title = "Add Dark Mode",
                             Type = 0
                         },
                         new
                         {
-                            Id = new Guid("a72df026-d893-469d-b625-5206c131bf30"),
-                            Deadline = new DateOnly(2024, 11, 29),
+                            Id = new Guid("2af1f7f8-f480-4c1e-afe7-42d22f90ba2e"),
+                            Deadline = new DateOnly(2024, 11, 28),
                             Description = "Fix issue with incorrect data rendering",
                             Priority = "High",
-                            ProjectId = new Guid("a0b80cae-e906-4c2b-813b-9b922e633b5d"),
+                            ProjectId = new Guid("a67a2929-fc12-4dd4-8efc-8ccc59949091"),
                             Status = "InProgress",
                             Title = "Bug in Report Generation",
                             Type = 1
@@ -308,66 +311,66 @@ namespace RhythmFlow.Framework.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("38c55e68-9178-4ba3-89c1-c0a7fb6effa8"),
+                            Id = new Guid("d37860e5-a49d-40f6-9d72-f5e4566a07b5"),
                             FirstName = "John",
                             LastName = "Doe",
-                            PasswordHash = "$2a$11$2Nr99X5WZI2jTj1S4KLt9.INl4LRZwejVFdv/XegFA0cA6VhLbVFi"
+                            PasswordHash = "passwordHash"
                         },
                         new
                         {
-                            Id = new Guid("93ab30e4-b10f-45b2-b307-691e46e8c46a"),
+                            Id = new Guid("25381b97-c3a3-43e2-8024-714e2c54ebd5"),
                             FirstName = "Jane",
                             LastName = "Smith",
-                            PasswordHash = "$2a$11$2Nr99X5WZI2jTj1S4KLt9.INl4LRZwejVFdv/XegFA0cA6VhLbVFi"
+                            PasswordHash = "passwordHash123"
                         },
                         new
                         {
-                            Id = new Guid("5185f6db-d2a0-4d3f-83a7-fa898baad42c"),
+                            Id = new Guid("f5658c57-f191-451c-81fc-b4b76adfadf6"),
                             FirstName = "Michael",
                             LastName = "Johnson",
-                            PasswordHash = "$2a$11$2Nr99X5WZI2jTj1S4KLt9.INl4LRZwejVFdv/XegFA0cA6VhLbVFi"
+                            PasswordHash = "securePass456"
                         },
                         new
                         {
-                            Id = new Guid("bd9239b0-e2a2-4781-812f-f236859f2f16"),
+                            Id = new Guid("90eee8d0-f956-4b6c-9f7c-e1ecd5b56f8c"),
                             FirstName = "Emily",
                             LastName = "Davis",
-                            PasswordHash = "$2a$11$2Nr99X5WZI2jTj1S4KLt9.INl4LRZwejVFdv/XegFA0cA6VhLbVFi"
+                            PasswordHash = "hashedPassword789"
                         },
                         new
                         {
-                            Id = new Guid("f7a28a2d-a6a9-4ed8-9f85-d718f1198f57"),
+                            Id = new Guid("8aa54f86-c7d7-45f8-b85c-f1baf9e35c5c"),
                             FirstName = "Chris",
                             LastName = "Brown",
-                            PasswordHash = "$2a$11$2Nr99X5WZI2jTj1S4KLt9.INl4LRZwejVFdv/XegFA0cA6VhLbVFi"
+                            PasswordHash = "passHash321"
                         },
                         new
                         {
-                            Id = new Guid("b1e6173f-5119-47c9-bec6-9f807eba4cdd"),
+                            Id = new Guid("ac22d790-84bb-4c98-91e4-f8ca8a3c1cbf"),
                             FirstName = "Sophia",
                             LastName = "Wilson",
-                            PasswordHash = "$2a$11$2Nr99X5WZI2jTj1S4KLt9.INl4LRZwejVFdv/XegFA0cA6VhLbVFi"
+                            PasswordHash = "encryptedPass654"
                         },
                         new
                         {
-                            Id = new Guid("b51eeff7-77c3-4687-8679-07ab0830e31f"),
+                            Id = new Guid("c3c7fb61-aa85-4c5b-bf7a-b5a1b87a55eb"),
                             FirstName = "Daniel",
                             LastName = "Martinez",
-                            PasswordHash = "$2a$11$2Nr99X5WZI2jTj1S4KLt9.INl4LRZwejVFdv/XegFA0cA6VhLbVFi"
+                            PasswordHash = "hashedPass987"
                         },
                         new
                         {
-                            Id = new Guid("d2bf611c-f2d9-47f0-a9d6-1c7703a4becf"),
+                            Id = new Guid("3f30dd69-54e4-4331-839d-088044a173ba"),
                             FirstName = "Olivia",
                             LastName = "Garcia",
-                            PasswordHash = "$2a$11$2Nr99X5WZI2jTj1S4KLt9.INl4LRZwejVFdv/XegFA0cA6VhLbVFi"
+                            PasswordHash = "passwordHash159"
                         },
                         new
                         {
-                            Id = new Guid("ac0fdb85-81c1-4c32-b5e2-aeef5c4d1c2f"),
+                            Id = new Guid("9cbb6de2-eda2-4770-9e93-bd4179aec0ac"),
                             FirstName = "Matthew",
                             LastName = "Anderson",
-                            PasswordHash = "$2a$11$2Nr99X5WZI2jTj1S4KLt9.INl4LRZwejVFdv/XegFA0cA6VhLbVFi"
+                            PasswordHash = "hashPass753"
                         });
                 });
 
@@ -393,44 +396,44 @@ namespace RhythmFlow.Framework.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("38c55e68-9178-4ba3-89c1-c0a7fb6effa8"),
-                            WorkspaceId = new Guid("3b2630f5-17f6-4f41-84aa-c6eced59bd2d"),
+                            UserId = new Guid("d37860e5-a49d-40f6-9d72-f5e4566a07b5"),
+                            WorkspaceId = new Guid("fbb37d69-3ffa-4279-8f8e-e69c7ed0d7a2"),
                             Role = 1
                         },
                         new
                         {
-                            UserId = new Guid("93ab30e4-b10f-45b2-b307-691e46e8c46a"),
-                            WorkspaceId = new Guid("0b8dac96-9f38-4328-a594-48aad8f6cff6"),
+                            UserId = new Guid("25381b97-c3a3-43e2-8024-714e2c54ebd5"),
+                            WorkspaceId = new Guid("ef9e7cc6-4e0a-4f72-9da2-1498c63b32a9"),
                             Role = 1
                         },
                         new
                         {
-                            UserId = new Guid("5185f6db-d2a0-4d3f-83a7-fa898baad42c"),
-                            WorkspaceId = new Guid("f4a7a744-e967-4997-8163-fb5e7915cb6d"),
+                            UserId = new Guid("f5658c57-f191-451c-81fc-b4b76adfadf6"),
+                            WorkspaceId = new Guid("2af8941b-ba86-4fff-9063-ad77493ba820"),
                             Role = 1
                         },
                         new
                         {
-                            UserId = new Guid("bd9239b0-e2a2-4781-812f-f236859f2f16"),
-                            WorkspaceId = new Guid("3b2630f5-17f6-4f41-84aa-c6eced59bd2d"),
+                            UserId = new Guid("90eee8d0-f956-4b6c-9f7c-e1ecd5b56f8c"),
+                            WorkspaceId = new Guid("fbb37d69-3ffa-4279-8f8e-e69c7ed0d7a2"),
                             Role = 1
                         },
                         new
                         {
-                            UserId = new Guid("ac0fdb85-81c1-4c32-b5e2-aeef5c4d1c2f"),
-                            WorkspaceId = new Guid("3b2630f5-17f6-4f41-84aa-c6eced59bd2d"),
+                            UserId = new Guid("9cbb6de2-eda2-4770-9e93-bd4179aec0ac"),
+                            WorkspaceId = new Guid("fbb37d69-3ffa-4279-8f8e-e69c7ed0d7a2"),
                             Role = 1
                         },
                         new
                         {
-                            UserId = new Guid("b1e6173f-5119-47c9-bec6-9f807eba4cdd"),
-                            WorkspaceId = new Guid("0b8dac96-9f38-4328-a594-48aad8f6cff6"),
+                            UserId = new Guid("ac22d790-84bb-4c98-91e4-f8ca8a3c1cbf"),
+                            WorkspaceId = new Guid("ef9e7cc6-4e0a-4f72-9da2-1498c63b32a9"),
                             Role = 2
                         },
                         new
                         {
-                            UserId = new Guid("b51eeff7-77c3-4687-8679-07ab0830e31f"),
-                            WorkspaceId = new Guid("0b8dac96-9f38-4328-a594-48aad8f6cff6"),
+                            UserId = new Guid("c3c7fb61-aa85-4c5b-bf7a-b5a1b87a55eb"),
+                            WorkspaceId = new Guid("ef9e7cc6-4e0a-4f72-9da2-1498c63b32a9"),
                             Role = 2
                         });
                 });
@@ -459,33 +462,33 @@ namespace RhythmFlow.Framework.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3b2630f5-17f6-4f41-84aa-c6eced59bd2d"),
+                            Id = new Guid("fbb37d69-3ffa-4279-8f8e-e69c7ed0d7a2"),
                             Name = "Marketing",
-                            OwnerId = new Guid("38c55e68-9178-4ba3-89c1-c0a7fb6effa8")
+                            OwnerId = new Guid("d37860e5-a49d-40f6-9d72-f5e4566a07b5")
                         },
                         new
                         {
-                            Id = new Guid("0b8dac96-9f38-4328-a594-48aad8f6cff6"),
+                            Id = new Guid("ef9e7cc6-4e0a-4f72-9da2-1498c63b32a9"),
                             Name = "Development",
-                            OwnerId = new Guid("93ab30e4-b10f-45b2-b307-691e46e8c46a")
+                            OwnerId = new Guid("25381b97-c3a3-43e2-8024-714e2c54ebd5")
                         },
                         new
                         {
-                            Id = new Guid("f4a7a744-e967-4997-8163-fb5e7915cb6d"),
+                            Id = new Guid("2af8941b-ba86-4fff-9063-ad77493ba820"),
                             Name = "Design",
-                            OwnerId = new Guid("5185f6db-d2a0-4d3f-83a7-fa898baad42c")
+                            OwnerId = new Guid("f5658c57-f191-451c-81fc-b4b76adfadf6")
                         },
                         new
                         {
-                            Id = new Guid("1d2128f7-fc01-44c9-b221-1079a6b5594e"),
+                            Id = new Guid("8e283f09-2057-4a72-ba7a-bef88a4a125f"),
                             Name = "Sales",
-                            OwnerId = new Guid("bd9239b0-e2a2-4781-812f-f236859f2f16")
+                            OwnerId = new Guid("90eee8d0-f956-4b6c-9f7c-e1ecd5b56f8c")
                         },
                         new
                         {
-                            Id = new Guid("53a2beea-6ece-4a0c-8852-3fdaf4608f2d"),
+                            Id = new Guid("2bf14e44-eab1-4dbe-b086-da90e27897fd"),
                             Name = "HR",
-                            OwnerId = new Guid("f7a28a2d-a6a9-4ed8-9f85-d718f1198f57")
+                            OwnerId = new Guid("8aa54f86-c7d7-45f8-b85c-f1baf9e35c5c")
                         });
                 });
 
@@ -549,47 +552,47 @@ namespace RhythmFlow.Framework.Migrations
                             b1.HasData(
                                 new
                                 {
-                                    UserId = new Guid("38c55e68-9178-4ba3-89c1-c0a7fb6effa8"),
+                                    UserId = new Guid("d37860e5-a49d-40f6-9d72-f5e4566a07b5"),
                                     Value = "john.doe@example.com"
                                 },
                                 new
                                 {
-                                    UserId = new Guid("93ab30e4-b10f-45b2-b307-691e46e8c46a"),
+                                    UserId = new Guid("25381b97-c3a3-43e2-8024-714e2c54ebd5"),
                                     Value = "jane.smith@example.com"
                                 },
                                 new
                                 {
-                                    UserId = new Guid("5185f6db-d2a0-4d3f-83a7-fa898baad42c"),
+                                    UserId = new Guid("f5658c57-f191-451c-81fc-b4b76adfadf6"),
                                     Value = "michael.johnson@example.com"
                                 },
                                 new
                                 {
-                                    UserId = new Guid("bd9239b0-e2a2-4781-812f-f236859f2f16"),
+                                    UserId = new Guid("90eee8d0-f956-4b6c-9f7c-e1ecd5b56f8c"),
                                     Value = "emily.davis@example.com"
                                 },
                                 new
                                 {
-                                    UserId = new Guid("f7a28a2d-a6a9-4ed8-9f85-d718f1198f57"),
+                                    UserId = new Guid("8aa54f86-c7d7-45f8-b85c-f1baf9e35c5c"),
                                     Value = "chris.brown@example.com"
                                 },
                                 new
                                 {
-                                    UserId = new Guid("b1e6173f-5119-47c9-bec6-9f807eba4cdd"),
+                                    UserId = new Guid("ac22d790-84bb-4c98-91e4-f8ca8a3c1cbf"),
                                     Value = "sophia.wilson@example.com"
                                 },
                                 new
                                 {
-                                    UserId = new Guid("b51eeff7-77c3-4687-8679-07ab0830e31f"),
+                                    UserId = new Guid("c3c7fb61-aa85-4c5b-bf7a-b5a1b87a55eb"),
                                     Value = "daniel.martinez@example.com"
                                 },
                                 new
                                 {
-                                    UserId = new Guid("d2bf611c-f2d9-47f0-a9d6-1c7703a4becf"),
+                                    UserId = new Guid("3f30dd69-54e4-4331-839d-088044a173ba"),
                                     Value = "olivia.garcia@example.com"
                                 },
                                 new
                                 {
-                                    UserId = new Guid("ac0fdb85-81c1-4c32-b5e2-aeef5c4d1c2f"),
+                                    UserId = new Guid("9cbb6de2-eda2-4770-9e93-bd4179aec0ac"),
                                     Value = "matthew.anderson@example.com"
                                 });
                         });

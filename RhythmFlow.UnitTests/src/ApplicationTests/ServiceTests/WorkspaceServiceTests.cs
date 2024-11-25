@@ -41,7 +41,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             var result = await _service.GetAllWorkspaceJoinedByUser(userId);
 
             // Assert
-            Assert.Equal(1, result.Count());
+            Assert.Single(result);
         }
 
         [Fact]
@@ -55,7 +55,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             var result = await _service.GetAllWorkspaceOwnedByUser(userId);
 
             // Assert
-            Assert.Equal(1, result.Count());
+            Assert.Single(result);
         }
     }
 }

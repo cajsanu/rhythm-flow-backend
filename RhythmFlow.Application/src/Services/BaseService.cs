@@ -42,7 +42,7 @@ namespace RhythmFlow.Application.src.Services
             return _dtoFactory.CreateReadDto(newEntity);
         }
 
-        public async Task<TReadDto?> UpdateAsync(Guid id, T entity)
+        public virtual async Task<TReadDto?> UpdateAsync(Guid id, T entity)
         {
             // This will throw an exception if the entity does not exist
             _ = await _repository.GetByIdAsync(id) ?? throw new KeyNotFoundException($"{typeof(T).Name} with ID {id} not found.");
