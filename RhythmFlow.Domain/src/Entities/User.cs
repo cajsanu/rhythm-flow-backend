@@ -7,9 +7,9 @@ namespace RhythmFlow.Domain.src.Entities
     public class User : BaseEntity
     {
         [Required]
-        public string FirstName { get; }
+        public string FirstName { get; set; }
         [Required]
-        public string LastName { get; }
+        public string LastName { get; set; }
         public Email Email { get; set; }
         public string PasswordHash { get; set; }
 
@@ -21,11 +21,10 @@ namespace RhythmFlow.Domain.src.Entities
 
         public ICollection<Ticket> Tickets { get; set; } = [];
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
-
         // empty constructor for Entity Framework. More here: https://stackoverflow.com/questions/54400115/no-suitable-constructor-found-for-entity-type-string
+        #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
         public User() { }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+        #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
         public User(string firstName, string lastName, string email, string passwordHash, Guid? Id = null) : base(Id) // Call the base constructor to generate a unique ID
         {
             // firstName and lastName validation in the constructor and email validation in the setter.

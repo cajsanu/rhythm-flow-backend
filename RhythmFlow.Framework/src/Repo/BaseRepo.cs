@@ -1,4 +1,3 @@
-using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
@@ -6,7 +5,7 @@ using RhythmFlow.Framework.src.Data;
 
 namespace RhythmFlow.Framework.src.Repo
 {
-    public class BaseRepo<T>(AppDbContext context) : IBaseRepo<T>
+    public abstract class BaseRepo<T>(AppDbContext context) : IBaseRepo<T>
         where T : BaseEntity
     {
         private readonly AppDbContext _context = context;
@@ -39,15 +38,6 @@ namespace RhythmFlow.Framework.src.Repo
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task<T?> UpdateAsync(T entity)
-        {
-            var foundEntity = await _dbSet.FindAsync(entity.Id) ?? throw new ArgumentException($"{typeof(T)} with ID {entity.Id} not found. ");
-            _dbSet.Remove(foundEntity);
-
-            // swap entity property with foundEntity Property
-            _dbSet.Update(entity); // shouldnt need to update the entity here, just need to update the FoundEntity instead
-            await _context.SaveChangesAsync();
-            return await _dbSet.FindAsync(entity.Id);
-        }
+        public abstract Task<T?> UpdateAsync(T entity);
     }
 }
