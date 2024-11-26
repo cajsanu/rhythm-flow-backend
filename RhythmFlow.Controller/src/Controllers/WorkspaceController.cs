@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RhythmFlow.Application.DTOs.Workspaces;
+using RhythmFlow.Application.src.DTOs.Roles;
 using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Application.src.DTOs.UserWorkspaces;
 using RhythmFlow.Application.src.DTOs.Workspaces;
@@ -49,6 +50,26 @@ namespace RhythmFlow.Controller.src.Controllers
         {
             var users = await _workspaceService.GetAllUsersInWorkspaceAsync(workspaceId);
             return Ok(users);
+        }
+
+        [Authorize(Policy = "WorkspaceOwnerPolicy")]
+        [HttpPost("{workspaceId}/users/{userId}")]
+        public async Task<ActionResult<UserWorkspaceReadDto>> AddUserToWorkspace([FromBody] RoleDto roleDto, Guid userId, Guid workspaceId)
+        {
+            // We need to make sure that you cannot assign owner role to the user.
+            // Only the worspace creator can be the owner.
+            // Validation needs to be done here.
+            if (roleDto.Role == Role.WorkspaceOwner)
+            {
+                return BadRequest("You cannot assign owner role to the user.");
+            }
+
+            return await _userWorkspaceService.AssignUserRoleInWorkspaceAsync(new UserWorkspaceCreateDto
+            {
+                UserId = userId,
+                WorkspaceId = workspaceId,
+                Role = roleDto.Role
+            });
         }
 
         [Authorize(Policy = "WorkspaceOwnerPolicy")]

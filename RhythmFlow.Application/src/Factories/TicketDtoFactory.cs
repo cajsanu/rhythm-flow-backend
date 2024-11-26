@@ -7,18 +7,6 @@ namespace RhythmFlow.Application.src.Factories
 {
     public class TicketDtoFactory : IDtoFactory<Ticket, TicketReadDto, TicketCreateDto, TicketUpdateDto>
     {
-        // public TicketCreateDto CreateCreateReadDto(Ticket entity)
-        // {
-        //     return new TicketCreateDto
-        //     {
-        //         Title = entity.Title,
-        //         Description = entity.Description,
-        //         Status = entity.Status,
-        //         Priority = entity.Priority,
-        //         Type = entity.Type,
-        //         ProjectId = entity.ProjectId,
-        //     };
-        // }
         public TicketReadDto CreateReadDto(Ticket entity)
         {
             return new TicketReadDto
@@ -37,19 +25,6 @@ namespace RhythmFlow.Application.src.Factories
                     LastName = u.LastName,
                     Email = u.Email.Value
                 }).ToList()
-            };
-        }
-
-        public TicketUpdateDto CreateUpdateDto(Ticket entity)
-        {
-            return new TicketUpdateDto
-            {
-                Title = entity.Title,
-                Description = entity.Description,
-                Status = entity.Status,
-                Priority = entity.Priority,
-                Type = entity.Type,
-                ProjectId = entity.ProjectId,
             };
         }
     }
