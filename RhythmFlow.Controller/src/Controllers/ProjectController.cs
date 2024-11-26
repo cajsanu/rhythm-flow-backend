@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -30,6 +31,13 @@ namespace RhythmFlow.Controller.src.Controllers
 
             if (workspaceId != createDto.WorkspaceId)
                 return BadRequest("WorkspaceId in the route and in the new project should match");
+
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId == null)
+                return Unauthorized();
+
+            createDto.UserIds.Add(Guid.Parse(userId));
 
             return await base.Add(createDto);
         }
