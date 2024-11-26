@@ -9,7 +9,7 @@ namespace RhythmFlow.UnitTests.src.RepoTests
 {
     public class UserWorkspaceRepoTests
     {
-       private AppDbContext CreateInMemoryDbContextOptions()
+        private AppDbContext CreateInMemoryDbContextOptions()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
@@ -17,8 +17,8 @@ namespace RhythmFlow.UnitTests.src.RepoTests
             return new AppDbContext(options);
         }
 
-       [Fact]
-       public async Task AssignRoleToUserInWorkspace_ShouldAssignRoleToUserInWorkspace()
+        [Fact]
+        public async Task AssignRoleToUserInWorkspace_ShouldAssignRoleToUserInWorkspace()
         {
             // Arrange
             using var context = CreateInMemoryDbContextOptions();
@@ -36,8 +36,8 @@ namespace RhythmFlow.UnitTests.src.RepoTests
             await context.SaveChangesAsync();
         }
 
-       [Fact]
-       public async Task GetAllUserWorkspacesByOwnedUserIdAsync_ShouldReturnAllUserWorkspacesByUserId()
+        [Fact]
+        public async Task GetAllUserWorkspacesByOwnedUserIdAsync_ShouldReturnAllUserWorkspacesByUserId()
         {
             using var context = CreateInMemoryDbContextOptions();
             var user1 = new TestUser("Jones", "Pence", "joneus@pence.com", "fdgfsfds213!");
@@ -61,8 +61,8 @@ namespace RhythmFlow.UnitTests.src.RepoTests
             Assert.Equal(testWorkspace.OwnerId, result.First().OwnerId);
         }
 
-       [Fact]
-       public async Task GetUserWorkspaceByUserIdAndWorkspaceIdAsync_ShouldReturnUserWorkspaceByUserIdAndWorkspaceId()
+        [Fact]
+        public async Task GetUserWorkspaceByUserIdAndWorkspaceIdAsync_ShouldReturnUserWorkspaceByUserIdAndWorkspaceId()
         {
             using var context = CreateInMemoryDbContextOptions();
             var user1 = new TestUser("Jones", "Pence", "joneus@pence.com", "fdgfsfds213!");

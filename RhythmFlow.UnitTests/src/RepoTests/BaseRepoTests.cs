@@ -20,26 +20,27 @@ namespace RhythmFlow.UnitTests.src.RepoTests
         [Fact]
         public async Task AddAsync_ShouldAddEntity()
         {
-             using var context = CreateInMemoryDbContextOptions();
-             var repo = new UserRepo(context);
-             var newUser = new TestUser("Jones", "Pence", "jones@pence.com", "fdgfsfds213!");
+            using var context = CreateInMemoryDbContextOptions();
+            var repo = new UserRepo(context);
+            var newUser = new TestUser("Jones", "Pence", "jones@pence.com", "fdgfsfds213!");
 
             // Act
-             var result = await repo.AddAsync(newUser);
+            var result = await repo.AddAsync(newUser);
 
             // Assert
-             Assert.NotNull(result);
-             Assert.Equal(newUser.Id, result.Id);
-             Assert.Equal(1, await context.Users.CountAsync());
+            Assert.NotNull(result);
+            Assert.Equal(newUser.Id, result.Id);
+            Assert.Equal(1, await context.Users.CountAsync());
         }
 
+        [Fact]
         public async Task GetByIdAsync_ShouldReturnEntityById()
         {
             // Arrange
             using var context = CreateInMemoryDbContextOptions();
             var repo = new UserRepo(context);
             var userId = Guid.NewGuid();
-            var newUser = new TestUser("Jones", "Pence", "jones@pence.com", "fdgfsfds213!"){ Id = userId };
+            var newUser = new TestUser("Jones", "Pence", "jones@pence.com", "fdgfsfds213!") { Id = userId };
             context.Users.Add(newUser);
             await context.SaveChangesAsync();
 
@@ -79,7 +80,7 @@ namespace RhythmFlow.UnitTests.src.RepoTests
             using var context = CreateInMemoryDbContextOptions();
             var repo = new UserRepo(context);
             var userId = Guid.NewGuid();
-            context.Users.Add(new TestUser("Jones", "Pence", "jones@pence.com", "fdgfsfds213!"){ Id = userId });
+            context.Users.Add(new TestUser("Jones", "Pence", "jones@pence.com", "fdgfsfds213!") { Id = userId });
             await context.SaveChangesAsync();
 
             // Act
@@ -96,7 +97,7 @@ namespace RhythmFlow.UnitTests.src.RepoTests
             using var context = CreateInMemoryDbContextOptions();
             var repo = new UserRepo(context);
             var userId = Guid.NewGuid();
-            var user = new TestUser("Jones", "Pence", "jones@pence.com", "fdgfsfds213!"){ Id = userId };
+            var user = new TestUser("Jones", "Pence", "jones@pence.com", "fdgfsfds213!") { Id = userId };
             context.Users.Add(user);
             await context.SaveChangesAsync();
 

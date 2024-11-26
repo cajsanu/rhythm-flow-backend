@@ -16,6 +16,7 @@ namespace RhythmFlow.UnitTests.src.RepoTests
                 .Options;
             return new AppDbContext(options);
         }
+
         [Fact]
         public async Task GetAllProjectsInWorkspaceAsync_ReturnsProjectsInWorkspace()
         {
