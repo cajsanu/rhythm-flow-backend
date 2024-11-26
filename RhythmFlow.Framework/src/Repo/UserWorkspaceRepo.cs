@@ -35,12 +35,6 @@ namespace RhythmFlow.Framework.src.Repo
             }
         }
 
-        public Task<IEnumerable<Workspace>> GetAllUserWorkspacesByUserIdAsync(Guid userId)
-        {
-            var workspaces = _context.GetWorkspacesJoinedByUserId(userId);
-            return Task.FromResult(workspaces);
-        }
-
         public Task<UserWorkspace?> GetUserWorkspaceByUserIdAndWorkspaceIdAsync(Guid userId, Guid workspaceId)
         {
             var userWorkspace = _context.GetUserWorkspaceByUserIdAndWorkspaceId(userId, workspaceId);
@@ -51,6 +45,12 @@ namespace RhythmFlow.Framework.src.Repo
         {
             var users = _context.GetUsersInWorkspace(workspaceId);
             return Task.FromResult(users);
+        }
+
+        public Task<IEnumerable<Workspace>> GetAllUserWorkspacesByUserIdAsync(Guid userId)
+        {
+            var workspaces = _context.GetWorkspacesJoinedByUserId(userId);
+            return Task.FromResult(workspaces);
         }
 
         public Task<IEnumerable<Workspace>> GetWorkspacesOwnedByUserAsync(Guid workspaceId)

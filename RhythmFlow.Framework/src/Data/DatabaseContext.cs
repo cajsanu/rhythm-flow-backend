@@ -79,8 +79,13 @@ namespace RhythmFlow.Framework.src.Data
 
         public IEnumerable<User> GetUsersInWorkspace(Guid workspaceId)
         {
-            var userWorkspaces = UserWorkspaces.Where(uw => uw.WorkspaceId == workspaceId).ToList();
-            var users = Users.Where(u => userWorkspaces.Select(uw => uw.UserId).Equals(u.Id)).ToList();
+            var userWorkspace = UserWorkspaces.FirstOrDefault(uw => uw.WorkspaceId == workspaceId);
+            if (userWorkspace == null)
+            {
+                return [];
+            }
+
+            var users = Users.Where(u => userWorkspace.UserId == u.Id).ToList();
             return users;
         }
     }
