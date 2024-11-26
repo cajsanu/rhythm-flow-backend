@@ -27,11 +27,11 @@ namespace RhythmFlow.Application.src.Services
             return await base.AddAsync(createDto);
         }
 
-        public override async Task<UserReadDto> UpdateAsync(Guid id, User entity)
+        public override async Task<UserReadDto?> UpdateAsync(Guid id, UserUpdateDto userUpdateDto)
         {
-            // This will throw an exception if the entity does not exist
-            entity.PasswordHash = _passwordService.HashPassword(entity.PasswordHash);
-            return await base.UpdateAsync(id, entity);
+            // This will throw an exception if the userUpdateDto does not exist
+            userUpdateDto.PasswordHash = _passwordService.HashPassword(userUpdateDto.PasswordHash);
+            return await base.UpdateAsync(id, userUpdateDto);
         }
 
         public async Task<UserReadDto?> GetUserByEmailAsync(Email email)

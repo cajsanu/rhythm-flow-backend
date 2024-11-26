@@ -50,7 +50,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.ServiceTests
             var result = await _service.GetByIdAsync(entity.Id);
 
             // Assert
-            Assert.Equal(entity.Id, result.Id);
+            Assert.Equal(entity.Id, result?.Id);
         }
 
         [Fact]
@@ -72,14 +72,15 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.ServiceTests
         {
             // Arrange
             var entity = new TestEntity { Id = Guid.NewGuid() };
+            var entityDto = new TestUpdateDto { Id = entity.Id };
             _mockRepo.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(entity);
             _mockRepo.Setup(repo => repo.UpdateAsync(It.IsAny<TestEntity>())).ReturnsAsync(entity);
 
             // Act
-            var result = await _service.UpdateAsync(entity.Id, entity);
+            var result = await _service.UpdateAsync(entity.Id, entityDto);
 
             // Assert
-            Assert.Equal(entity.Id, result.Id);
+            Assert.Equal(entity.Id, result?.Id);
         }
 
         [Fact]

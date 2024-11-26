@@ -36,17 +36,17 @@ namespace RhythmFlow.Application.src.Services
             return _dtoFactory.CreateReadDto(entity);
         }
 
-        public virtual async Task<TReadDto> AddAsync(TCreateDto entity)
+        public virtual async Task<TReadDto> AddAsync(TCreateDto entityDto)
         {
-            var newEntity = await _repository.AddAsync(entity.ToEntity()) ?? throw new InvalidOperationException($"Failed to add {typeof(T).Name}.");
+            var newEntity = await _repository.AddAsync(entityDto.ToEntity()) ?? throw new InvalidOperationException($"Failed to add {typeof(T).Name}.");
             return _dtoFactory.CreateReadDto(newEntity);
         }
 
-        public virtual async Task<TReadDto?> UpdateAsync(Guid id, T entity)
+        public virtual async Task<TReadDto?> UpdateAsync(Guid id, TUpdateDto entityDto)
         {
             // This will throw an exception if the entity does not exist
             _ = await _repository.GetByIdAsync(id) ?? throw new KeyNotFoundException($"{typeof(T).Name} with ID {id} not found.");
-            var updatedEntity = await _repository.UpdateAsync(entity) ?? throw new InvalidOperationException($"Failed to update {typeof(T).Name} with ID {entity.Id}.");
+            var updatedEntity = await _repository.UpdateAsync(entityDto.ToEntity(id)) ?? throw new InvalidOperationException($"Failed to update {typeof(T).Name} with ID {id}.");
             return _dtoFactory.CreateReadDto(updatedEntity);
         }
 

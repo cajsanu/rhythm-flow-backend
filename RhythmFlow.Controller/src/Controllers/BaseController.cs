@@ -47,7 +47,7 @@ namespace RhythmFlow.Controller.src.Controllers
         [HttpPut("{id}")]
         public virtual async Task<ActionResult> Update(Guid id, [FromBody] TUpdateDto updateDto)
         {
-            await _service.UpdateAsync(id, updateDto.ToEntity(id));
+            await _service.UpdateAsync(id, updateDto);
             return NoContent();
         }
 

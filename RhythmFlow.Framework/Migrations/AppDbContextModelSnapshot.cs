@@ -527,7 +527,7 @@ namespace RhythmFlow.Framework.Migrations
 
             modelBuilder.Entity("RhythmFlow.Domain.src.Entities.User", b =>
                 {
-                    b.OwnsOne("RhythmFlow.Domain.src.ValueObjects.Email", "Email", b1 =>
+                    b.OwnsOne("RhythmFlow.Domain.src.Entities.User.Email#RhythmFlow.Domain.src.ValueObjects.Email", "Email", b1 =>
                         {
                             b1.Property<Guid>("UserId")
                                 .HasColumnType("uuid")
@@ -540,7 +540,7 @@ namespace RhythmFlow.Framework.Migrations
 
                             b1.HasKey("UserId");
 
-                            b1.ToTable("users");
+                            b1.ToTable("users", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId")

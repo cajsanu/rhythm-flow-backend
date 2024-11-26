@@ -15,7 +15,7 @@ namespace RhythmFlow.Controller.src.Controllers
 
         public override async Task<ActionResult<IEnumerable<ProjectReadDto>>> GetAll()
         {
-            var workspaceId = Guid.Parse(HttpContext.GetRouteValue("workspaceId")?.ToString());
+            var workspaceId = Guid.Parse(HttpContext.GetRouteValue("workspaceId")?.ToString() ?? "");
             var projects = await _service.GetAllProjectsInWorkspaceAsync(workspaceId);
             return Ok(projects);
         }
@@ -23,6 +23,12 @@ namespace RhythmFlow.Controller.src.Controllers
         [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
         public override async Task<ActionResult<ProjectReadDto>> Add([FromBody] ProjectCreateDto createDto)
         {
+            var workspaceId = Guid.Parse(HttpContext.GetRouteValue("workspaceId")?.ToString() ?? "");
+            if (workspaceId != createDto.WorkspaceId)
+            {
+                throw new InvalidDataException("workspaceId in data must match workspaceId in url");
+            }
+
             return await base.Add(createDto);
         }
 
@@ -42,6 +48,7 @@ namespace RhythmFlow.Controller.src.Controllers
         [HttpPost("{projectId}/users/{userId}")]
         public async Task<ActionResult<ProjectReadDto>> AssignUserToProject(Guid userId, Guid projectId)
         {
+            // need to check if user is in workspace here or in the service layer
             var projectReadDto = await _service.AssignUserToProjectAsync(userId, projectId);
             return Ok(projectReadDto);
         }
