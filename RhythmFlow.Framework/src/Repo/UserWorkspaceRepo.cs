@@ -1,4 +1,3 @@
-using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
@@ -23,7 +22,6 @@ namespace RhythmFlow.Framework.src.Repo
                 existingUserWorkspace.Role = role;
                 await _context.SaveChangesAsync();
                 return existingUserWorkspace;
-
             }
             else
             {

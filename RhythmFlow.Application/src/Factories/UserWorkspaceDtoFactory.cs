@@ -15,5 +15,23 @@ namespace RhythmFlow.Application.src.Factories
                 Role = entity.Role
             };
         }
+
+        public UserWorkspaceCreateDto CreateCreateDto(UserWorkspace entity)
+        {
+            return new UserWorkspaceCreateDto
+            {
+                UserId = entity.UserId,
+                WorkspaceId = entity.WorkspaceId
+            };
+        }
+
+        public UserWorkspaceUpdateDto CreateUpdateDto(UserWorkspace entity)
+        {
+            return new UserWorkspaceUpdateDto
+            {
+                UserId = entity.UserId,
+                WorkspaceId = entity.WorkspaceId
+            };
+        }
     }
 }

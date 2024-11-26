@@ -16,6 +16,16 @@ namespace RhythmFlow.Framework.src.Repo
             await _context.SaveChangesAsync();
             return entity;
         }
-        
+
+        public async override Task<Workspace?> UpdateAsync(Workspace entity)
+        {
+            // swap entity property with foundEntity Property
+            var foundEntity = await _workspaces.FindAsync(entity.Id) ?? throw new ArgumentException($"Workspace with ID {entity.Id} not found. ");
+            foundEntity.Name = entity.Name;
+
+            // then save the changes
+            await _context.SaveChangesAsync();
+            return await _workspaces.FindAsync(entity.Id);
+        }
     }
 }

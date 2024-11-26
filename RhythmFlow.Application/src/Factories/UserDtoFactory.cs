@@ -16,6 +16,5 @@ namespace RhythmFlow.Application.src.Factories
                 Email = entity.Email.Value
             };
         }
-
     }
 }

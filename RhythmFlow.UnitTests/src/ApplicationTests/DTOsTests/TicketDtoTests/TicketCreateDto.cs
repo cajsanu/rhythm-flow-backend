@@ -29,7 +29,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.TicketDtoTests
             string projectId,
             TicketType type,
             bool isValid)
-            
+
         {
             // Arrange
             var dto = new TicketCreateDto

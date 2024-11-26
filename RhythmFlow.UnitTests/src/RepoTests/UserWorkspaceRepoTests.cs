@@ -9,7 +9,7 @@ namespace RhythmFlow.UnitTests.src.RepoTests
 {
     public class UserWorkspaceRepoTests
     {
-       private AppDbContext CreateInMemoryDbContextOptions()
+        private AppDbContext CreateInMemoryDbContextOptions()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
@@ -17,39 +17,40 @@ namespace RhythmFlow.UnitTests.src.RepoTests
             return new AppDbContext(options);
         }
 
-       [Fact]
-       public async Task AssignRoleToUserInWorkspace_ShouldAssignRoleToUserInWorkspace()
+        [Fact]
+        public async Task AssignRoleToUserInWorkspace_ShouldAssignRoleToUserInWorkspace()
         {
             // Arrange
             using var context = CreateInMemoryDbContextOptions();
             var user1 = new TestUser("Jones", "Pence", "jones@pence.com", "fdgfsfds213!");
             var user2 = new TestUser("Monsi", "Phonsi", "jones@pence.com", "fdgfsfds213!");
-            var userRepo = new BaseRepo<User>(context);
+            var userRepo = new UserRepo(context);
             await userRepo.AddAsync(user1);
             await userRepo.AddAsync(user2);
-            var workspaceRepo = new BaseRepo<Workspace>(context);
             var userWorkspaceRepo = new UserWorkspaceRepo(context);
+            var workSpaceRepo = new WorkspaceRepo(context, userWorkspaceRepo);
             var testWorkspace = new TestWorkSpace("Health", user1.Id);
-            await workspaceRepo.AddAsync(testWorkspace);
-            var userWorkSpace = await userWorkspaceRepo.AssignRoleToUserInWorkspace(user2.Id, testWorkspace.Id, Role.Developer);
+            await workSpaceRepo.AddAsync(testWorkspace);
+
+            _ = await userWorkspaceRepo.AssignRoleToUserInWorkspace(user2.Id, testWorkspace.Id, Role.Developer);
             await context.SaveChangesAsync();
         }
 
-       [Fact]
-       public async Task GetAllUserWorkspacesByOwnedUserIdAsync_ShouldReturnAllUserWorkspacesByUserId()
+        [Fact]
+        public async Task GetAllUserWorkspacesByOwnedUserIdAsync_ShouldReturnAllUserWorkspacesByUserId()
         {
             using var context = CreateInMemoryDbContextOptions();
             var user1 = new TestUser("Jones", "Pence", "joneus@pence.com", "fdgfsfds213!");
             var user2 = new TestUser("Monsi", "Phonsi", "jones@pence.com", "fdgfsfds213!");
-            var workspaceRepo = new BaseRepo<Workspace>(context);
-            var userRepo = new BaseRepo<User>(context);
             var userWorkspaceRepo = new UserWorkspaceRepo(context);
+            var workSpaceRepo = new WorkspaceRepo(context, userWorkspaceRepo);
+            var userRepo = new UserRepo(context);
             await userRepo.AddAsync(user1);
             await userRepo.AddAsync(user2);
             var testWorkspace = new TestWorkSpace("Health", user2.Id);
             var testWorkspace2 = new TestWorkSpace("Travel", user2.Id);
-            await workspaceRepo.AddAsync(testWorkspace);
-            await workspaceRepo.AddAsync(testWorkspace2);
+            await workSpaceRepo.AddAsync(testWorkspace);
+            await workSpaceRepo.AddAsync(testWorkspace2);
             await userWorkspaceRepo.AssignRoleToUserInWorkspace(user2.Id, testWorkspace.Id, Role.WorkspaceOwner);
             await userWorkspaceRepo.AssignRoleToUserInWorkspace(user2.Id, testWorkspace2.Id, Role.WorkspaceOwner);
             await userWorkspaceRepo.AssignRoleToUserInWorkspace(user1.Id, testWorkspace.Id, Role.Developer);
@@ -60,16 +61,16 @@ namespace RhythmFlow.UnitTests.src.RepoTests
             Assert.Equal(testWorkspace.OwnerId, result.First().OwnerId);
         }
 
-       [Fact]
-       public async Task GetUserWorkspaceByUserIdAndWorkspaceIdAsync_ShouldReturnUserWorkspaceByUserIdAndWorkspaceId()
+        [Fact]
+        public async Task GetUserWorkspaceByUserIdAndWorkspaceIdAsync_ShouldReturnUserWorkspaceByUserIdAndWorkspaceId()
         {
             using var context = CreateInMemoryDbContextOptions();
             var user1 = new TestUser("Jones", "Pence", "joneus@pence.com", "fdgfsfds213!");
             var user2 = new TestUser("Monsi", "Phonsi", "jones@pence.com", "fdgfsfds213!");
             var testWorkspace = new TestWorkSpace("Health", user2.Id);
-            var workspaceRepo = new BaseRepo<Workspace>(context);
-            var userRepo = new BaseRepo<User>(context);
+            var userRepo = new UserRepo(context);
             var userWorkspaceRepo = new UserWorkspaceRepo(context);
+            var workspaceRepo = new WorkspaceRepo(context, userWorkspaceRepo);
             await userRepo.AddAsync(user1);
             await userRepo.AddAsync(user2);
             await workspaceRepo.AddAsync(testWorkspace);

@@ -23,9 +23,10 @@ namespace RhythmFlow.UnitTests.src.RepoTests
             // Arrange
             using var context = CreateInMemoryDbContextOptions();
             var ticketRepo = new TicketRepo(context);
-            var workSpaceRepo = new BaseRepo<Workspace>(context);
-            var userRepo = new BaseRepo<User>(context);
-            var projectRepo = new BaseRepo<Project>(context);
+            var projectRepo = new ProjectRepo(context);
+            var userRepo = new UserRepo(context);
+            var userWorkspaceRepo = new UserWorkspaceRepo(context);
+            var workSpaceRepo = new WorkspaceRepo(context, userWorkspaceRepo);
             var user2 = new TestUser("Monsi", "Phonsi", "jones@pence.com", "fdgfsfds213!");
             var testWorkspace = new TestWorkSpace("Health", user2.Id);
             var project = new TestProject("Health Application", "bla bla bla", new DateOnly(2025, 2, 2), new DateOnly(2026, 2, 2), Status.NotStarted, testWorkspace.Id);

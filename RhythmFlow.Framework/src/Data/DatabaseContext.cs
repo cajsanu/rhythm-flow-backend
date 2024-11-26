@@ -6,7 +6,7 @@ namespace RhythmFlow.Framework.src.Data
 {
     public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
     {
-        //public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+        // public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         // In-memory storage for each entity type
         public DbSet<User> Users { get; set; }

@@ -2,4 +2,5 @@
 .vscode
 bin/
 obj/
+publish/
 appsettings.Development.json

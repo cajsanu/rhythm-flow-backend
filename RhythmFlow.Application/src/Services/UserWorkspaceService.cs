@@ -10,7 +10,8 @@ namespace RhythmFlow.Application.src.Services
     {
         public async Task<UserWorkspaceReadDto> AssignUserRoleInWorkspaceAsync(UserWorkspaceCreateDto userWorkspaceCreateDto)
         {
-            var userRoleUpdate = repository.AssignRoleToUserInWorkspace(userWorkspaceCreateDto.UserId, userWorkspaceCreateDto.WorkspaceId, userWorkspaceCreateDto.Role).Result ?? throw new InvalidOperationException($"User with ID {userWorkspaceCreateDto.UserId} is not a member of workspace with ID {userWorkspaceCreateDto.WorkspaceId}.");
+            var userRoleUpdate = repository.AssignRoleToUserInWorkspace(userWorkspaceCreateDto.UserId, userWorkspaceCreateDto.WorkspaceId, userWorkspaceCreateDto.Role).Result
+                ?? throw new InvalidOperationException($"User with ID {userWorkspaceCreateDto.UserId} is not a member of workspace with ID {userWorkspaceCreateDto.WorkspaceId}.");
             UserWorkspaceReadDto userWorkspace = userWorkspaceDtoFactory.CreateReadDto(userRoleUpdate);
             return await Task.FromResult(userWorkspace);
         }

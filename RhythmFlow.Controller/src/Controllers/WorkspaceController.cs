@@ -26,6 +26,15 @@ namespace RhythmFlow.Controller.src.Controllers
             if (userId == null)
                 return Unauthorized();
 
+            // here createDto takes owner of the request and change the ownerId of the Workspace accordingly
+            // createDto.OwnerId = Guid.Parse(userId);
+            // or we can do a small check here to check if the same user create workspace with their own id
+            if (Guid.Parse(userId) != createDto.OwnerId)
+            {
+                throw new UnauthorizedAccessException("Workspace must be created by same user");
+            }
+
+            // maybe we should also have a check for duplicates since one user can create many projects with the same name atm
             var result = await base.Add(createDto);
 
             if (result.Value == null)
@@ -72,19 +81,25 @@ namespace RhythmFlow.Controller.src.Controllers
             });
         }
 
-        [Authorize(Policy = "WorkspaceOwnerPolicy")]
-        [HttpDelete("{workspaceId}")]
-        public override async Task<ActionResult> Delete(Guid workspaceId)
+        [HttpGet("joinedby/{userId}")]
+        public async Task<ActionResult<IEnumerable<WorkspaceCreateDto>>> GetWorkspacesJoinedByUser(Guid userId)
         {
-            Console.WriteLine("Delete called with id: " + workspaceId);
-            return await base.Delete(workspaceId);
+            return Ok(await service.GetAllWorkspaceJoinedByUser(userId));
         }
 
         [Authorize(Policy = "WorkspaceOwnerPolicy")]
         [HttpPut("{workspaceId}")]
-        public override async Task<ActionResult> Update(Guid workspaceId, [FromBody] WorkspaceUpdateDto updateDto)
+        public override async Task<ActionResult> Update(Guid id, [FromBody] WorkspaceUpdateDto updateDto)
         {
-            return await base.Update(workspaceId, updateDto);
+            return await base.Update(id, updateDto);
+        }
+
+        [Authorize(Policy = "WorkspaceOwnerPolicy")]
+        [HttpDelete("{workspaceId}")] // id here is workspace id
+        public override async Task<ActionResult> Delete(Guid id)
+        {
+            Console.WriteLine("Delete called with id: " + id);
+            return await base.Delete(id);
         }
     }
 }

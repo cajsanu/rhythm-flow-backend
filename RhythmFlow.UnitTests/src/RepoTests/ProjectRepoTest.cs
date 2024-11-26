@@ -16,13 +16,15 @@ namespace RhythmFlow.UnitTests.src.RepoTests
                 .Options;
             return new AppDbContext(options);
         }
+
         [Fact]
         public async Task GetAllProjectsInWorkspaceAsync_ReturnsProjectsInWorkspace()
         {
             using var context = CreateInMemoryDbContextOptions();
             var projectRepo = new ProjectRepo(context);
-            var workSpaceRepo = new BaseRepo<Workspace>(context);
-            var userRepo = new BaseRepo<User>(context);
+            var userRepo = new UserRepo(context);
+            var userWorkspaceRepo = new UserWorkspaceRepo(context);
+            var workSpaceRepo = new WorkspaceRepo(context, userWorkspaceRepo);
             var user = new TestUser("Monsi", "Phonsi", "jones@pence.com", "fdgfsfds213!");
             var testWorkspace = new TestWorkSpace("Health", user.Id);
             var project = new TestProject("Health Application", "bla bla bla", new DateOnly(2025, 2, 2), new DateOnly(2026, 2, 2), Status.NotStarted, testWorkspace.Id);
