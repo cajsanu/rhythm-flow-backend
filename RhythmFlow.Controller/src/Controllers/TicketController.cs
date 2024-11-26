@@ -53,7 +53,7 @@ namespace RhythmFlow.Controller.src.Controllers
         [HttpPost("{ticketId}/users/{userId}")]
         public async Task<ActionResult<TicketReadDto>> AssignUserToTicket(Guid userId, Guid ticketId)
         {
-            var ticketReadDto = await _service.AssignUserToTicketAsync(userId, Guid.Parse(HttpContext.GetRouteValue("id")?.ToString()));
+            var ticketReadDto = await _service.AssignUserToTicketAsync(userId, ticketId);
             return Ok(ticketReadDto);
         }
 
