@@ -1,4 +1,3 @@
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
@@ -37,13 +36,20 @@ namespace RhythmFlow.Framework.src.Data
         private static readonly Project Project6 = new ("Zeta", "Optimize Data Pipeline", DateOnly.FromDateTime(DateTime.Now.AddDays(10)), DateOnly.FromDateTime(DateTime.Now.AddDays(80)), Status.InProgress, Workspace5.Id);
 
         // Generate tickets
+        // Project 1
         private static readonly Ticket Ticket1 = new ("Create Database", "using Postgres", Priority.High, DateOnly.FromDateTime(DateTime.Now.AddDays(7)), Status.InProgress, Project1.Id, TicketType.Bug);
         private static readonly Ticket Ticket2 = new ("Fix Login Issue", "Resolve authentication error", Priority.High, DateOnly.FromDateTime(DateTime.Now.AddDays(3)), Status.InProgress, Project1.Id, TicketType.Bug);
         private static readonly Ticket Ticket3 = new ("Design Landing Page", "Create wireframe for new landing page", Priority.Medium, DateOnly.FromDateTime(DateTime.Now.AddDays(14)), Status.Cancelled, Project1.Id, TicketType.Feature);
+
+        // Project 2
         private static readonly Ticket Ticket4 = new ("Update Privacy Policy", "Review and update policy document", Priority.Low, DateOnly.FromDateTime(DateTime.Now.AddDays(30)), Status.NotStarted, Project2.Id, TicketType.TechnicalDebt);
         private static readonly Ticket Ticket5 = new ("Optimize API", "Enhance performance of existing API calls", Priority.High, DateOnly.FromDateTime(DateTime.Now.AddDays(10)), Status.InProgress, Project2.Id, TicketType.Feature);
         private static readonly Ticket Ticket6 = new ("Schedule Training", "Plan onboarding session for new hires", Priority.Medium, DateOnly.FromDateTime(DateTime.Now.AddDays(7)), Status.NotStarted, Project2.Id, TicketType.TechnicalDebt);
+
+        // Project 5
         private static readonly Ticket Ticket7 = new ("Add Dark Mode", "Implement dark mode toggle for Users", Priority.High, DateOnly.FromDateTime(DateTime.Now.AddDays(21)), Status.Cancelled, Project5.Id, TicketType.Bug);
+
+        // Project 6
         private static readonly Ticket Ticket8 = new ("Bug in Report Generation", "Fix issue with incorrect data rendering", Priority.High, DateOnly.FromDateTime(DateTime.Now.AddDays(5)), Status.InProgress, Project6.Id, TicketType.Feature);
 
         // Generate User workspace
