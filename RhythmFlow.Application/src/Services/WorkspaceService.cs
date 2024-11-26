@@ -21,13 +21,13 @@ namespace RhythmFlow.Application.src.Services
             return _assignmentService.AssignUserToEntityAsync(userId, entityId);
         }
 
-        public Task<IEnumerable<WorkspaceReadDto>> GetAllWorkspaceJoinedByUser(Guid userId)
+        public Task<IEnumerable<WorkspaceReadDto>> GetAllWorkspaceJoinedByUserAsync(Guid userId)
         {
             IEnumerable<WorkspaceReadDto> workspacesJoinedByUser = _userWorkspaceRepo.GetAllUserWorkspacesByUserIdAsync(userId).Result.Select(_workspaceDtoFactory.CreateReadDto);
             return Task.FromResult(workspacesJoinedByUser);
         }
 
-        public Task<IEnumerable<WorkspaceReadDto>> GetAllWorkspaceOwnedByUser(Guid userId)
+        public Task<IEnumerable<WorkspaceReadDto>> GetAllWorkspaceOwnedByUserAsync(Guid userId)
         {
             IEnumerable<WorkspaceReadDto> workspacesOwnedByUser = _userWorkspaceRepo.GetWorkspacesOwnedByUserAsync(userId).Result.Select(_workspaceDtoFactory.CreateReadDto);
             return Task.FromResult(workspacesOwnedByUser);

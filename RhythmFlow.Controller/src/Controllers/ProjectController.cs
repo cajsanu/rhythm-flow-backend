@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -24,11 +25,19 @@ namespace RhythmFlow.Controller.src.Controllers
         [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
         public override async Task<ActionResult<ProjectReadDto>> Add([FromBody] ProjectCreateDto createDto)
         {
+            // Make sure the workspaceId in the route and in the body are the same
+            // so that the project is added to the correct workspace
             var workspaceId = Guid.Parse(HttpContext.GetRouteValue("workspaceId")?.ToString() ?? "");
+
             if (workspaceId != createDto.WorkspaceId)
-            {
-                throw new InvalidDataException("workspaceId in data must match workspaceId in url");
-            }
+                return BadRequest("WorkspaceId in the route and in the new project should match");
+
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId == null)
+                return Unauthorized();
+
+            createDto.UserIds.Add(Guid.Parse(userId));
 
             return await base.Add(createDto);
         }
