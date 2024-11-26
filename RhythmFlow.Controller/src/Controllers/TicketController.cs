@@ -30,6 +30,13 @@ namespace RhythmFlow.Controller.src.Controllers
 
         public override async Task<ActionResult<TicketReadDto>> Add([FromBody] TicketCreateDto createDto)
         {
+            // Make sure the projectId in the route and in the body are the same
+            // so that the ticket is added to the correct project
+            var projectId = Guid.Parse(HttpContext.GetRouteValue("projectId")?.ToString());
+
+            if (projectId != createDto.ProjectId)
+                return BadRequest("ProjectId in the route and in the new ticket should be the same");
+
             return await base.Add(createDto);
         }
 
