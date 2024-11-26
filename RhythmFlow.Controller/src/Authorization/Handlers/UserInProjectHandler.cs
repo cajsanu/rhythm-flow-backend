@@ -4,21 +4,21 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using RhythmFlow.Application.src.ServiceInterfaces;
 
-namespace RhythmFlow.Application.src.Authorization.Handlers
+namespace RhythmFlow.Controller.src.Authorization.Handlers
 {
-    public class WorkspaceRoleHandler(IUserWorkspaceService userWorkspaceService, IHttpContextAccessor httpContextAccessor) : AuthorizationHandler<RoleInWorkspaceRequirement>
+    public class UserInProjectHandler(IProjectService projectService, IHttpContextAccessor httpContextAccessor) : AuthorizationHandler<UserInProjectRequirement>
     {
-        private readonly IUserWorkspaceService _userWorkspaceService = userWorkspaceService;
+        private readonly IProjectService _projectService = projectService;
         private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
         protected override async Task HandleRequirementAsync(
             AuthorizationHandlerContext context,
-            RoleInWorkspaceRequirement requirement)
+            UserInProjectRequirement requirement)
         {
             // Extract workspace ID from route data
             var routeData = _httpContextAccessor.HttpContext?.GetRouteData();
-            if (routeData == null || !routeData.Values.TryGetValue("workspaceId", out var workspaceIdValue)
-                || !Guid.TryParse(workspaceIdValue?.ToString(), out var workspaceId))
+            if (routeData == null || !routeData.Values.TryGetValue("projectId", out var projectIdValue)
+                || !Guid.TryParse(projectIdValue?.ToString(), out var projectId))
             {
                 context.Fail();
                 return;
@@ -31,8 +31,16 @@ namespace RhythmFlow.Application.src.Authorization.Handlers
                 return;
             }
 
-            var userRole = await _userWorkspaceService.GetUserRoleInWorkspaceAsync(userId, workspaceId);
-            if (requirement.ValidRoles.Contains(userRole))
+            // Validate if the user is in the project
+            var project = await _projectService.GetByIdAsync(projectId);
+            if (project == null)
+            {
+                context.Fail();
+                return;
+            }
+
+            var userInProject = project.Users.Any(u => u.Id == userId);
+            if (userInProject)
             {
                 context.Succeed(requirement);
             }
