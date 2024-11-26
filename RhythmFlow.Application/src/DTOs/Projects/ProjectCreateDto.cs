@@ -19,7 +19,7 @@ namespace RhythmFlow.Application.src.DTOs.Projects
         public Guid WorkspaceId { get; set; }
 
         [NoEmptyGuid(ValidateCollection = true)]
-        public ICollection<Guid> UsersId { get; set; } = [];
+        public ICollection<Guid> UserIds { get; set; } = [];
 
         public Project ToEntity()
         {

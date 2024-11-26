@@ -36,11 +36,12 @@ namespace RhythmFlow.Controller.src.Controllers
         }
 
         [HttpPost]
-        public virtual async Task<ActionResult<TReadDto>> Add([FromBody] TCreateDto entity)
+        public virtual async Task<ActionResult<TReadDto>> Add([FromBody] TCreateDto createDto)
         {
+            Console.WriteLine("Add called with createDto: " + createDto);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var createdEntity = await _service.AddAsync(entity);
+            var createdEntity = await _service.AddAsync(createDto);
             return createdEntity;
         }
 

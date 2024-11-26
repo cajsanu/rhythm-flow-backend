@@ -39,7 +39,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.DTOsTests.ProjectDtoTests
                 EndDate = DateOnly.Parse(endDate),
                 Status = status,
                 WorkspaceId = Guid.Parse(workspaceId),
-                UsersId = ParseGuids(usersId)
+                UserIds = ParseGuids(usersId)
             };
 
             // Act

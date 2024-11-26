@@ -32,16 +32,19 @@ namespace RhythmFlow.Framework.src.Repo
             return await Task.FromResult(allItems);
         }
 
-        public async Task<T?> GetByIdAsync(Guid id)
+        public virtual async Task<T?> GetByIdAsync(Guid id)
         {
-            // var entity = _context.GetById<T>(id) ?? throw new ArgumentException($"{typeof(T)} with ID {id} does not exist.");
-            return await _dbSet.FindAsync(id);
+            var results = await GetByIdsAsync([id]);
+            return results.FirstOrDefault();
+        }
+
+        public async Task<ICollection<T>> GetByIdsAsync(ICollection<Guid> ids)
+        {
+            return await _dbSet.Where(e => ids.Contains(e.Id)).ToArrayAsync();
         }
 
         public async Task<T?> UpdateAsync(T entity)
         {
-            var foundEntity = await _dbSet.FindAsync(entity.Id) ?? throw new ArgumentException($"{typeof(T)} with ID {entity.Id} not found. ");
-            _dbSet.Remove(foundEntity);
             _dbSet.Update(entity);
             await _context.SaveChangesAsync();
             return await _dbSet.FindAsync(entity.Id);

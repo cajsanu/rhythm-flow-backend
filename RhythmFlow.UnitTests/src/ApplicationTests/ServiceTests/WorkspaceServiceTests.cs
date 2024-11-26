@@ -1,5 +1,6 @@
 using Moq;
 using RhythmFlow.Application.DTOs.Workspaces;
+using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Application.src.DTOs.Workspaces;
 using RhythmFlow.Application.src.FactoryInterfaces;
 using RhythmFlow.Application.src.Services;
@@ -13,7 +14,8 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
     public class WorkspaceServiceTests
     {
         private readonly Mock<IUserRepo> _mockUserRepo;
-        private readonly Mock<IDtoFactory<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>> _mockDtoFactory;
+        private readonly Mock<IDtoFactory<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>> _mockWorkspaceDtoFactory;
+        private readonly Mock<IDtoFactory<User, UserReadDto, UserCreateDto, UserUpdateDto>> _mockUserDtoFactory;
         private readonly AssignmentService<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto> _assignmentService;
         private readonly Mock<IWorkspaceRepo> _mockWorkspaceRepo;
         private readonly Mock<IUserWorkspaceRepo> _mockUserWorkspaceRepo;
@@ -22,12 +24,13 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
         public WorkspaceServiceTests()
         {
             _mockUserRepo = new Mock<IUserRepo>();
-            _mockDtoFactory = new Mock<IDtoFactory<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>>();
+            _mockWorkspaceDtoFactory = new Mock<IDtoFactory<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>>();
+            _mockUserDtoFactory = new Mock<IDtoFactory<User, UserReadDto, UserCreateDto, UserUpdateDto>>();
             _mockWorkspaceRepo = new Mock<IWorkspaceRepo>();
             _mockUserWorkspaceRepo = new Mock<IUserWorkspaceRepo>();
-            _assignmentService = new AssignmentService<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>(_mockUserRepo.Object, _mockWorkspaceRepo.Object, _mockDtoFactory.Object);
+            _assignmentService = new AssignmentService<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>(_mockUserRepo.Object, _mockWorkspaceRepo.Object, _mockWorkspaceDtoFactory.Object);
 
-            _service = new WorkspaceService(_assignmentService, _mockDtoFactory.Object, _mockUserWorkspaceRepo.Object, _mockWorkspaceRepo.Object);
+            _service = new WorkspaceService(_assignmentService, _mockWorkspaceDtoFactory.Object, _mockUserDtoFactory.Object, _mockUserWorkspaceRepo.Object, _mockWorkspaceRepo.Object);
         }
 
         [Fact]

@@ -9,7 +9,7 @@ namespace RhythmFlow.Application.src.ServiceInterfaces
     {
         Task<IEnumerable<TReadDto>> GetAllAsync();
         Task<TReadDto?> GetByIdAsync(Guid id);
-        Task<TReadDto> AddAsync(TCreateDto entity);
+        Task<TReadDto> AddAsync(TCreateDto createDto);
         Task<TReadDto?> UpdateAsync(Guid id, T entity);
         Task DeleteAsync(Guid id);
     }
