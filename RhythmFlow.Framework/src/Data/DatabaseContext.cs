@@ -6,12 +6,14 @@ namespace RhythmFlow.Framework.src.Data
 {
     public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
     {
+        //public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+
         // In-memory storage for each entity type
-        required public DbSet<User> Users { get; set; }
-        required public DbSet<Project> Projects { get; set; }
-        required public DbSet<Ticket> Tickets { get; set; }
-        required public DbSet<Workspace> Workspaces { get; set; }
-        required public DbSet<UserWorkspace> UserWorkspaces { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<Workspace> Workspaces { get; set; }
+        public DbSet<UserWorkspace> UserWorkspaces { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -65,7 +67,7 @@ namespace RhythmFlow.Framework.src.Data
         public IEnumerable<Workspace> GetWorkspacesJoinedByUserId(Guid userId)
         {
             var userWorkspaces = UserWorkspaces.Where(uw => uw.UserId == userId).ToList();
-            var workSpaces = Workspaces.Where(w => userWorkspaces.Select(uw => uw.WorkspaceId).Equals(w.Id)).ToList();
+            var workSpaces = Workspaces.Where(w => userWorkspaces.Select(uw => uw.WorkspaceId).Contains(w.Id)).ToList();
             return workSpaces;
         }
 
