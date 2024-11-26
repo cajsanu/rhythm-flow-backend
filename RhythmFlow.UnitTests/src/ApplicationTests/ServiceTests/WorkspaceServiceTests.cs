@@ -6,10 +6,9 @@ using RhythmFlow.Application.src.FactoryInterfaces;
 using RhythmFlow.Application.src.Services;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.RepoInterfaces;
-using RhythmFlow.Domain.src.ValueObjects;
 using RhythmFlow.UnitTests.src.ApplicationTests.TestClasses;
 
-namespace RhythmFlow.UnitTests.src.ApplicationTests
+namespace RhythmFlow.UnitTests.src.ApplicationTests.ServiceTests
 {
     public class WorkspaceServiceTests
     {
@@ -41,7 +40,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             TestWorkSpace workspace1 = new TestWorkSpace("Travel workspace", userId2);
             var workSapcesJoinedByUser = new List<Workspace> { workspace1 };
             _mockUserWorkspaceRepo.Setup(repo => repo.GetAllUserWorkspacesByUserIdAsync(userId)).ReturnsAsync(workSapcesJoinedByUser);
-            var result = await _service.GetAllWorkspaceJoinedByUser(userId);
+            var result = await _service.GetAllWorkspaceJoinedByUserAsync(userId);
 
             // Assert
             Assert.Single(result);
@@ -55,7 +54,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             TestWorkSpace workspace1 = new TestWorkSpace("Travel workspace", userId2);
             var workSapcesOwnedByUser = new List<Workspace> { workspace1 };
             _mockUserWorkspaceRepo.Setup(repo => repo.GetWorkspacesOwnedByUserAsync(userId)).ReturnsAsync(workSapcesOwnedByUser);
-            var result = await _service.GetAllWorkspaceOwnedByUser(userId);
+            var result = await _service.GetAllWorkspaceOwnedByUserAsync(userId);
 
             // Assert
             Assert.Single(result);

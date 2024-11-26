@@ -8,10 +8,10 @@ namespace RhythmFlow.Application.src.ServiceInterfaces
     public interface IWorkspaceService : IBaseService<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>
     {
         // Methdo to get all workspaces owned by a user'
-        Task<IEnumerable<WorkspaceReadDto>> GetAllWorkspaceOwnedByUser(Guid userId);
+        Task<IEnumerable<WorkspaceReadDto>> GetAllWorkspaceOwnedByUserAsync(Guid userId);
 
         // Method to get all workspaces joined by a user
-        Task<IEnumerable<WorkspaceReadDto>> GetAllWorkspaceJoinedByUser(Guid userId);
+        Task<IEnumerable<WorkspaceReadDto>> GetAllWorkspaceJoinedByUserAsync(Guid userId);
 
         // Method to get all users in a workspace
         Task<IEnumerable<UserReadDto>> GetAllUsersInWorkspaceAsync(Guid workspaceId);
