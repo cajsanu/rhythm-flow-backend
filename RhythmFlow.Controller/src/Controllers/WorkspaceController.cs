@@ -2,6 +2,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RhythmFlow.Application.DTOs.Workspaces;
+using RhythmFlow.Application.src.DTOs.Roles;
+using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Application.src.DTOs.UserWorkspaces;
 using RhythmFlow.Application.src.DTOs.Workspaces;
 using RhythmFlow.Application.src.ServiceInterfaces;
@@ -16,6 +18,7 @@ namespace RhythmFlow.Controller.src.Controllers
     public class WorkspaceController(IWorkspaceService service, IUserWorkspaceService userWorkspaceService) : BaseController<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>(service)
     {
         private readonly IUserWorkspaceService _userWorkspaceService = userWorkspaceService;
+        private readonly IWorkspaceService _workspaceService = service;
 
         public override async Task<ActionResult<WorkspaceReadDto>> Add([FromBody] WorkspaceCreateDto createDto)
         {
@@ -50,11 +53,32 @@ namespace RhythmFlow.Controller.src.Controllers
             return CreatedAtAction(nameof(GetById), new { id = createdWorkspace.Id }, createdWorkspace);
         }
 
-        // Since all workspaces and all users are public information this should be ok to be exposed to the public
-        [HttpGet("ownedby/{userId}")]
-        public async Task<ActionResult<IEnumerable<WorkspaceCreateDto>>> GetWorkspacesOwnedByUser(Guid userId)
+        [Authorize(Policy = "WorkspaceDeveloperPolicy")]
+        [HttpGet("{workspaceId}/users")]
+        public async Task<ActionResult<IEnumerable<UserReadDto>>> GetAllUsersInWorkspace(Guid workspaceId)
         {
-            return Ok(await service.GetAllWorkspaceOwnedByUser(userId));
+            var users = await _workspaceService.GetAllUsersInWorkspaceAsync(workspaceId);
+            return Ok(users);
+        }
+
+        [Authorize(Policy = "WorkspaceOwnerPolicy")]
+        [HttpPost("{workspaceId}/users/{userId}")]
+        public async Task<ActionResult<UserWorkspaceReadDto>> AddUserToWorkspace([FromBody] RoleDto roleDto, Guid userId, Guid workspaceId)
+        {
+            // We need to make sure that you cannot assign owner role to the user.
+            // Only the worspace creator can be the owner.
+            // Validation needs to be done here.
+            if (roleDto.Role == Role.WorkspaceOwner)
+            {
+                return BadRequest("You cannot assign owner role to the user.");
+            }
+
+            return await _userWorkspaceService.AssignUserRoleInWorkspaceAsync(new UserWorkspaceCreateDto
+            {
+                UserId = userId,
+                WorkspaceId = workspaceId,
+                Role = roleDto.Role
+            });
         }
 
         [HttpGet("joinedby/{userId}")]
@@ -64,18 +88,18 @@ namespace RhythmFlow.Controller.src.Controllers
         }
 
         [Authorize(Policy = "WorkspaceOwnerPolicy")]
+        [HttpPut("{workspaceId}")]
+        public override async Task<ActionResult> Update(Guid id, [FromBody] WorkspaceUpdateDto updateDto)
+        {
+            return await base.Update(id, updateDto);
+        }
+
+        [Authorize(Policy = "WorkspaceOwnerPolicy")]
         [HttpDelete("{workspaceId}")] // id here is workspace id
         public override async Task<ActionResult> Delete(Guid id)
         {
             Console.WriteLine("Delete called with id: " + id);
             return await base.Delete(id);
-        }
-
-        [Authorize(Policy = "WorkspaceOwnerPolicy")]
-        [HttpPut("{workspaceId}")]
-        public override async Task<ActionResult> Update(Guid id, [FromBody] WorkspaceUpdateDto updateDto)
-        {
-            return await base.Update(id, updateDto);
         }
     }
 }

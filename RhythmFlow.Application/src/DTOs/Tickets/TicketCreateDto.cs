@@ -19,6 +19,9 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
         public Guid ProjectId { get; set; }
         public TicketType Type { get; set; }
 
+        [NoEmptyGuid(ValidateCollection = true)]
+        public ICollection<Guid> UserIds { get; set; } = [];
+
         public Ticket ToEntity()
         {
             return new Ticket(Title, Description, Priority, Deadline, Status, ProjectId, Type);

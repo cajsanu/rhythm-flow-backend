@@ -7,15 +7,6 @@ namespace RhythmFlow.Application.src.Factories
 {
     public class ProjectDtoFactory : IDtoFactory<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>
     {
-        // public ProjectCreateDto CreateCreateReadDto(Project entity)
-        // {
-        //     return new ProjectCreateDto
-        //     {
-        //         Name = entity.Name,
-        //         Description = entity.Description,
-        //         Status = entity.Status,
-        //     };
-        // }
         public ProjectReadDto CreateReadDto(Project entity)
         {
             return new ProjectReadDto
@@ -36,17 +27,6 @@ namespace RhythmFlow.Application.src.Factories
                     LastName = u.LastName,
                     Email = u.Email.Value
                 }).ToList()
-            };
-        }
-
-        public ProjectUpdateDto CreateUpdateDto(Project entity)
-        {
-            return new ProjectUpdateDto
-            {
-                Name = entity.Name,
-                Description = entity.Description,
-                Status = entity.Status,
-                EndDate = entity.EndDate,
             };
         }
     }

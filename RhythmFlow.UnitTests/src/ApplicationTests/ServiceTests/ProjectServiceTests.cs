@@ -1,6 +1,7 @@
 using Moq;
 using RhythmFlow.Application.src.DTOs.Projects;
 using RhythmFlow.Application.src.DTOs.Tickets;
+using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Application.src.Factories;
 using RhythmFlow.Application.src.FactoryInterfaces;
 using RhythmFlow.Application.src.Services;
@@ -13,7 +14,8 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
 {
     public class ProjectServiceTests
     {
-        private readonly Mock<IDtoFactory<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>> _mockDtoFactory;
+        private readonly Mock<IDtoFactory<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>> _mockProjectDtoFactory;
+        private readonly Mock<IDtoFactory<User, UserReadDto, UserCreateDto, UserUpdateDto>> _mockUserDtoFactory;
         private readonly Mock<IUserRepo> _mockUserRepo;
         private readonly AssignmentService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto> _serviceAssignment;
         private readonly Mock<IProjectRepo> _mockProjectRepo;
@@ -21,16 +23,17 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
 
         public ProjectServiceTests()
         {
-            _mockDtoFactory = new Mock<IDtoFactory<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>>();
+            _mockProjectDtoFactory = new Mock<IDtoFactory<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>>();
+            _mockUserDtoFactory = new Mock<IDtoFactory<User, UserReadDto, UserCreateDto, UserUpdateDto>>();
             _mockProjectRepo = new Mock<IProjectRepo>();
             _mockUserRepo = new Mock<IUserRepo>();
             _serviceAssignment = new AssignmentService<Project, ProjectReadDto, ProjectCreateDto, ProjectUpdateDto>(
                 _mockUserRepo.Object,
                 _mockProjectRepo.Object,
-                _mockDtoFactory.Object
+                _mockProjectDtoFactory.Object
 
             );
-            _service = new ProjectService(_mockProjectRepo.Object, _serviceAssignment, new ProjectDtoFactory());
+            _service = new ProjectService(_mockProjectRepo.Object, _mockUserRepo.Object, _serviceAssignment, _mockProjectDtoFactory.Object, _mockUserDtoFactory.Object);
         }
 
         [Fact]
@@ -44,7 +47,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             var dto = new TestProjectReadDto { Id = project.Id };
             _mockUserRepo.Setup(repo => repo.GetByIdAsync(userId)).ReturnsAsync(user);
             _mockProjectRepo.Setup(repo => repo.GetByIdAsync(projectId)).ReturnsAsync(project);
-            _mockDtoFactory.Setup(factory => factory.CreateReadDto(project)).Returns(dto);
+            _mockProjectDtoFactory.Setup(factory => factory.CreateReadDto(project)).Returns(dto);
 
             // Act
             var result = await _service.AssignUserToProjectAsync(userId, projectId);
@@ -65,7 +68,7 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             var dto = new TestProjectReadDto { Id = project.Id };
             _mockUserRepo.Setup(repo => repo.GetByIdAsync(userId)).ReturnsAsync(user);
             _mockProjectRepo.Setup(repo => repo.GetByIdAsync(projectId)).ReturnsAsync(project);
-            _mockDtoFactory.Setup(factory => factory.CreateReadDto(project)).Returns(dto);
+            _mockProjectDtoFactory.Setup(factory => factory.CreateReadDto(project)).Returns(dto);
 
             // Act
             var result = await _service.RemoveUserFromProjectAsync(userId, projectId);

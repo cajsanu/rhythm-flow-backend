@@ -6,7 +6,5 @@ namespace RhythmFlow.Application.src.FactoryInterfaces
     public interface IUserWorkspaceDtoFactory
     {
         UserWorkspaceReadDto CreateReadDto(UserWorkspace entity);
-        UserWorkspaceCreateDto CreateCreateDto(UserWorkspace entity);
-        UserWorkspaceUpdateDto CreateUpdateDto(UserWorkspace entity);
     }
 }

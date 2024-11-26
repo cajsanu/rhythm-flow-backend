@@ -12,7 +12,9 @@ namespace RhythmFlow.Framework.src.Repo
 
         public async Task<IEnumerable<Ticket>> GetAllTicketsInProjectAsync(Guid projectId)
         {
-            var ticketsInProject = _context.Tickets.Where(t => t.ProjectId == projectId);
+            var ticketsInProject = await _context.Tickets
+                .Where(t => t.ProjectId == projectId)
+                .Include(t => t.Users).ToListAsync();
             return await Task.FromResult(ticketsInProject);
         }
 
@@ -31,6 +33,14 @@ namespace RhythmFlow.Framework.src.Repo
             // then save the changes
             await _context.SaveChangesAsync();
             return await _dbSet.FindAsync(entity.Id);
+        }
+
+        public override async Task<Ticket?> GetByIdAsync(Guid id)
+        {
+            var ticket = await _context.Tickets
+                .Include(t => t.Users)
+                .FirstOrDefaultAsync(t => t.Id == id);
+            return ticket;
         }
     }
 }

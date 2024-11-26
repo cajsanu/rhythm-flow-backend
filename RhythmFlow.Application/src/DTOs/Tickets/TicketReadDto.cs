@@ -1,4 +1,5 @@
 using RhythmFlow.Application.src.DTOs.Shared;
+using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
 
@@ -15,5 +16,6 @@ namespace RhythmFlow.Application.src.DTOs.Tickets
         public Status Status { get; set; }
         public Guid ProjectId { get; set; }
         public TicketType Type { get; set; }
+        public ICollection<UserReadDto> Users { get; set; } = [];
     }
 }
