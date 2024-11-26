@@ -84,7 +84,7 @@ namespace RhythmFlow.Controller.src.Controllers
         [HttpGet("joinedby/{userId}")]
         public async Task<ActionResult<IEnumerable<WorkspaceCreateDto>>> GetWorkspacesJoinedByUser(Guid userId)
         {
-            return Ok(await service.GetAllWorkspaceJoinedByUser(userId));
+            return Ok(await service.GetAllWorkspaceJoinedByUserAsync(userId));
         }
 
         [Authorize(Policy = "WorkspaceOwnerPolicy")]
