@@ -27,7 +27,6 @@ namespace RhythmFlow.Framework.src.Repo
             foundEntity.StartDate = entity.StartDate;
             foundEntity.EndDate = entity.EndDate;
             foundEntity.Status = entity.Status;
-            foundEntity.Users = entity.Users;
 
             // then save the changes
             await _context.SaveChangesAsync();

@@ -8,7 +8,7 @@ using RhythmFlow.Domain.src.RepoInterfaces;
 using RhythmFlow.Domain.src.ValueObjects;
 using RhythmFlow.UnitTests.src.ApplicationTests.TestClasses;
 
-namespace RhythmFlow.UnitTests.src.ApplicationTests
+namespace RhythmFlow.UnitTests.src.ApplicationTests.ServiceTests
 {
     public class TicketServiceTests
     {
@@ -73,6 +73,80 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests
             // Assert
             Assert.Equal(ticket.Id, result.Id);
             Assert.DoesNotContain(user, ticket.Users);
+        }
+
+        [Fact]
+        public async Task AddAsync_ShouldAddTicket_WhenValidInput()
+        {
+            // Arrange
+            var ticketCreateDto = new TestTicketCreateDto
+            {
+                Title = "New Ticket",
+                Description = "Ticket Description",
+                Priority = Priority.High,
+                Deadline = DateOnly.FromDateTime(DateTime.Now.AddDays(30)),
+                Status = Status.InProgress,
+                ProjectId = Guid.NewGuid(),
+                Type = TicketType.Bug,
+                UserIds = [Guid.NewGuid()]
+            };
+            var newTicket = new TestTicket(ticketCreateDto.Title, ticketCreateDto.Description, ticketCreateDto.Priority, ticketCreateDto.Deadline, ticketCreateDto.Status, ticketCreateDto.ProjectId, ticketCreateDto.Type);
+            var dto = new TestTicketReadDto { Id = newTicket.Id };
+
+            _mockUserRepo.Setup(repo => repo.GetByIdsAsync(ticketCreateDto.UserIds)).ReturnsAsync([new User("Test", "User", "test@example.com", "hashedPassword")]);
+            _mockTicketRepo.Setup(repo => repo.AddAsync(It.IsAny<Ticket>())).ReturnsAsync(newTicket);
+            _mockTicketDtoFactory.Setup(factory => factory.CreateReadDto(newTicket)).Returns(dto);
+
+            // Act
+            var result = await _service.AddAsync(ticketCreateDto);
+
+            // Assert
+            Assert.Equal(newTicket.Id, result.Id);
+        }
+
+        [Fact]
+        public async Task GetAllTicketsInProjectAsync_ShouldReturnTickets_WhenTicketsExist()
+        {
+            // Arrange
+            var projectId = Guid.NewGuid();
+            var tickets = new List<Ticket>
+            {
+                new TestTicket("Ticket 1", "Description 1", Priority.High, DateOnly.FromDateTime(DateTime.Now.AddDays(30)), Status.InProgress, projectId, TicketType.Bug),
+                new TestTicket("Ticket 2", "Description 2", Priority.Medium, DateOnly.FromDateTime(DateTime.Now.AddDays(30)), Status.InProgress, projectId, TicketType.Feature)
+            };
+            var dtos = tickets.Select(t => new TestTicketReadDto { Id = t.Id }).ToList();
+
+            _mockTicketRepo.Setup(repo => repo.GetAllTicketsInProjectAsync(projectId)).ReturnsAsync(tickets);
+            _mockTicketDtoFactory.Setup(factory => factory.CreateReadDto(It.IsAny<Ticket>())).Returns((Ticket t) => new TestTicketReadDto { Id = t.Id });
+
+            // Act
+            var result = await _service.GetAllTicketsInProjectAsync(projectId);
+
+            // Assert
+            Assert.Equal(dtos.Count, result.Count());
+        }
+
+        [Fact]
+        public async Task GetAllUsersInTicketAsync_ShouldReturnUsers_WhenUsersExist()
+        {
+            // Arrange
+            var ticketId = Guid.NewGuid();
+            var users = new List<User>
+            {
+                new ("Test", "User1", "user1@example.com", "hashedPassword") { Id = Guid.NewGuid() },
+                new ("Test", "User2", "user2@example.com", "hashedPassword") { Id = Guid.NewGuid() }
+            };
+            var ticket = new TestTicket("Ticket", "Description", Priority.High, DateOnly.FromDateTime(DateTime.Now.AddDays(30)), Status.InProgress, Guid.NewGuid(), TicketType.Bug) { Id = ticketId, Users = users };
+            var dtos = users.Select(u => new TestUserReadDto { Id = u.Id }).ToList();
+
+            _mockTicketRepo.Setup(repo => repo.GetByIdAsync(ticketId)).ReturnsAsync(ticket);
+            _mockUserDtoFactory.Setup(factory => factory.CreateReadDto(It.IsAny<User>())).Returns((User u) => new TestUserReadDto { Id = u.Id });
+
+            // Act
+            var result = await _service.GetAllUsersInTicketAsync(ticketId);
+
+            // Assert
+            Assert.Equal(dtos.Count, result.Count());
         }
     }
 }

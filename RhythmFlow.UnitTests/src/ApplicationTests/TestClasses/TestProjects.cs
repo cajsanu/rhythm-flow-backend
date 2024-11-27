@@ -1,5 +1,4 @@
 using RhythmFlow.Application.src.DTOs.Projects;
-using RhythmFlow.Application.src.DTOs.Tickets;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
 
