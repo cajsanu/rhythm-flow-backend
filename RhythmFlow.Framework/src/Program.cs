@@ -111,9 +111,6 @@ builder.Services.AddScoped<IAuthorizationHandler, WorkspaceRoleHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, UserInProjectHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, UserIsUserHandler>();
 
-// builder.Services.AddScoped<IAuthorizationRequirement, RoleInWorkspaceRequirement>();
-// builder.Services.AddScoped<IAuthorizationRequirement, UserInProjectRequirement>();
-
 // add authorization policies
 builder.Services.AddAuthorization(options =>
 {
