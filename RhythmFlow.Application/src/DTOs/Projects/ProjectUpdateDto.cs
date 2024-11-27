@@ -12,7 +12,7 @@ namespace RhythmFlow.Application.src.DTOs.Projects
         public DateOnly EndDate { get; set; }
         public Status Status { get; set; }
         public Guid WorkspaceId { get; set; }
-        public ICollection<Guid> UsersId { get; set; } = [];
+        // public ICollection<Guid> UserIds { get; set; } = [];
 
         public IBaseUpdateDto<Project> ToDto(Project entity)
         {
