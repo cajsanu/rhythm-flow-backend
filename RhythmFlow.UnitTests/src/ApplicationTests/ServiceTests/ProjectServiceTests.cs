@@ -10,7 +10,7 @@ using RhythmFlow.Domain.src.RepoInterfaces;
 using RhythmFlow.Domain.src.ValueObjects;
 using RhythmFlow.UnitTests.src.ApplicationTests.TestClasses;
 
-namespace RhythmFlow.UnitTests.src.ApplicationTests
+namespace RhythmFlow.UnitTests.src.ApplicationTests.ServiceTests
 {
     public class ProjectServiceTests
     {
