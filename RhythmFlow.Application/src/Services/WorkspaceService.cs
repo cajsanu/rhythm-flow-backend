@@ -1,4 +1,3 @@
-using RhythmFlow.Application.DTOs.Workspaces;
 using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Application.src.DTOs.Workspaces;
 using RhythmFlow.Application.src.FactoryInterfaces;
@@ -39,9 +38,9 @@ namespace RhythmFlow.Application.src.Services
             return usersInWorkspace.Select(_userDtoFactory.CreateReadDto).ToList();
         }
 
-        public Task<WorkspaceReadDto> RemoveUserFromEntityAsync(Guid userId, Guid entityId)
-        {
-            return _assignmentService.RemoveUserFromEntityAsync(userId, entityId);
-        }
+        // public Task<WorkspaceReadDto> RemoveUserFromEntityAsync(Guid userId, Guid entityId)
+        // {
+        //     return _assignmentService.RemoveUserFromEntityAsync(userId, entityId);
+        // }
     }
 }

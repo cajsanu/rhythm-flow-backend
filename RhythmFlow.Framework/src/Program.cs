@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using RhythmFlow.Application.DTOs.Workspaces;
 using RhythmFlow.Application.src.Authorization;
 using RhythmFlow.Application.src.Authorization.Handlers;
 using RhythmFlow.Application.src.DTOs.Projects;
@@ -110,9 +109,6 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddScoped<IAuthorizationHandler, WorkspaceRoleHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, UserInProjectHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, UserIsUserHandler>();
-
-// builder.Services.AddScoped<IAuthorizationRequirement, RoleInWorkspaceRequirement>();
-// builder.Services.AddScoped<IAuthorizationRequirement, UserInProjectRequirement>();
 
 // add authorization policies
 builder.Services.AddAuthorization(options =>

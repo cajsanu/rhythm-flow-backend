@@ -12,7 +12,7 @@ namespace RhythmFlow.Framework.src.Repo
         public override async Task<Workspace> AddAsync(Workspace entity)
         {
             await _workspaces.AddAsync(entity);
-            await _userWorkspaceRepo.AssignRoleToUserInWorkspace(entity.OwnerId, entity.Id, Role.WorkspaceOwner);
+            await _userWorkspaceRepo.AssignRoleToUserInWorkspaceAsync(entity.OwnerId, entity.Id, Role.WorkspaceOwner);
             await _context.SaveChangesAsync();
             return entity;
         }

@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
 using RhythmFlow.Framework.src.Data;
 using RhythmFlow.Framework.src.Repo;
@@ -32,7 +31,7 @@ namespace RhythmFlow.UnitTests.src.RepoTests
             var testWorkspace = new TestWorkSpace("Health", user1.Id);
             await workSpaceRepo.AddAsync(testWorkspace);
 
-            _ = await userWorkspaceRepo.AssignRoleToUserInWorkspace(user2.Id, testWorkspace.Id, Role.Developer);
+            _ = await userWorkspaceRepo.AssignRoleToUserInWorkspaceAsync(user2.Id, testWorkspace.Id, Role.Developer);
             await context.SaveChangesAsync();
         }
 
@@ -51,9 +50,9 @@ namespace RhythmFlow.UnitTests.src.RepoTests
             var testWorkspace2 = new TestWorkSpace("Travel", user2.Id);
             await workSpaceRepo.AddAsync(testWorkspace);
             await workSpaceRepo.AddAsync(testWorkspace2);
-            await userWorkspaceRepo.AssignRoleToUserInWorkspace(user2.Id, testWorkspace.Id, Role.WorkspaceOwner);
-            await userWorkspaceRepo.AssignRoleToUserInWorkspace(user2.Id, testWorkspace2.Id, Role.WorkspaceOwner);
-            await userWorkspaceRepo.AssignRoleToUserInWorkspace(user1.Id, testWorkspace.Id, Role.Developer);
+            await userWorkspaceRepo.AssignRoleToUserInWorkspaceAsync(user2.Id, testWorkspace.Id, Role.WorkspaceOwner);
+            await userWorkspaceRepo.AssignRoleToUserInWorkspaceAsync(user2.Id, testWorkspace2.Id, Role.WorkspaceOwner);
+            await userWorkspaceRepo.AssignRoleToUserInWorkspaceAsync(user1.Id, testWorkspace.Id, Role.Developer);
             await context.SaveChangesAsync();
             var result = await userWorkspaceRepo.GetWorkspacesOwnedByUserAsync(user2.Id);
 
@@ -74,7 +73,7 @@ namespace RhythmFlow.UnitTests.src.RepoTests
             await userRepo.AddAsync(user1);
             await userRepo.AddAsync(user2);
             await workspaceRepo.AddAsync(testWorkspace);
-            await userWorkspaceRepo.AssignRoleToUserInWorkspace(user1.Id, testWorkspace.Id, Role.Developer);
+            await userWorkspaceRepo.AssignRoleToUserInWorkspaceAsync(user1.Id, testWorkspace.Id, Role.Developer);
             await context.SaveChangesAsync();
             var result = await userWorkspaceRepo.GetAllUserWorkspacesByUserIdAsync(user1.Id);
 
