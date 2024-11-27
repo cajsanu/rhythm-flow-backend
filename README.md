@@ -24,7 +24,6 @@ With RhythmFlow you can signup and login to manage projects and tickets easily. 
 - Users can be assigned _(POST /api/v1/workspaces/{workspaceId}/user/{userId})_ to workspaces as:
   - **Developer**
   - **Project Manager**
-- Users can also be unassigned _(DELETE /api/v1/workspaces/{workspaceId}/users/{userId})_ from the workspace
 
 ### Project Management
 
