@@ -1,7 +1,6 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RhythmFlow.Application.DTOs.Workspaces;
 using RhythmFlow.Application.src.DTOs.Roles;
 using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Application.src.DTOs.UserWorkspaces;

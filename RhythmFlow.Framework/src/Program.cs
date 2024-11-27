@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using RhythmFlow.Application.DTOs.Workspaces;
 using RhythmFlow.Application.src.Authorization;
 using RhythmFlow.Application.src.Authorization.Handlers;
 using RhythmFlow.Application.src.DTOs.Projects;

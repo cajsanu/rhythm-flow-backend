@@ -1,5 +1,4 @@
 using Moq;
-using RhythmFlow.Application.DTOs.Workspaces;
 using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Application.src.DTOs.Workspaces;
 using RhythmFlow.Application.src.FactoryInterfaces;
@@ -30,6 +29,28 @@ namespace RhythmFlow.UnitTests.src.ApplicationTests.ServiceTests
             _assignmentService = new AssignmentService<Workspace, WorkspaceReadDto, WorkspaceCreateDto, WorkspaceUpdateDto>(_mockUserRepo.Object, _mockWorkspaceRepo.Object, _mockWorkspaceDtoFactory.Object);
 
             _service = new WorkspaceService(_assignmentService, _mockWorkspaceDtoFactory.Object, _mockUserDtoFactory.Object, _mockUserWorkspaceRepo.Object, _mockWorkspaceRepo.Object);
+        }
+
+        [Fact]
+        public async Task GetAllUsersInWorkspaceAsync_ShouldReturnUsers_WhenUsersExist()
+        {
+            // Arrange
+            var workspaceId = Guid.NewGuid();
+            var users = new List<User>
+            {
+                new ("Test", "User1", "user1@example.com", "hashedPassword") { Id = Guid.NewGuid() },
+                new ("Test", "User2", "user2@example.com", "hashedPassword") { Id = Guid.NewGuid() }
+            };
+            var dtos = users.Select(u => new TestUserReadDto { Id = u.Id }).ToList();
+
+            _mockUserWorkspaceRepo.Setup(repo => repo.GetAllUsersInWorkspaceAsync(workspaceId)).ReturnsAsync(users);
+            _mockUserDtoFactory.Setup(factory => factory.CreateReadDto(It.IsAny<User>())).Returns((User u) => new TestUserReadDto { Id = u.Id });
+
+            // Act
+            var result = await _service.GetAllUsersInWorkspaceAsync(workspaceId);
+
+            // Assert
+            Assert.Equal(dtos.Count, result.Count());
         }
 
         [Fact]
