@@ -11,7 +11,7 @@ namespace RhythmFlow.Framework.src.Repo
         private readonly AppDbContext _context = context;
         private readonly DbSet<UserWorkspace> _userWorkspaces = context.Set<UserWorkspace>();
 
-        public async Task<UserWorkspace?> AssignRoleToUserInWorkspace(Guid userId, Guid workspaceId, Role role)
+        public async Task<UserWorkspace?> AssignRoleToUserInWorkspaceAsync(Guid userId, Guid workspaceId, Role role)
         {
             var existingUserWorkspace = await _userWorkspaces
                 .FirstOrDefaultAsync(uw => uw.UserId == userId && uw.WorkspaceId == workspaceId);
