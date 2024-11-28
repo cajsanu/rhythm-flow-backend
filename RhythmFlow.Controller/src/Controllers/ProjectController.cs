@@ -6,6 +6,7 @@ using RhythmFlow.Application.src.DTOs.Projects;
 using RhythmFlow.Application.src.DTOs.Users;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.Entities;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace RhythmFlow.Controller.src.Controllers
 {
@@ -15,6 +16,7 @@ namespace RhythmFlow.Controller.src.Controllers
     {
         private readonly IProjectService _service = service;
 
+        [SwaggerOperation(Summary = "Get all Projects in a Workspace")]
         public override async Task<ActionResult<IEnumerable<ProjectReadDto>>> GetAll()
         {
             var workspaceId = Guid.Parse(HttpContext.GetRouteValue("workspaceId")?.ToString() ?? "");
@@ -23,6 +25,7 @@ namespace RhythmFlow.Controller.src.Controllers
         }
 
         [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
+        [SwaggerOperation(Summary = "Add a Project to a Workspace")]
         public override async Task<ActionResult<ProjectReadDto>> Add([FromBody] ProjectCreateDto createDto)
         {
             // Make sure the workspaceId in the route and in the body are the same
@@ -43,12 +46,14 @@ namespace RhythmFlow.Controller.src.Controllers
         }
 
         [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
+        [SwaggerOperation(Summary = "Delete a Project")]
         public override async Task<ActionResult> Delete(Guid id)
         {
             return await base.Delete(id);
         }
 
         [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
+        [SwaggerOperation(Summary = "Update a Project")]
         public override async Task<ActionResult> Update(Guid id, [FromBody] ProjectUpdateDto updateDto)
         {
             return await base.Update(id, updateDto);
@@ -56,6 +61,7 @@ namespace RhythmFlow.Controller.src.Controllers
 
         [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
         [HttpGet("{projectId}/users")]
+        [SwaggerOperation(Summary = "Get all Users in a Project")]
         public async Task<ActionResult<IEnumerable<UserReadDto>>> GetAllUsersInProject(Guid projectId)
         {
             var users = await _service.GetAllUsersInProjectAsync(projectId);
@@ -64,6 +70,7 @@ namespace RhythmFlow.Controller.src.Controllers
 
         [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
         [HttpPost("{projectId}/users/{userId}")]
+        [SwaggerOperation(Summary = "Add a User to a Project")]
         public async Task<ActionResult<ProjectReadDto>> AssignUserToProject(Guid userId, Guid projectId)
         {
             // need to check if user is in workspace here or in the service layer
@@ -73,6 +80,7 @@ namespace RhythmFlow.Controller.src.Controllers
 
         [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
         [HttpDelete("{projectId}/users/{userId}")]
+        [SwaggerOperation(Summary = "Remove a User from a Project")]
         public async Task<ActionResult<ProjectReadDto>> RemoveUserFromProject(Guid userId, Guid projectId)
         {
             var projectReadDto = await _service.RemoveUserFromProjectAsync(userId, projectId);
