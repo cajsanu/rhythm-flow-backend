@@ -71,8 +71,8 @@ With RhythmFlow you can signup and login to manage projects and tickets easily. 
 
 - The project adheres to the CLEAN Architecture pattern, organized as follows:
   - **Domain**: Entities, value objects and interfaces.
-  - **Application**: Authorization handlers, service implementations, and DTOs.
-  - **Controller**: Controllers for handling API requests and responses and middleware.
+  - **Application**: Service implementations, and DTOs.
+  - **Controller**: Controllers for handling API requests and responses, middleware and authorization.
   - **Framework**: DI container, repositories and database configurations
 
 ## Local Development Setup
