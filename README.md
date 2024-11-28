@@ -1,5 +1,7 @@
 # RhythmFlow
 
+[Link to deployed project on Azure](https://rhythmflow.azurewebsites.net/swagger/index.html)
+
 ## Project Overview
 
 **RhythmFlow** is a backend application designed for managing IT-related projects efficiently. It manages workflows through workspaces, projects, and tickets requiring users to be authenticated. The system is built following the **CLEAN architecture** principles and utilizes **RESTful APIs** to ensure a scalable, maintainable, and robust backend.
