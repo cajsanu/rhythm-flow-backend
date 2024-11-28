@@ -3,4 +3,7 @@
 bin/
 obj/
 publish/
+TestResult/
+Icov.info
 appsettings.Development.json
+RhythmFlow.UnitTests/lcov.info

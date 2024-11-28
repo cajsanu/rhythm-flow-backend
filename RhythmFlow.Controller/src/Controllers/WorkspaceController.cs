@@ -8,6 +8,7 @@ using RhythmFlow.Application.src.DTOs.Workspaces;
 using RhythmFlow.Application.src.ServiceInterfaces;
 using RhythmFlow.Domain.src.Entities;
 using RhythmFlow.Domain.src.ValueObjects;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace RhythmFlow.Controller.src.Controllers
 {
@@ -19,6 +20,7 @@ namespace RhythmFlow.Controller.src.Controllers
         private readonly IUserWorkspaceService _userWorkspaceService = userWorkspaceService;
         private readonly IWorkspaceService _workspaceService = service;
 
+        [SwaggerOperation(Summary = "Create a Workspace")]
         public override async Task<ActionResult<WorkspaceReadDto>> Add([FromBody] WorkspaceCreateDto createDto)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -54,6 +56,7 @@ namespace RhythmFlow.Controller.src.Controllers
 
         [Authorize(Policy = "WorkspaceDeveloperPolicy")]
         [HttpGet("{workspaceId}/users")]
+        [SwaggerOperation(Summary = "Get all Users in a Workspace")]
         public async Task<ActionResult<IEnumerable<UserReadDto>>> GetAllUsersInWorkspace(Guid workspaceId)
         {
             var users = await _workspaceService.GetAllUsersInWorkspaceAsync(workspaceId);
@@ -62,6 +65,7 @@ namespace RhythmFlow.Controller.src.Controllers
 
         [Authorize(Policy = "WorkspaceOwnerPolicy")]
         [HttpPost("{workspaceId}/users/{userId}")]
+        [SwaggerOperation(Summary = "Add User to Workspace")]
         public async Task<ActionResult<UserWorkspaceReadDto>> AddUserToWorkspace([FromBody] RoleDto roleDto, Guid userId, Guid workspaceId)
         {
             // We need to make sure that you cannot assign owner role to the user.
@@ -81,6 +85,7 @@ namespace RhythmFlow.Controller.src.Controllers
         }
 
         [HttpGet("joinedby/{userId}")]
+        [SwaggerOperation(Summary = "Get all Workspace Joined by a User")]
         public async Task<ActionResult<IEnumerable<WorkspaceCreateDto>>> GetWorkspacesJoinedByUser(Guid userId)
         {
             return Ok(await service.GetAllWorkspaceJoinedByUserAsync(userId));
@@ -88,6 +93,7 @@ namespace RhythmFlow.Controller.src.Controllers
 
         [Authorize(Policy = "WorkspaceOwnerPolicy")]
         [HttpPut("{workspaceId}")]
+        [SwaggerOperation(Summary = "Update Workspace")]
         public override async Task<ActionResult> Update(Guid workspaceId, [FromBody] WorkspaceUpdateDto updateDto)
         {
             return await base.Update(workspaceId, updateDto);
@@ -95,6 +101,7 @@ namespace RhythmFlow.Controller.src.Controllers
 
         [Authorize(Policy = "WorkspaceOwnerPolicy")]
         [HttpDelete("{workspaceId}")]
+        [SwaggerOperation(Summary = "Delete Workspace")]
         public override async Task<ActionResult> Delete(Guid workspaceId)
         {
             return await base.Delete(workspaceId);
