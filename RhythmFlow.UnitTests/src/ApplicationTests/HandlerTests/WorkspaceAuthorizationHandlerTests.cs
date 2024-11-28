@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Moq;
-using RhythmFlow.Application.src.Authorization;
-using RhythmFlow.Application.src.Authorization.Handlers;
 using RhythmFlow.Application.src.ServiceInterfaces;
+using RhythmFlow.Controller.src.Authorization;
+using RhythmFlow.Controller.src.Authorization.Handlers;
 using RhythmFlow.Domain.src.ValueObjects;
 
 namespace RhythmFlow.UnitTests.src.ApplicationTests.HandlerTests

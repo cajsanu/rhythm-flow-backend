@@ -4,23 +4,21 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using RhythmFlow.Application.src.ServiceInterfaces;
 
-namespace RhythmFlow.Application.src.Authorization.Handlers
+namespace RhythmFlow.Controller.src.Authorization.Handlers
 {
-    public class UserIsUserHandler(IUserService userService, IHttpContextAccessor httpContextAccessor) : AuthorizationHandler<UserIsUserRequirement>
+    public class WorkspaceRoleHandler(IUserWorkspaceService userWorkspaceService, IHttpContextAccessor httpContextAccessor) : AuthorizationHandler<RoleInWorkspaceRequirement>
     {
-        private readonly IUserService _userService = userService;
+        private readonly IUserWorkspaceService _userWorkspaceService = userWorkspaceService;
         private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
         protected override async Task HandleRequirementAsync(
             AuthorizationHandlerContext context,
-            UserIsUserRequirement requirement)
+            RoleInWorkspaceRequirement requirement)
         {
-            // context.Succeed(requirement);
-
-            // Extract target user ID from route data
+            // Extract workspace ID from route data
             var routeData = _httpContextAccessor.HttpContext?.GetRouteData();
-            if (routeData == null || !routeData.Values.TryGetValue("id", out var targetUserIdValue)
-                || !Guid.TryParse(targetUserIdValue?.ToString(), out var targetUserId))
+            if (routeData == null || !routeData.Values.TryGetValue("workspaceId", out var workspaceIdValue)
+                || !Guid.TryParse(workspaceIdValue?.ToString(), out var workspaceId))
             {
                 context.Fail();
                 return;
@@ -33,16 +31,8 @@ namespace RhythmFlow.Application.src.Authorization.Handlers
                 return;
             }
 
-            // validate for user Existence
-            var user = await _userService.GetByIdAsync(userId);
-            if (user == null)
-            {
-                context.Fail();
-                return;
-            }
-
-            // Validate if the user is the same as target user
-            if (targetUserId == userId)
+            var userRole = await _userWorkspaceService.GetUserRoleInWorkspaceAsync(userId, workspaceId);
+            if (requirement.ValidRoles.Contains(userRole))
             {
                 context.Succeed(requirement);
             }
