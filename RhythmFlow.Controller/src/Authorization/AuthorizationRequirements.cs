@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using RhythmFlow.Domain.src.ValueObjects;
 
-namespace RhythmFlow.Application.src.Authorization
+namespace RhythmFlow.Controller.src.Authorization
 {
     public class RoleInWorkspaceRequirement(Role[] validRoles) : IAuthorizationRequirement
     {
