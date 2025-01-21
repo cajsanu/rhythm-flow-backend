@@ -158,7 +158,7 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        builder => builder.WithOrigins("http://localhost:3000")
+        builder => builder.WithOrigins("http://0.0.0.0:3000")
                           .AllowAnyHeader()
                           .AllowAnyMethod());
 });
@@ -188,4 +188,5 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-app.Run();
+var port = Environment.GetEnvironmentVariable("PORT") ?? "7037";
+app.Run($"http://0.0.0.0:{port}");
