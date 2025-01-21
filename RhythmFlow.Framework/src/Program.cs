@@ -154,18 +154,34 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("UserIsUserPolicy", policy => policy.Requirements.Add(new UserIsUserRequirement()));
 });
 
+// Add CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder.WithOrigins("http://localhost:3000")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod());
+});
+
 // add exception handling middleware
 builder.Services.AddTransient<ExceptionHandlerMiddleware>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
+{
+    app.UseMiddleware<ExceptionHandlerMiddleware>();
+    // app.UseSwagger();
+    // app.UseSwaggerUI();
+}
+else
 {
     // putting this here since this can hide errors during development
     app.UseMiddleware<ExceptionHandlerMiddleware>();
 }
 
+app.UseCors("AllowSpecificOrigin");
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();

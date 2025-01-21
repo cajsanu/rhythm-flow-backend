@@ -36,7 +36,7 @@ namespace RhythmFlow.Application.src.Services
             var ticketsInProject = await _ticketRepo.GetAllTicketsInProjectAsync(projectId);
             if (ticketsInProject == null || !ticketsInProject.Any())
             {
-                throw new InvalidOperationException("No tickets found in project.");
+                return [];
             }
 
             return ticketsInProject.Select(_ticketDtoFactory.CreateReadDto).ToList();
