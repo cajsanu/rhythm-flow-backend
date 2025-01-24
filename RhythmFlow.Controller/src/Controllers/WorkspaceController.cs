@@ -106,5 +106,13 @@ namespace RhythmFlow.Controller.src.Controllers
         {
             return await base.Delete(workspaceId);
         }
+
+        [Authorize(Policy = "WorkspaceDeveloperPolicy")]
+        [HttpGet("{workspaceId}/users/{userId}")]
+        [SwaggerOperation(Summary = "Get User Role in Workspace")]
+        public async Task<ActionResult> GetUserRoleInWorkspace(Guid userId, Guid workspaceId)
+        {
+            return Ok(await _userWorkspaceService.GetUserRoleInWorkspaceAsync(userId, workspaceId));
+        }
     }
 }

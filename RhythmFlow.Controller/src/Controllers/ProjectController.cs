@@ -59,7 +59,7 @@ namespace RhythmFlow.Controller.src.Controllers
             return await base.Update(id, updateDto);
         }
 
-        [Authorize(Policy = "WorkspaceProjectManagerPolicy")]
+        [Authorize(Policy = "WorkspaceDeveloperPolicy")]
         [HttpGet("{projectId}/users")]
         [SwaggerOperation(Summary = "Get all Users in a Project")]
         public async Task<ActionResult<IEnumerable<UserReadDto>>> GetAllUsersInProject(Guid projectId)
