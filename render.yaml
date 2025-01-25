@@ -1,0 +1,13 @@
+services:
+  - type: web
+    plan: free
+    name: rhythm-flow-backend
+    runtime: image
+    region: frankfurt
+    image:
+      url: docker.io/cajsanu/rhythm-flow-backend:production
+    envVars:
+      - key: DATABASE_URL
+        value: ${DATABASE_URL}
+      - key: PORT
+        value: 7037
