@@ -62,6 +62,12 @@ builder.Services.AddSwaggerGen(opt =>
 // Configure lowercase URLs
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
+var connectionStringFromEnv = Environment.GetEnvironmentVariable("DATABASE_URL");
+if (!string.IsNullOrEmpty(connectionStringFromEnv))
+{
+    builder.Configuration["ConnectionStrings:DefaultConnection"] = connectionStringFromEnv;
+}
+
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options

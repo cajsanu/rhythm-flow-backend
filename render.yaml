@@ -7,7 +7,5 @@ services:
     image:
       url: docker.io/cajsanu/rhythm-flow-backend:production
     envVars:
-      - key: DATABASE_URL
-        value: ${DATABASE_URL}
       - key: PORT
         value: 7037
