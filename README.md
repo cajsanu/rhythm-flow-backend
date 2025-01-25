@@ -1,6 +1,6 @@
 # RhythmFlow
 
-[Link to deployed project on Azure](https://rhythmflow.azurewebsites.net/swagger/index.html)
+[Link to deployed project](https://rhythm-flow-backend-production.onrender.com)
 
 ## Project Overview
 
