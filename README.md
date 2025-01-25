@@ -69,6 +69,7 @@ With RhythmFlow you can signup and login to manage projects and tickets easily. 
 - **API Design**: RESTful APIs
 - **CI**: GitHub Actions
 - **Code checking**: Husky and Sonarlint
+- **Containerising for deployment**: Docker
 
 ## Folder structure
 
