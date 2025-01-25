@@ -15,6 +15,6 @@ jobs:
           echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
           docker build -t cajsanu/rhythm-flow-backend:production .
           docker push cajsanu/rhythm-flow-backend:production
-    #   - name: call Render.io hook to trigger the deploy
-    #     run: |
-    #       curl ${{ secrets.RENDER_DEPLOY_HOOK }}
+      - name: call Render.io hook to trigger the deploy
+        run: |
+          curl ${{ secrets.RENDER_DEPLOY_HOOK }}
