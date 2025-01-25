@@ -164,9 +164,13 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        builder => builder.WithOrigins("http://0.0.0.0:3000")
-                          .AllowAnyHeader()
-                          .AllowAnyMethod());
+        corsBuilder => corsBuilder.WithOrigins(
+            builder.Environment.IsDevelopment()
+                ? "http://0.0.0.0:3000"
+                : Environment.GetEnvironmentVariable("FRONTEND_URL")
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod());
 });
 
 // add exception handling middleware
