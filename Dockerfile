@@ -15,4 +15,4 @@ COPY --from=build /app/out .
 EXPOSE 7037
 
 # Start the application
-ENTRYPOINT ["dotnet", "RhythmFlow.dll"]
+ENTRYPOINT ["dotnet", "RhythmFlow.Framework.dll"]

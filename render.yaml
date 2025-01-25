@@ -9,3 +9,5 @@ services:
     envVars:
       - key: PORT
         value: 7037
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
